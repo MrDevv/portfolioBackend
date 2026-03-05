@@ -1,4 +1,4 @@
-package com.mrdevv.portfolioBackend.utils;
+package com.mrdevv.portfolioBackend.utils.constants;
 
 public enum TipoResponse {
     CREATE(201),

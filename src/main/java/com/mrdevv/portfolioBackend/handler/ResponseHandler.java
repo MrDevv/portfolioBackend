@@ -1,6 +1,6 @@
 package com.mrdevv.portfolioBackend.handler;
 
-import com.mrdevv.portfolioBackend.utils.TipoResponse;
+import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
