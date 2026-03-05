@@ -3,7 +3,7 @@ package com.mrdevv.portfolioBackend.controllers;
 import com.mrdevv.portfolioBackend.dto.ResponseDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IDesarrolladorService;
-import com.mrdevv.portfolioBackend.utils.TipoResponse;
+import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -14,7 +14,7 @@ create table desarrolladores(
 );
 
 create table roles(
-    rol_id bigint bigint generated always as identity,
+    rol_id bigint generated always as identity,
     descripcion varchar(100) not null,
     primary key(rol_id)
 );
