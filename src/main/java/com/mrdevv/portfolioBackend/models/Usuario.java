@@ -30,7 +30,7 @@ public class Usuario {
     @JoinColumn(name = "rol_id")
     Rol rol;
 
-    @Column(name = "token_acceso_front")
-    String tokenAccesoFront;
+    @Column(name = "api_key")
+    String apiKey;
 
 }

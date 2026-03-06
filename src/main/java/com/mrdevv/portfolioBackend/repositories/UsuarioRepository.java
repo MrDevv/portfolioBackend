@@ -16,7 +16,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "select u.usuarioId, u.username, " +
             "d.nombres, d.apellidos, d.puesto, " +
             "r.rolId, r.descripcion, u.estado, " +
-            "u.tokenAccesoFront " +
+            "u.apiKey " +
             "from Usuario u join u.desarrollador d " +
             "join u.rol r")
     List<Object[]> obtenerUsuarios();
@@ -24,4 +24,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Modifying
     @Query(value = "update Usuario u set u.rol = :rol where u.usuarioId = :usuarioId")
     void actualizarRol(@Param("usuarioId") Long usuarioId, @Param("rol") Rol rol);
+
+    @Modifying
+    @Query(value = "update Usuario u set u.apiKey = :apiKey where u.usuarioId = :usuarioId")
+    void crearApiKey(@Param("usuarioId") Long usuarioId, @Param("apiKey") String apiKey);
 }

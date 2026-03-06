@@ -26,7 +26,7 @@ create table usuarios(
     estado smallint not null,
     desarrollador_id bigint not null,
     rol_id bigint not null,
-    token_acceso_front text,
+    api_key text,
     primary key(usuario_id),
     foreign key(desarrollador_id) references desarrolladores(desarrollador_id),
     foreign key(rol_id) references roles(rol_id)

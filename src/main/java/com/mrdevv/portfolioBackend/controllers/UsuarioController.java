@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.controllers;
 
+import com.mrdevv.portfolioBackend.dto.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.UpdateRolUsuarioDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
@@ -34,6 +35,12 @@ public class UsuarioController {
     public ResponseEntity actualizarRolUsuario(@PathVariable(name = "id") Long usuarioId, @RequestBody UpdateRolUsuarioDTO rol){
         usuarioService.actualizarRol(usuarioId, rol);
         return ResponseHandler.ok(TipoResponse.PATCH, "Se actualizó el rol del usuario correctamente", null);
+    }
+
+    @PostMapping("/{id}/generar-api-key")
+    public ResponseEntity generarApiKey(@PathVariable(name = "id") Long usuarioId){
+        ResponseApiKeyUsuario apiKey = usuarioService.generarApiKey(usuarioId);
+        return ResponseHandler.ok(TipoResponse.PATCH, "Se generó la api key del usuario correctamente", apiKey);
     }
 
 }
