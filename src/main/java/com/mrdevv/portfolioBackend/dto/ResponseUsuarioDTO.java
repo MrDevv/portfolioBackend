@@ -13,7 +13,7 @@ public record ResponseUsuarioDTO(
         @JsonProperty("rol")
         ResponseRolDTO rolDTO,
         String estado,
-        @JsonProperty("token_acceso_front")
-        String tokenAccesoFront
+        @JsonProperty("api_key")
+        String apiKey
 ) {
 }

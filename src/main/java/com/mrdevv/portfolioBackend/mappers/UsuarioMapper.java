@@ -20,9 +20,9 @@ public class UsuarioMapper {
                     Long rolId = ((Number) usuario[5]).longValue();
                     String rol = usuario[6].toString();
                     String estado = Boolean.parseBoolean(usuario[7].toString()) ? "activo" : "inactivo";
-                    String tokenAccesoFront = usuario[8] != null ? usuario[8].toString() : null;
+                    String apiKey = usuario[8] != null ? usuario[8].toString() : null;
 
-                    return new ResponseUsuarioDTO(usuarioId, username, nombres, apellidos, puesto, new ResponseRolDTO(rolId, rol), estado, tokenAccesoFront);
+                    return new ResponseUsuarioDTO(usuarioId, username, nombres, apellidos, puesto, new ResponseRolDTO(rolId, rol), estado, apiKey);
         }).collect(Collectors.toList());
 
         return usuarioDTOS;
@@ -37,7 +37,7 @@ public class UsuarioMapper {
                 usuario.getDesarrollador().getPuesto(),
                 RolMapper.toResponseRolDTO(usuario.getRol()),
                 usuario.getEstado() ? "activo" : "inactivo",
-                usuario.getTokenAccesoFront()
+                usuario.getApiKey()
                 );
     }
 
