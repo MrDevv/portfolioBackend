@@ -3,6 +3,8 @@ package com.mrdevv.portfolioBackend.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.List;
+
 @JsonPropertyOrder({
         "desarrollador_id", "nombres", "apellidos", "correo", "github_url", "linkedin_url", "cv_url", "prefijo_telefono", "telefono", "biografia", "puesto"})
 public record ResponseDesarrolladorDTO(
@@ -21,6 +23,7 @@ public record ResponseDesarrolladorDTO(
         String prefijoTelefono,
         String telefono,
         String biografia,
-        String puesto
+        String puesto,
+        List<ResponseTecnologiaSimpleDTO> tecnologias
 ) {
 }

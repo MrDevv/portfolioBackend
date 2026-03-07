@@ -3,6 +3,8 @@ package com.mrdevv.portfolioBackend.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,5 +41,13 @@ public class Desarrollador {
     String biografia;
 
     String puesto;
+
+    @ManyToMany
+    @JoinTable(
+            name = "desarrollador_tecnologias",
+            joinColumns = @JoinColumn(name = "desarrollador_id"),
+            inverseJoinColumns = @JoinColumn(name = "tecnologia_id")
+    )
+    List<Tecnologia> tecnologias;
 
 }
