@@ -19,7 +19,8 @@ public class DesarrolladorMapper {
                 desarrollador.getPrefijoTelefono(),
                 desarrollador.getTelefono(),
                 desarrollador.getBiografia(),
-                desarrollador.getPuesto()
+                desarrollador.getPuesto(),
+                TecnologiaMapper.toResponseTecnologiaSimpleDTOList(desarrollador.getTecnologias())
         );
     }
 
@@ -35,7 +36,8 @@ public class DesarrolladorMapper {
                     desarrollador.getPrefijoTelefono(),
                     desarrollador.getTelefono(),
                     desarrollador.getBiografia(),
-                    desarrollador.getPuesto()
+                    desarrollador.getPuesto(),
+                    TecnologiaMapper.toResponseTecnologiaSimpleDTOList(desarrollador.getTecnologias())
             );
         }).collect(Collectors.toList());
     }
