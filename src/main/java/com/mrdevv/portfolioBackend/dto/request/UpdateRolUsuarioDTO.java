@@ -1,4 +1,4 @@
-package com.mrdevv.portfolioBackend.dto;
+package com.mrdevv.portfolioBackend.dto.request;
 
 import com.mrdevv.portfolioBackend.utils.constants.Roles;
 

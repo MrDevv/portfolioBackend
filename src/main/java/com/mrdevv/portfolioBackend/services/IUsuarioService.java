@@ -1,8 +1,8 @@
 package com.mrdevv.portfolioBackend.services;
 
-import com.mrdevv.portfolioBackend.dto.ResponseApiKeyUsuario;
-import com.mrdevv.portfolioBackend.dto.ResponseUsuarioDTO;
-import com.mrdevv.portfolioBackend.dto.UpdateRolUsuarioDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
+import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
 
 import java.util.List;
 

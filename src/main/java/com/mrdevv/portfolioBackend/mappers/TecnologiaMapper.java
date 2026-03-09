@@ -1,11 +1,10 @@
 package com.mrdevv.portfolioBackend.mappers;
 
-import com.mrdevv.portfolioBackend.dto.ResponseTecnologiaDTO;
-import com.mrdevv.portfolioBackend.dto.ResponseTecnologiaSimpleDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaSimpleDTO;
 import com.mrdevv.portfolioBackend.models.Tecnologia;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class TecnologiaMapper {

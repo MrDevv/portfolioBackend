@@ -1,6 +1,6 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
-import com.mrdevv.portfolioBackend.dto.ResponseTecnologiaDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.mappers.TecnologiaMapper;
 import com.mrdevv.portfolioBackend.models.Tecnologia;

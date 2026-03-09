@@ -1,6 +1,6 @@
 package com.mrdevv.portfolioBackend.controllers;
 
-import com.mrdevv.portfolioBackend.dto.ResponseDesarrolladorDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IDesarrolladorService;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;

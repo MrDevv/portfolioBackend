@@ -1,8 +1,8 @@
 package com.mrdevv.portfolioBackend.controllers;
 
-import com.mrdevv.portfolioBackend.dto.ResponseApiKeyUsuario;
-import com.mrdevv.portfolioBackend.dto.ResponseUsuarioDTO;
-import com.mrdevv.portfolioBackend.dto.UpdateRolUsuarioDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
+import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.impl.UsuarioServiceImpl;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;

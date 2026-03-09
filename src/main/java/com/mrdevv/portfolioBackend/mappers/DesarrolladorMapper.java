@@ -1,6 +1,6 @@
 package com.mrdevv.portfolioBackend.mappers;
 
-import com.mrdevv.portfolioBackend.dto.ResponseDesarrolladorDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.models.Desarrollador;
 
 import java.util.List;

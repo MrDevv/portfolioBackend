@@ -1,6 +1,6 @@
 package com.mrdevv.portfolioBackend.services;
 
-import com.mrdevv.portfolioBackend.dto.ResponseTecnologiaDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaDTO;
 
 import java.util.List;
 
