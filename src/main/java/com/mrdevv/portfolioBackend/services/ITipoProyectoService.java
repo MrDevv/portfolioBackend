@@ -1,8 +1,8 @@
 package com.mrdevv.portfolioBackend.services;
 
-import com.mrdevv.portfolioBackend.dto.CreateTipoProyecto;
-import com.mrdevv.portfolioBackend.dto.ResponseTipoProyectoDTO;
-import com.mrdevv.portfolioBackend.dto.UpdateTipoProyectoDTO;
+import com.mrdevv.portfolioBackend.dto.request.CreateTipoProyecto;
+import com.mrdevv.portfolioBackend.dto.response.ResponseTipoProyectoDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateTipoProyectoDTO;
 
 import java.util.List;
 

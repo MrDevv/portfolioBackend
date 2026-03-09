@@ -1,7 +1,7 @@
 package com.mrdevv.portfolioBackend.mappers;
 
-import com.mrdevv.portfolioBackend.dto.ResponseRolDTO;
-import com.mrdevv.portfolioBackend.dto.ResponseUsuarioDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseRolDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.models.Usuario;
 
 import java.util.List;

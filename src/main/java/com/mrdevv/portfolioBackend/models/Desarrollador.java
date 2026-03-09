@@ -42,7 +42,7 @@ public class Desarrollador {
 
     String puesto;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "desarrollador_tecnologias",
             joinColumns = @JoinColumn(name = "desarrollador_id"),

@@ -1,8 +1,8 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
-import com.mrdevv.portfolioBackend.dto.CreateTipoProyecto;
-import com.mrdevv.portfolioBackend.dto.ResponseTipoProyectoDTO;
-import com.mrdevv.portfolioBackend.dto.UpdateTipoProyectoDTO;
+import com.mrdevv.portfolioBackend.dto.request.CreateTipoProyecto;
+import com.mrdevv.portfolioBackend.dto.response.ResponseTipoProyectoDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateTipoProyectoDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.mappers.TipoProyectoMapper;
 import com.mrdevv.portfolioBackend.models.TipoProyecto;

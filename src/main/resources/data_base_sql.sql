@@ -25,7 +25,7 @@ CREATE TABLE usuarios (
     usuario_id NUMBER GENERATED ALWAYS AS IDENTITY,
     username VARCHAR2(20) NOT NULL,
     password VARCHAR2(255) NOT NULL,
-    estado NUMBER(1) NOT NULL,
+    estado NUMBER(1) DEFAULT 1 NOT NULL,
     desarrollador_id NUMBER NOT NULL,
     rol_id NUMBER NOT NULL,
     api_key CLOB,
@@ -63,4 +63,53 @@ CREATE TABLE desarrollador_tecnologias (
         FOREIGN KEY (desarrollador_id) REFERENCES desarrolladores(desarrollador_id),
     CONSTRAINT fk_dt_tecnologia
         FOREIGN KEY (tecnologia_id) REFERENCES tecnologias(tecnologia_id)
+);
+
+CREATE TABLE experiencias(
+    experiencia_id NUMBER GENERATED ALWAYS AS IDENTITY,
+    descripcion VARCHAR2(1000) NOT NULL,
+    titulo VARCHAR2(100) NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    nombre_empresa VARCHAR2(60) NOT NULL,
+    desarrollador_id NUMBER NOT NULL,
+    CONSTRAINT pk_experiencia
+        PRIMARY KEY (experiencia_id),
+    CONSTRAINT fk_experiencia_desarrollador
+        FOREIGN KEY (desarrollador_id) REFERENCES desarrolladores(desarrollador_id)
+);
+
+CREATE TABLE proyectos(
+    proyecto_id NUMBER GENERATED ALWAYS AS IDENTITY,
+    titulo VARCHAR2(200) NOT NULL,
+    descripcion VARCHAR2(4000) NOT NULL,
+    url_produccion VARCHAR2(1000) NULL,
+    url_repositorio VARCHAR2(1000) NOT NULL,
+    estado NUMBER(1) DEFAULT 1 NOT NULL,
+    experiencia_id NUMBER NOT NULL,
+    tipo_proyecto_id NUMBER NOT NULL,
+    CONSTRAINT pk_proyecto
+        PRIMARY KEY (proyecto_id),
+    CONSTRAINT fk_proyecto_experiencia
+        FOREIGN KEY (experiencia_id) REFERENCES experiencias(experiencia_id),
+    CONSTRAINT fk_proyecto_tipo_proyecto
+        FOREIGN KEY (tipo_proyecto_id) REFERENCES tipos_proyectos(tipo_proyecto_id)
+);
+
+CREATE TABLE etiquetas(
+    etiqueta_id NUMBER GENERATED ALWAYS AS IDENTITY,
+    descripcion VARCHAR2(20) NOT NULL,
+    CONSTRAINT pk_etiqueta
+        PRIMARY KEY (etiqueta_id)
+);
+
+CREATE TABLE proyecto_etiquestas(
+    proyecto_id NUMBER NOT NULL,
+    etiqueta_id NUMBER NOT NULL,
+    CONSTRAINT pk_proyecto_etiqueta
+        PRIMARY KEY (proyecto_id, etiqueta_id),
+    CONSTRAINT fk_pe_proyecto
+        FOREIGN KEY (proyecto_id) REFERENCES proyectos(proyecto_id),
+    CONSTRAINT fk_pe_etiqueta
+        FOREIGN KEY (etiqueta_id) REFERENCES etiquetas(etiqueta_id)
 );

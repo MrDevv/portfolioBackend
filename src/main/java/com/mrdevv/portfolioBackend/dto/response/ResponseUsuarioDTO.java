@@ -1,7 +1,6 @@
-package com.mrdevv.portfolioBackend.dto;
+package com.mrdevv.portfolioBackend.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Value;
 
 public record ResponseUsuarioDTO(
         @JsonProperty("usuario_id")

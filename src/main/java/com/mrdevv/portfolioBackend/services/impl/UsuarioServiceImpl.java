@@ -1,8 +1,8 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
-import com.mrdevv.portfolioBackend.dto.ResponseApiKeyUsuario;
-import com.mrdevv.portfolioBackend.dto.ResponseUsuarioDTO;
-import com.mrdevv.portfolioBackend.dto.UpdateRolUsuarioDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
+import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.mappers.UsuarioMapper;
 import com.mrdevv.portfolioBackend.models.Rol;
@@ -11,7 +11,6 @@ import com.mrdevv.portfolioBackend.repositories.UsuarioRepository;
 import com.mrdevv.portfolioBackend.services.IUsuarioService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.error.Error;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,4 +1,4 @@
-package com.mrdevv.portfolioBackend.dto;
+package com.mrdevv.portfolioBackend.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
