@@ -50,4 +50,7 @@ public class Desarrollador {
     )
     List<Tecnologia> tecnologias;
 
+    @OneToOne(mappedBy = "desarrollador")
+    Usuario usuario;
+
 }

@@ -42,6 +42,6 @@ public class Proyecto {
             joinColumns = @JoinColumn(name = "proyecto_id"),
             inverseJoinColumns = @JoinColumn(name = "etiqueta_id")
     )
-    List<Etiqueta> etiqueta;
+    List<Etiqueta> etiquetas;
 
 }

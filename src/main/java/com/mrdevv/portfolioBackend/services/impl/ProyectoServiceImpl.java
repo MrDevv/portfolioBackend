@@ -1,9 +1,14 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
-import com.mrdevv.portfolioBackend.models.Proyecto;
+import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
+import com.mrdevv.portfolioBackend.dto.projection.ProyectoProjectionDTO;
+import com.mrdevv.portfolioBackend.mappers.ProyectoMapper;
 import com.mrdevv.portfolioBackend.repositories.ProyectoRepository;
 import com.mrdevv.portfolioBackend.services.IProyectoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +22,12 @@ public class ProyectoServiceImpl implements IProyectoService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Proyecto> obtenerProyectos() {
-        List<Proyecto> proyectos = proyectoRepository.findAll();
-        proyectos.forEach(proyecto -> {
-            System.out.println(proyecto);
-        });
-        return proyectos;
+    public ResponseWithPageable obtenerProyectos(Long usuarioId, Pageable pageable) {
+        Page<ProyectoProjectionDTO> proyectosProjection = proyectoRepository.obtenerProyectos(
+                null,
+                usuarioId,
+                pageable);
+
+        return ProyectoMapper.toResponseProyectoListDTO(proyectosProjection);
     }
 }

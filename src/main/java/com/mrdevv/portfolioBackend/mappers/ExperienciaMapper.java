@@ -1,5 +1,7 @@
 package com.mrdevv.portfolioBackend.mappers;
 
+import com.mrdevv.portfolioBackend.dto.projection.ExperienciaProjectionSimpleDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaSimpleDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciasDTO;
 import com.mrdevv.portfolioBackend.dto.projection.ExperienciaProjectionDTO;
 
@@ -20,6 +22,13 @@ public class ExperienciaMapper {
                     experienciaProjection.nombres().concat(" ").concat(experienciaProjection.apellidos())
             );
         }).collect(Collectors.toList());
+    }
+
+    public static ResponseExperienciaSimpleDTO toResponseExperienciaSimpleDTO(ExperienciaProjectionSimpleDTO experienciaProjectionDTO){
+        return new ResponseExperienciaSimpleDTO(
+                experienciaProjectionDTO.getExperienciaId(),
+                experienciaProjectionDTO.getDescripcion()
+        );
     }
 
 }

@@ -28,7 +28,7 @@ CREATE TABLE usuarios (
     estado NUMBER(1) DEFAULT 1 NOT NULL,
     desarrollador_id NUMBER NOT NULL,
     rol_id NUMBER NOT NULL,
-    api_key CLOB,
+    api_key VARCHAR2(100),
     CONSTRAINT pk_usuarios
         PRIMARY KEY (usuario_id),
     CONSTRAINT fk_usuario_desarrollador
