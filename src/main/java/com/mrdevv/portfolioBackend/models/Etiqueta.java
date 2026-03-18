@@ -3,7 +3,6 @@ package com.mrdevv.portfolioBackend.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-@ToString
 @Builder
 @Getter
 @AllArgsConstructor
