@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -34,6 +35,9 @@ public class GlobalExceptionHandler {
         }else if (exception instanceof HttpMessageNotReadableException){
             Integer code = HttpStatus.BAD_REQUEST.value();
             return ResponseHandlerError.error(code, request, ErrorMessage.INVALID_VALUE_ROL_ENUM_FRONT.getMessage(), ErrorMessage.INVALID_VALUE_ROL_ENUM_BACKEND.getMessage(), fecha);
+        }else if(exception instanceof BadCredentialsException){
+            Integer code = HttpStatus.UNAUTHORIZED.value();
+            return ResponseHandlerError.error(code, request, ErrorMessage.BAD_CREDENTIALS_LOGIN_FRONT.getMessage(), ErrorMessage.BAD_CREDENTIALS_LOGIN_BACKEND.getMessage(), fecha);
         }
 
         RuntimeException runtimeException = (RuntimeException) exception;
