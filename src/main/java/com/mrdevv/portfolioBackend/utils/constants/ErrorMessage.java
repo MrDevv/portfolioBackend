@@ -13,7 +13,9 @@ public enum ErrorMessage {
     NOT_FOUND_TIPO_PROYECTO_FRONT("No se encontró el tipo proyecto con id '%s'"),
     NOT_FOUND_TIPO_PROYECTO_BACKEND("No se encontró el OBJECT 'TIPOPROYECTO' con ID '%s' en la base de datos."),
     NOT_FOUND_TECNOLOGIA_FRONT("No se encontró la tecnología con id '%s'"),
-    NOT_FOUND_TECNOLOGIA_BACKEND("No se encontró el OBJECT 'TECNOLOGIA' con ID '%s' en la base de datos.");
+    NOT_FOUND_TECNOLOGIA_BACKEND("No se encontró el OBJECT 'TECNOLOGIA' con ID '%s' en la base de datos."),
+    BAD_CREDENTIALS_LOGIN_FRONT("Usuario o contraseña incorrectos, revise sus datos"),
+    BAD_CREDENTIALS_LOGIN_BACKEND("Credenciales incorrectas");
 
 
     private String message;

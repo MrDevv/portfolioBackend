@@ -2,6 +2,7 @@ package com.mrdevv.portfolioBackend.mappers;
 
 import com.mrdevv.portfolioBackend.dto.response.ResponseRolDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
 import com.mrdevv.portfolioBackend.models.Usuario;
 
 import java.util.List;
@@ -39,6 +40,19 @@ public class UsuarioMapper {
                 usuario.getEstado() ? "activo" : "inactivo",
                 usuario.getApiKey()
                 );
+    }
+
+    public static ResponseUsuarioLoginDTO toResponseUsuarioLogin(Usuario usuario, String jwt){
+        return new ResponseUsuarioLoginDTO(
+                usuario.getUsuarioId(),
+                usuario.getUsername(),
+                usuario.getDesarrollador().getNombres(),
+                usuario.getDesarrollador().getApellidos(),
+                usuario.getDesarrollador().getPuesto(),
+                RolMapper.toResponseRolDTO(usuario.getRol()),
+                usuario.getEstado() ? "activo" : "inactivo",
+                jwt
+        );
     }
 
 }
