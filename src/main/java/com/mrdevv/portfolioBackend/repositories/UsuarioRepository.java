@@ -34,4 +34,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @EntityGraph(attributePaths = {"desarrollador", "rol"})
     Optional<Usuario> findByUsername(String username);
+
+    boolean existsByApiKey(String apiKey);
 }
