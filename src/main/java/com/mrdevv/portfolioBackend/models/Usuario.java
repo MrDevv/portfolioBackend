@@ -28,7 +28,7 @@ public class Usuario implements UserDetails {
 
     Boolean estado;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "desarrollador_id")
     Desarrollador desarrollador;
 

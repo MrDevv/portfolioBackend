@@ -23,7 +23,6 @@ public record ResponseDesarrolladorDTO(
         String prefijoTelefono,
         String telefono,
         String biografia,
-        String puesto,
-        List<ResponseTecnologiaSimpleDTO> tecnologias
+        String puesto
 ) {
 }
