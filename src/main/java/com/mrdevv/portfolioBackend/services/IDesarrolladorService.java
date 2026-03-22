@@ -10,4 +10,5 @@ public interface IDesarrolladorService {
 
     ResponseDesarrolladorDTO obtenerDesarrolladorById(Long desarrolladorId);
 
+    ResponseDesarrolladorDTO obtenerDatosDesarrollador();
 }

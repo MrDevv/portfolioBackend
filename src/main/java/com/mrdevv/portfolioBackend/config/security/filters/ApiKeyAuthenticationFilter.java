@@ -23,7 +23,7 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return !request.getRequestURI().contains("/public");
+        return !request.getRequestURI().contains("/me");
     }
 
     @Override

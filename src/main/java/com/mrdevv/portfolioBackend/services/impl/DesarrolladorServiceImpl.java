@@ -8,6 +8,8 @@ import com.mrdevv.portfolioBackend.repositories.DesarrolladorRepository;
 import com.mrdevv.portfolioBackend.services.IDesarrolladorService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,15 @@ public class DesarrolladorServiceImpl implements IDesarrolladorService {
             throw new ObjectNotFoundException(ErrorMessage.NOT_FOUND_DESARROLLADOR_FRONT.getMessage(desarrolladorId),
                     ErrorMessage.NOT_FOUND_DESARROLLADOR_BACKEND.getMessage(desarrolladorId));
         });
+        return DesarrolladorMapper.toDesarrolladorDTO(desarrollador);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ResponseDesarrolladorDTO obtenerDatosDesarrollador() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String apiKey = authentication.getPrincipal().toString();
+        Desarrollador desarrollador = desarrolladorRepository.obtenerDesarrolladorPorApiKey(apiKey);
         return DesarrolladorMapper.toDesarrolladorDTO(desarrollador);
     }
 }

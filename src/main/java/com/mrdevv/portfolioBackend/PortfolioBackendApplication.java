@@ -13,11 +13,11 @@ public class PortfolioBackendApplication {
 		SpringApplication.run(PortfolioBackendApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner createPasswordCommand(PasswordEncoder passwordEncoder){
-		return args -> {
-			System.out.println(passwordEncoder.encode("12345"));
-		};
-	}
+//	@Bean
+//	CommandLineRunner createPasswordCommand(PasswordEncoder passwordEncoder){
+//		return args -> {
+//			System.out.println(passwordEncoder.encode("12345"));
+//		};
+//	}
 
 }

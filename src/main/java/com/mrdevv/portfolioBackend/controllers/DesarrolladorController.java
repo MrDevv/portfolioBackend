@@ -32,4 +32,10 @@ public class DesarrolladorController {
         return ResponseHandler.ok(TipoResponse.GET, "se obtuvieron los datos del desarrollador correctamente", desarrolladorDTO);
     }
 
+    @GetMapping("me/datos")
+    public ResponseEntity obtenerDatos(){
+        ResponseDesarrolladorDTO desarrolladorDTO = desarrolladorService.obtenerDatosDesarrollador();
+        return ResponseHandler.ok(TipoResponse.GET, "Se obtuvo los datos del desarrollador correctamente", desarrolladorDTO);
+    }
+
 }
