@@ -2,11 +2,12 @@ package com.mrdevv.portfolioBackend.controllers;
 
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.response.ResponseDesarrolladorDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciasDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IDesarrolladorService;
 import com.mrdevv.portfolioBackend.services.IExperienciaService;
 import com.mrdevv.portfolioBackend.services.IProyectoService;
+import com.mrdevv.portfolioBackend.services.ITecnologiaService;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ public class DesarrolladorController {
     private final IDesarrolladorService desarrolladorService;
     private final IExperienciaService experienciaService;
     private final IProyectoService proyectoService;
+    private final ITecnologiaService tecnologiaService;
 
     @GetMapping
     public ResponseEntity<Object> obtenerDesarrolladores(){
@@ -57,6 +59,12 @@ public class DesarrolladorController {
         Pageable pageable = PageRequest.of(page, size);
         ResponseWithPageable proyectosDTO = proyectoService.obtenerProyectos(null, pageable);
         return ResponseHandler.ok(TipoResponse.GETALL, "Se obtuvieron los proyectos correctamente", proyectosDTO);
+    }
+
+    @GetMapping("me/tecnologias")
+    public ResponseEntity obtenerTecnologiasDesarrollador(){
+        List<ResponseTecnologiaDTO> tecnologias = tecnologiaService.obtenerTecnologiasDesarrollador();
+        return ResponseHandler.ok(TipoResponse.GETALL, "Se obtuvieron las tecnologías correctamente", tecnologias);
     }
 
 }
