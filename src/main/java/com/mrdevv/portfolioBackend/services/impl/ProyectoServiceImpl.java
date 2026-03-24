@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +25,11 @@ public class ProyectoServiceImpl implements IProyectoService {
     @Transactional(readOnly = true)
     @Override
     public ResponseWithPageable obtenerProyectos(Long usuarioId, Pageable pageable) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        String apiKey = principal != null ? principal.toString() : null;
         Page<ProyectoProjectionDTO> proyectosProjection = proyectoRepository.obtenerProyectos(
-                null,
+                apiKey,
                 usuarioId,
                 pageable);
 
