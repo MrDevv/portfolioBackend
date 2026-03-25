@@ -10,4 +10,6 @@ public interface ITecnologiaService {
 
     ResponseTecnologiaDTO obtenerTecnologiaPorId(Long tipoProyectoId);
 
+    List<ResponseTecnologiaDTO> obtenerTecnologiasDesarrollador();
+
 }

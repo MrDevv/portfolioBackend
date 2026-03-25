@@ -8,9 +8,12 @@ import com.mrdevv.portfolioBackend.repositories.TecnologiaRepository;
 import com.mrdevv.portfolioBackend.services.ITecnologiaService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ public class TecnologiaServiceImpl implements ITecnologiaService {
     @Transactional(readOnly = true)
     @Override
     public List<ResponseTecnologiaDTO> obtenerTecnologias() {
-        List<Tecnologia> tecnologias = tecnologiaRepository.findAll();
+        List<Tecnologia> tecnologias = tecnologiaRepository.obtenerTecnologias(null);
         return TecnologiaMapper.toResponseTecnologiaDTOList(tecnologias);
     }
 
@@ -37,5 +40,14 @@ public class TecnologiaServiceImpl implements ITecnologiaService {
         });
 
         return TecnologiaMapper.toResponseTecnologiaDTO(tecnologia);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ResponseTecnologiaDTO> obtenerTecnologiasDesarrollador() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String apiKey = authentication.getPrincipal().toString();
+        List<Tecnologia> tecnologias = tecnologiaRepository.obtenerTecnologias(apiKey);
+        return TecnologiaMapper.toResponseTecnologiaDTOList(tecnologias);
     }
 }
