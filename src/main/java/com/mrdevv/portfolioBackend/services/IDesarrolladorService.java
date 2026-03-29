@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.services;
 
+import com.mrdevv.portfolioBackend.dto.request.UpdateDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseDesarrolladorDTO;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface IDesarrolladorService {
     ResponseDesarrolladorDTO obtenerDesarrolladorById(Long desarrolladorId);
 
     ResponseDesarrolladorDTO obtenerDatosDesarrollador();
+
+    ResponseDesarrolladorDTO actualizarDesarrollador(Long desarrolladorId, UpdateDesarrolladorDTO updateDesarrolladorDTO);
 }

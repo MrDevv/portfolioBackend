@@ -1,6 +1,7 @@
 package com.mrdevv.portfolioBackend.controllers;
 
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
+import com.mrdevv.portfolioBackend.dto.request.UpdateDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
@@ -37,6 +38,12 @@ public class DesarrolladorController {
     public ResponseEntity<Object> obtenerDesarrolladorPorId(@PathVariable(name = "id") Long desarrolladorId){
         ResponseDesarrolladorDTO desarrolladorDTO = desarrolladorService.obtenerDesarrolladorById(desarrolladorId);
         return ResponseHandler.ok(TipoResponse.GET, "se obtuvieron los datos del desarrollador correctamente", desarrolladorDTO);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> actualizarDesarrollador(@PathVariable(name = "id") Long desarrolladorId, @RequestBody UpdateDesarrolladorDTO updateDesarrolladorDTO){
+        ResponseDesarrolladorDTO desarrolladorDTO = desarrolladorService.actualizarDesarrollador(desarrolladorId, updateDesarrolladorDTO);
+        return ResponseHandler.ok(TipoResponse.UPDATE, "se actualizó el desarrollador correctamente", desarrolladorDTO);
     }
 
     @GetMapping("me/datos")

@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.mappers;
 
+import com.mrdevv.portfolioBackend.dto.request.UpdateDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.models.Desarrollador;
 
@@ -21,6 +22,18 @@ public class DesarrolladorMapper {
                 desarrollador.getBiografia(),
                 desarrollador.getPuesto()
         );
+    }
+
+    public static void updateDesarrollador(Desarrollador desarrollador, UpdateDesarrolladorDTO updateDesarrolladorDTO){
+        desarrollador.setNombres(updateDesarrolladorDTO.nombres());
+        desarrollador.setApellidos(updateDesarrolladorDTO.apellidos());
+        desarrollador.setCorreo(updateDesarrolladorDTO.correo());
+        desarrollador.setGithubUrl(updateDesarrolladorDTO.githubUrl());
+        desarrollador.setCvUrl(updateDesarrolladorDTO.cvUrl());
+        desarrollador.setPrefijoTelefono(updateDesarrolladorDTO.prefijoTelefono());
+        desarrollador.setTelefono(updateDesarrolladorDTO.telefono());
+        desarrollador.setBiografia(updateDesarrolladorDTO.biografia());
+        desarrollador.setPuesto(updateDesarrolladorDTO.puesto());
     }
 
     public static List<ResponseDesarrolladorDTO> toDesarrolladorDTOList(List<Desarrollador> desarrolladores){
