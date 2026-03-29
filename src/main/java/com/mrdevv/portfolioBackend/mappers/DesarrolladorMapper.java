@@ -17,6 +17,7 @@ public class DesarrolladorMapper {
                 desarrollador.getGithubUrl(),
                 desarrollador.getLinkedinUrl(),
                 desarrollador.getCvUrl(),
+                desarrollador.getLogoUrl(),
                 desarrollador.getPrefijoTelefono(),
                 desarrollador.getTelefono(),
                 desarrollador.getBiografia(),
@@ -30,6 +31,7 @@ public class DesarrolladorMapper {
         desarrollador.setCorreo(updateDesarrolladorDTO.correo());
         desarrollador.setGithubUrl(updateDesarrolladorDTO.githubUrl());
         desarrollador.setCvUrl(updateDesarrolladorDTO.cvUrl());
+        desarrollador.setLogoUrl(updateDesarrolladorDTO.logoUrl());
         desarrollador.setPrefijoTelefono(updateDesarrolladorDTO.prefijoTelefono());
         desarrollador.setTelefono(updateDesarrolladorDTO.telefono());
         desarrollador.setBiografia(updateDesarrolladorDTO.biografia());
@@ -45,6 +47,7 @@ public class DesarrolladorMapper {
                     desarrollador.getGithubUrl(),
                     desarrollador.getLinkedinUrl(),
                     desarrollador.getCvUrl(),
+                    desarrollador.getLogoUrl(),
                     desarrollador.getPrefijoTelefono(),
                     desarrollador.getTelefono(),
                     desarrollador.getBiografia(),

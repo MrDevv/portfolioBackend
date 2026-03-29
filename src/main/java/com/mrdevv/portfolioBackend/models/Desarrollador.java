@@ -33,6 +33,9 @@ public class Desarrollador {
     @Column(name = "cv_url")
     String cvUrl;
 
+    @Column(name = "logo_url")
+    String logoUrl;
+
     @Column(name = "prefijo_telefono")
     String prefijoTelefono;
 

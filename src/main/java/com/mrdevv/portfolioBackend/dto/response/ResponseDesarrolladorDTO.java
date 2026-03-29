@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 
 @JsonPropertyOrder({
-        "desarrollador_id", "nombres", "apellidos", "correo", "github_url", "linkedin_url", "cv_url", "prefijo_telefono", "telefono", "biografia", "puesto"})
+        "desarrollador_id", "nombres", "apellidos", "correo", "github_url", "linkedin_url", "cv_url", "logo_url", "prefijo_telefono", "telefono", "biografia", "puesto"})
 public record ResponseDesarrolladorDTO(
         @JsonProperty("desarrollador_id")
         Long desarrolladorId,
@@ -19,6 +19,8 @@ public record ResponseDesarrolladorDTO(
         String linkedinUrl,
         @JsonProperty("cv_url")
         String cvUrl,
+        @JsonProperty("logo_url")
+        String logoUrl,
         @JsonProperty("prefijo_telefono")
         String prefijoTelefono,
         String telefono,

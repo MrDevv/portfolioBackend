@@ -12,6 +12,8 @@ public record UpdateDesarrolladorDTO(
         String linkedinUrl,
         @JsonProperty("cv_url")
         String cvUrl,
+        @JsonProperty("logo_url")
+        String logoUrl,
         @JsonProperty("prefijo_telefono")
         String prefijoTelefono,
         String telefono,

@@ -6,6 +6,7 @@ CREATE TABLE desarrolladores (
     github_url CLOB NOT NULL,
     linkedin_url CLOB NOT NULL,
     cv_url CLOB NOT NULL,
+    logo_url CLOB NOT NULL,
     prefijo_telefono VARCHAR2(10) NOT NULL,
     telefono VARCHAR2(20) NOT NULL,
     biografia CLOB NOT NULL,
@@ -47,6 +48,7 @@ CREATE TABLE tipos_proyectos (
 CREATE TABLE tecnologias (
     tecnologia_id NUMBER GENERATED ALWAYS AS IDENTITY,
     descripcion VARCHAR2(100) NOT NULL,
+    logo_url CLOB NOT NULL,
     tipo_tecnologia_id NUMBER NOT NULL,
     CONSTRAINT pk_tecnologias
         PRIMARY KEY (tecnologia_id),
@@ -85,6 +87,7 @@ CREATE TABLE proyectos(
     descripcion VARCHAR2(4000) NOT NULL,
     url_produccion VARCHAR2(1000) NULL,
     url_repositorio VARCHAR2(1000) NOT NULL,
+    imagen_presentacion_url CLOB NOT NULL,
     estado NUMBER(1) DEFAULT 1 NOT NULL,
     experiencia_id NUMBER NOT NULL,
     tipo_proyecto_id NUMBER NOT NULL,
