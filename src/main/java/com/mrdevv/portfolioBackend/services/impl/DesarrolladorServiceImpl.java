@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
+import com.mrdevv.portfolioBackend.dto.request.UpdateDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.mappers.DesarrolladorMapper;
@@ -31,10 +32,7 @@ public class DesarrolladorServiceImpl implements IDesarrolladorService {
     @Transactional(readOnly = true)
     @Override
     public ResponseDesarrolladorDTO obtenerDesarrolladorById(Long desarrolladorId) {
-        Desarrollador desarrollador = desarrolladorRepository.findById(desarrolladorId).orElseThrow(() -> {
-            throw new ObjectNotFoundException(ErrorMessage.NOT_FOUND_DESARROLLADOR_FRONT.getMessage(desarrolladorId),
-                    ErrorMessage.NOT_FOUND_DESARROLLADOR_BACKEND.getMessage(desarrolladorId));
-        });
+        Desarrollador desarrollador = buscarDesarrolladorPorId(desarrolladorId);
         return DesarrolladorMapper.toDesarrolladorDTO(desarrollador);
     }
 
@@ -45,5 +43,20 @@ public class DesarrolladorServiceImpl implements IDesarrolladorService {
         String apiKey = authentication.getPrincipal().toString();
         Desarrollador desarrollador = desarrolladorRepository.obtenerDesarrolladorPorApiKey(apiKey);
         return DesarrolladorMapper.toDesarrolladorDTO(desarrollador);
+    }
+
+    @Transactional
+    @Override
+    public ResponseDesarrolladorDTO actualizarDesarrollador(Long desarrolladorId, UpdateDesarrolladorDTO updateDesarrolladorDTO) {
+        Desarrollador desarrollador = buscarDesarrolladorPorId(desarrolladorId);
+        DesarrolladorMapper.updateDesarrollador(desarrollador, updateDesarrolladorDTO);
+        return DesarrolladorMapper.toDesarrolladorDTO(desarrollador);
+    }
+
+    private Desarrollador buscarDesarrolladorPorId(Long desarrolladorId){
+        return desarrolladorRepository.findById(desarrolladorId).orElseThrow(() -> {
+            throw new ObjectNotFoundException(ErrorMessage.NOT_FOUND_DESARROLLADOR_FRONT.getMessage(desarrolladorId),
+                    ErrorMessage.NOT_FOUND_DESARROLLADOR_BACKEND.getMessage(desarrolladorId));
+        });
     }
 }
