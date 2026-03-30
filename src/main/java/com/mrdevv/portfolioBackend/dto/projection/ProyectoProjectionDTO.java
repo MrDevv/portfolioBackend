@@ -14,6 +14,8 @@ public interface ProyectoProjectionDTO {
 
     String getUrlRepositorio();
 
+    String getUrlImagenPresentacion();
+
     Boolean getEstado();
 
     ExperienciaProjectionSimpleDTO getExperiencia();

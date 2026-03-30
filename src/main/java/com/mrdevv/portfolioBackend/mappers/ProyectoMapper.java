@@ -36,6 +36,7 @@ public class ProyectoMapper {
                     proyecto.getDescripcion(),
                     proyecto.getUrlProduccion(),
                     proyecto.getUrlRepositorio(),
+                    proyecto.getUrlImagenPresentacion(),
                     proyecto.getEstado() ? "activo" : "inactivo",
                     ExperienciaMapper.toResponseExperienciaSimpleDTO(proyecto.getExperiencia()),
                     tipoProyectoDTO,

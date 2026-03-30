@@ -17,8 +17,7 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
 
     @EntityGraph(attributePaths = {
             "experiencia",
-            "tipoProyecto",
-            "etiquetas"
+            "tipoProyecto"
     })
     @Query(value = """
         select p

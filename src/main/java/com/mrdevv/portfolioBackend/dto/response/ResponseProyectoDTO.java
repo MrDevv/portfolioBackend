@@ -13,6 +13,8 @@ public record ResponseProyectoDTO(
         String urlProduccion,
         @JsonProperty("url_repositorio")
         String urlRepositorio,
+        @JsonProperty("url_imagen_presentacion")
+        String urlImagenPresentacion,
         String estado,
         @JsonProperty("experiencia")
         ResponseExperienciaSimpleDTO experienciaSimpleDTO,

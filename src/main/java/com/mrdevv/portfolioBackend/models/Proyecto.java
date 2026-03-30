@@ -2,6 +2,7 @@ package com.mrdevv.portfolioBackend.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class Proyecto {
 
     String urlRepositorio;
 
+    String urlImagenPresentacion;
+
     Boolean estado;
 
     @ManyToOne
@@ -37,6 +40,7 @@ public class Proyecto {
     TipoProyecto tipoProyecto;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @BatchSize(size = 10)
     @JoinTable(
             name = "proyecto_etiquetas",
             joinColumns = @JoinColumn(name = "proyecto_id"),
