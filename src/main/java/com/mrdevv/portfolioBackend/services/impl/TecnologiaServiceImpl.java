@@ -1,6 +1,7 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
 import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaSimpleDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.mappers.TecnologiaMapper;
 import com.mrdevv.portfolioBackend.models.Tecnologia;
@@ -44,10 +45,10 @@ public class TecnologiaServiceImpl implements ITecnologiaService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ResponseTecnologiaDTO> obtenerTecnologiasDesarrollador() {
+    public List<ResponseTecnologiaSimpleDTO> obtenerTecnologiasDesarrollador() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String apiKey = authentication.getPrincipal().toString();
         List<Tecnologia> tecnologias = tecnologiaRepository.obtenerTecnologias(apiKey);
-        return TecnologiaMapper.toResponseTecnologiaDTOList(tecnologias);
+        return TecnologiaMapper.toResponseTecnologiaSimpleDTOList(tecnologias);
     }
 }

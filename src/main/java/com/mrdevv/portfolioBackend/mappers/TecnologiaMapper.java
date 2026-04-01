@@ -14,6 +14,7 @@ public class TecnologiaMapper {
             return new ResponseTecnologiaDTO(
                     tecnologia.getTecnologiaId(),
                     tecnologia.getDescripcion(),
+                    tecnologia.getLogoUrl(),
                     TipoProyectoMapper.toResponseTipoProyectoDTO(tecnologia.getTipoProyecto()));
         }).collect(Collectors.toList());
     }
@@ -22,14 +23,15 @@ public class TecnologiaMapper {
         return new ResponseTecnologiaDTO(
                 tecnologia.getTecnologiaId(),
                 tecnologia.getDescripcion(),
+                tecnologia.getLogoUrl(),
                 TipoProyectoMapper.toResponseTipoProyectoDTO(tecnologia.getTipoProyecto()));
     }
 
     public static List<ResponseTecnologiaSimpleDTO> toResponseTecnologiaSimpleDTOList(List<Tecnologia> tecnologias){
         return tecnologias.stream().map(tecnologia -> {
             return new ResponseTecnologiaSimpleDTO(
-                    tecnologia.getTecnologiaId(),
                     tecnologia.getDescripcion(),
+                    tecnologia.getLogoUrl(),
                     tecnologia.getTipoProyecto().getDescripcion());
         }).collect(Collectors.toList());
     }

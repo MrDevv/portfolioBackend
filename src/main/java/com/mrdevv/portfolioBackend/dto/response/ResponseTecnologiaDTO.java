@@ -8,6 +8,9 @@ public record ResponseTecnologiaDTO(
 
         String descripcion,
 
+        @JsonProperty("logo_url")
+        String logoUrl,
+
         @JsonProperty("tipo_tecnologia")
         ResponseTipoProyectoDTO tipoProyecto
 ) {

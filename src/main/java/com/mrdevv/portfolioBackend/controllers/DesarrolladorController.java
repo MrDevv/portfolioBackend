@@ -4,6 +4,7 @@ import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.request.UpdateDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaSimpleDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IDesarrolladorService;
 import com.mrdevv.portfolioBackend.services.IExperienciaService;
@@ -70,7 +71,7 @@ public class DesarrolladorController {
 
     @GetMapping("me/tecnologias")
     public ResponseEntity obtenerTecnologiasDesarrollador(){
-        List<ResponseTecnologiaDTO> tecnologias = tecnologiaService.obtenerTecnologiasDesarrollador();
+        List<ResponseTecnologiaSimpleDTO> tecnologias = tecnologiaService.obtenerTecnologiasDesarrollador();
         return ResponseHandler.ok(TipoResponse.GETALL, "Se obtuvieron las tecnologías correctamente", tecnologias);
     }
 

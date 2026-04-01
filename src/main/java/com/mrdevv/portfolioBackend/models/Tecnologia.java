@@ -21,6 +21,9 @@ public class Tecnologia {
 
     String descripcion;
 
+    @Column(name = "logo_url")
+    String logoUrl;
+
     @ManyToOne
     @JoinColumn(name = "tipo_tecnologia_id")
     TipoProyecto tipoProyecto;
