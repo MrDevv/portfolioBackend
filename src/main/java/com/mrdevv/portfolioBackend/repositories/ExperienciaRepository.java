@@ -19,6 +19,7 @@ public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> 
             "e.fechaInicio, " +
             "e.fechaFin, " +
             "e.nombreEmpresa, " +
+            "e.puesto, " +
             "d.nombres, " +
             "d.apellidos " +
             "from Experiencia e join e.desarrollador d " +

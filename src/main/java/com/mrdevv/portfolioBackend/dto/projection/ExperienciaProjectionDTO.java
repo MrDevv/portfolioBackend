@@ -9,6 +9,7 @@ public record ExperienciaProjectionDTO(
         LocalDate fechaInicio,
         LocalDate fechaFin,
         String nombreEmpresa,
+        String puesto,
         String nombres,
         String apellidos
 ) {

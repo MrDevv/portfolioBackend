@@ -24,6 +24,7 @@ public class ExperienciaMapper {
                     experienciaProjection.fechaInicio(),
                     experienciaProjection.fechaFin(),
                     experienciaProjection.nombreEmpresa(),
+                    experienciaProjection.puesto(),
                     experienciaProjection.nombres().concat(" ").concat(experienciaProjection.apellidos())
             );
         }).collect(Collectors.toList());

@@ -30,6 +30,8 @@ public class Experiencia {
     @Column(name = "nombre_empresa")
     String nombreEmpresa;
 
+    String puesto;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "desarrollador_id")
     Desarrollador desarrollador;

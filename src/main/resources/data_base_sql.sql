@@ -74,6 +74,7 @@ CREATE TABLE experiencias(
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     nombre_empresa VARCHAR2(60) NOT NULL,
+    puesto VARCHAR2(60) NOT NULL,
     desarrollador_id NUMBER NOT NULL,
     CONSTRAINT pk_experiencia
         PRIMARY KEY (experiencia_id),

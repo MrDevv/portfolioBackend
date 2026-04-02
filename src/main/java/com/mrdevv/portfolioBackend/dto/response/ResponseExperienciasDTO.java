@@ -15,6 +15,7 @@ public record ResponseExperienciasDTO(
         LocalDate fechaFin,
         @JsonProperty("nombre_empresa")
         String nombreEmpresa,
+        String puesto,
         String desarrollador
 ) {
 }
