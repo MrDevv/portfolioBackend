@@ -107,7 +107,7 @@ CREATE TABLE etiquetas(
         PRIMARY KEY (etiqueta_id)
 );
 
-CREATE TABLE proyecto_etiquestas(
+CREATE TABLE proyecto_etiquetas(
     proyecto_id NUMBER NOT NULL,
     etiqueta_id NUMBER NOT NULL,
     CONSTRAINT pk_proyecto_etiqueta
