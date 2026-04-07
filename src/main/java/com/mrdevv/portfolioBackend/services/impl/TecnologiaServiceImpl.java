@@ -26,7 +26,7 @@ public class TecnologiaServiceImpl implements ITecnologiaService {
     @Transactional(readOnly = true)
     @Override
     public List<ResponseTecnologiaDTO> obtenerTecnologias() {
-        List<Tecnologia> tecnologias = tecnologiaRepository.obtenerTecnologias(null);
+        List<Tecnologia> tecnologias = tecnologiaRepository.findAll();
         return TecnologiaMapper.toResponseTecnologiaDTOList(tecnologias);
     }
 

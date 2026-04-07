@@ -3,14 +3,14 @@ CREATE TABLE desarrolladores (
     nombres VARCHAR2(100) NOT NULL,
     apellidos VARCHAR2(100) NOT NULL,
     correo VARCHAR2(200) NOT NULL UNIQUE,
-    github_url CLOB NOT NULL,
-    linkedin_url CLOB NOT NULL,
-    cv_url CLOB NOT NULL,
-    logo_url CLOB NOT NULL,
-    prefijo_telefono VARCHAR2(10) NOT NULL,
-    telefono VARCHAR2(20) NOT NULL,
-    biografia CLOB NOT NULL,
-    puesto VARCHAR2(100) NOT NULL,
+    github_url CLOB,
+    linkedin_url CLOB,
+    cv_url CLOB,
+    logo_url CLOB,
+    prefijo_telefono VARCHAR2(10),
+    telefono VARCHAR2(20),
+    biografia CLOB,
+    puesto VARCHAR2(100),
     CONSTRAINT pk_desarrolladores
         PRIMARY KEY (desarrollador_id)
 );
