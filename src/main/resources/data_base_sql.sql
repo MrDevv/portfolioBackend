@@ -72,7 +72,7 @@ CREATE TABLE experiencias(
     descripcion VARCHAR2(1000) NOT NULL,
     titulo VARCHAR2(100) NOT NULL,
     fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
+    fecha_fin DATE,
     nombre_empresa VARCHAR2(60) NOT NULL,
     puesto VARCHAR2(60) NOT NULL,
     desarrollador_id NUMBER NOT NULL,
