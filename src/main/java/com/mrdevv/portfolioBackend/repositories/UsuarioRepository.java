@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    @Query(value = "select u.usuarioId, u.username, " +
+    @Query(value = "select u.usuarioId, u.email, " +
             "d.nombres, d.apellidos, d.puesto, " +
             "r.rolId, r.descripcion, u.estado, " +
             "u.apiKey " +
@@ -33,7 +33,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     void crearApiKey(@Param("usuarioId") Long usuarioId, @Param("apiKey") String apiKey);
 
     @EntityGraph(attributePaths = {"desarrollador", "rol"})
-    Optional<Usuario> findByUsername(String username);
+    Optional<Usuario> findByEmail(String email);
 
-    boolean existsByApiKey(String apiKey);
+    @EntityGraph(attributePaths = {})
+    Optional<Usuario> findByApiKey(String apiKey);
 }

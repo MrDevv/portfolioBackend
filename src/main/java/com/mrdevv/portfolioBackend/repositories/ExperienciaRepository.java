@@ -23,8 +23,8 @@ public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> 
             "d.nombres, " +
             "d.apellidos " +
             "from Experiencia e join e.desarrollador d " +
-            "join d.usuario u where (:apiKey is null or u.apiKey = :apiKey) order by e.fechaInicio desc"
+            "join d.usuario u where (:usuario_id is null or u.usuarioId = :usuario_id) order by e.fechaInicio desc"
     )
-    Page<ExperienciaProjectionDTO> obtenerExperiencias(@Param("apiKey") String apiKey, Pageable pageable);
+    Page<ExperienciaProjectionDTO> obtenerExperiencias(@Param("usuario_id") Long usuarioId, Pageable pageable);
 
 }

@@ -22,7 +22,7 @@ public class Usuario implements UserDetails {
     @Column(name = "usuario_id")
     Long usuarioId;
 
-    String username;
+    String email;
 
     String password;
 
@@ -39,9 +39,20 @@ public class Usuario implements UserDetails {
     @Column(name = "api_key")
     String apiKey;
 
+    @Column(name = "origen_permitido")
+    String origenPermitido;
+
+    @Column(name = "estado_origen")
+    Boolean estadoOrigen;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + rol.descripcion));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 
     @Override

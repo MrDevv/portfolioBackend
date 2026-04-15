@@ -26,9 +26,9 @@ public class ExperienciaServiceImpl implements IExperienciaService {
     @Override
     public ResponseWithPageable obtenerExperiencias(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getPrincipal();
-        String apiKey = principal != null ? principal.toString() : null;
-        Page<ExperienciaProjectionDTO> experiencias = experienciaRepository.obtenerExperiencias(apiKey, pageable);
+        Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
+
+        Page<ExperienciaProjectionDTO> experiencias = experienciaRepository.obtenerExperiencias(usuarioId, pageable);
         return ExperienciaMapper.toResponseExperienciasListDTO(experiencias);
     }
 }

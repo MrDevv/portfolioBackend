@@ -23,6 +23,7 @@ public class GlobalExceptionHandler {
         Exception.class,
         ObjectNotFoundException.class,
         HttpMessageNotReadableException.class,
+        BadCredentialsException.class
     })
     public ResponseEntity<Object> handlerAllException(Exception exception, HttpServletRequest request, HttpServletResponse response){
         ZoneId zoneId = ZoneId.of("America/Lima");

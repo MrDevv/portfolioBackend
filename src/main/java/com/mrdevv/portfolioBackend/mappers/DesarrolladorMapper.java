@@ -13,7 +13,7 @@ public class DesarrolladorMapper {
         return new ResponseDesarrolladorDTO(desarrollador.getDesarrolladorId(),
                 desarrollador.getNombres(),
                 desarrollador.getApellidos(),
-                desarrollador.getCorreo(),
+                desarrollador.getCorreoContacto(),
                 desarrollador.getGithubUrl(),
                 desarrollador.getLinkedinUrl(),
                 desarrollador.getCvUrl(),
@@ -28,7 +28,7 @@ public class DesarrolladorMapper {
     public static void updateDesarrollador(Desarrollador desarrollador, UpdateDesarrolladorDTO updateDesarrolladorDTO){
         desarrollador.setNombres(updateDesarrolladorDTO.nombres());
         desarrollador.setApellidos(updateDesarrolladorDTO.apellidos());
-        desarrollador.setCorreo(updateDesarrolladorDTO.correo());
+        desarrollador.setCorreoContacto(updateDesarrolladorDTO.correoContacto());
         desarrollador.setGithubUrl(updateDesarrolladorDTO.githubUrl());
         desarrollador.setCvUrl(updateDesarrolladorDTO.cvUrl());
         desarrollador.setLogoUrl(updateDesarrolladorDTO.logoUrl());
@@ -43,7 +43,7 @@ public class DesarrolladorMapper {
             return new ResponseDesarrolladorDTO(desarrollador.getDesarrolladorId(),
                     desarrollador.getNombres(),
                     desarrollador.getApellidos(),
-                    desarrollador.getCorreo(),
+                    desarrollador.getCorreoContacto(),
                     desarrollador.getGithubUrl(),
                     desarrollador.getLinkedinUrl(),
                     desarrollador.getCvUrl(),

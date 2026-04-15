@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record ResponseUsuarioDTO(
         @JsonProperty("usuario_id")
         Long usuarioId,
-        String username,
+        String email,
         String nombres,
         String apellidos,
         String puesto,
