@@ -22,7 +22,8 @@ public class Desarrollador {
 
     String apellidos;
 
-    String correo;
+    @Column(name = "correo_contacto")
+    String correoContacto;
 
     @Column(name = "github_url")
     String githubUrl;

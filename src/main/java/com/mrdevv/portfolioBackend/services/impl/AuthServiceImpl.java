@@ -7,6 +7,7 @@ import com.mrdevv.portfolioBackend.mappers.UsuarioMapper;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.repositories.UsuarioRepository;
 import com.mrdevv.portfolioBackend.services.IAuthService;
+import com.mrdevv.portfolioBackend.services.auth.JwtService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,18 +24,20 @@ import java.util.Optional;
 public class AuthServiceImpl implements IAuthService {
 
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Transactional
     @Override
     public ResponseUsuarioLoginDTO login(AuthDTO authDTO) {
         Authentication usuarioRequest = new UsernamePasswordAuthenticationToken(
-                authDTO.username(),
+                authDTO.email(),
                 authDTO.password()
         );
 
         try{
             Authentication authentication = authenticationManager.authenticate(usuarioRequest);
-            return UsuarioMapper.toResponseUsuarioLogin((Usuario) authentication.getPrincipal(), null);
+            String jwt = jwtService.generarToken((Usuario) authentication.getPrincipal());
+            return UsuarioMapper.toResponseUsuarioLogin((Usuario) authentication.getPrincipal(), jwt);
         }catch (BadCredentialsException exception){
             throw new BadCredentialsException("Usuario o contraseña incorrectas");
         }

@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.config.security.filters;
 
+import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.services.auth.ApiKeyService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -37,13 +39,17 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 
         String apiKey = authorizationHeader.split(" ")[1];
 
-        if(!apiKeyService.esApiKeyValida(apiKey)){
+        Optional<Usuario> usuario = apiKeyService.obtenerUsuarioPorApiKey(apiKey);
+
+        if(usuario.isEmpty()){
             request.setAttribute("auth_error", "API_KEY_INVALID");
             throw new InsufficientAuthenticationException("API_KEY invalida");
         };
 
+        Long usuarioId = usuario.get().getUsuarioId();
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-                apiKey, null, null
+                usuarioId, null, null
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);

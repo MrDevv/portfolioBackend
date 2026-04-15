@@ -25,7 +25,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         ResponseError responseError = null;
 
         String error = (String) request.getAttribute("auth_error");
-        System.out.println(error);
 
         if (error.equals("JWT_MISSING")){
             responseError = new ResponseError(
@@ -38,7 +37,18 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
                     localDateTime,
                     null
             );
-        }else if(error.equals("API_KEY_MISSING")){
+        }else if(error.equals("JWT_INVALID")){
+            responseError = new ResponseError(
+                    "Failed",
+                    httpStatus,
+                    request.getRequestURL().toString(),
+                    request.getMethod(),
+                    "El token proporcionado no es válido.",
+                    "El JWT proporcionado en los HEADERS de la REQUEST no es válido.",
+                    localDateTime,
+                    null
+            );
+        } else if(error.equals("API_KEY_MISSING")){
             responseError = new ResponseError(
                     "Failed",
                     httpStatus,

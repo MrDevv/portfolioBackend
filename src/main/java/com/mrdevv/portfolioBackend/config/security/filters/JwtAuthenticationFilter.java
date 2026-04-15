@@ -1,10 +1,13 @@
 package com.mrdevv.portfolioBackend.config.security.filters;
 
+import com.mrdevv.portfolioBackend.models.Usuario;
+import com.mrdevv.portfolioBackend.services.auth.JwtService;
+import com.mrdevv.portfolioBackend.services.impl.UsuarioServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.BadCredentialsException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,8 +17,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@RequiredArgsConstructor
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private final JwtService jwtService;
+    private final UsuarioServiceImpl usuarioService;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -31,8 +38,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throw new InsufficientAuthenticationException("JWT faltante");
         }
 
-        String uri = request.getRequestURI();
-
         if (!authorizationHeader.contains("Bearer ")){
             filterChain.doFilter(request, response);
             return;
@@ -40,14 +45,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String jwt = authorizationHeader.split(" ")[1];
 
-//        TODO: validar jwt
-        System.out.println(jwt);
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            request.setAttribute("auth_error", "JWT_MISSING");
+            throw new InsufficientAuthenticationException("JWT faltante");
+        }
 
+        String email;
 
-//        crear una autenticación con los datos del usuario
+        try{
+            email = jwtService.extractEmail(jwt);
+        }catch (Exception e){
+            request.setAttribute("auth_error", "JWT_INVALID");
+            throw new InsufficientAuthenticationException("JWT invalido");
+        }
+
+        Usuario usuarioAutenticado = usuarioService.obtenerUsuarioByEmail(email);
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-                null, null, null
+                usuarioAutenticado.getUsuarioId(), null, usuarioAutenticado.getAuthorities()
         );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
     }

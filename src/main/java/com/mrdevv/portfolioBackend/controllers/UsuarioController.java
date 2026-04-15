@@ -25,12 +25,6 @@ public class UsuarioController {
         return ResponseHandler.ok(TipoResponse.GETALL, "Se obtuvieron los usuarios correctamente", usuarios);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity obtenerUsuario(@PathVariable(name = "id") Long usuarioId){
-        ResponseUsuarioDTO usuario = usuarioService.obtenerUsuario(usuarioId);
-        return ResponseHandler.ok(TipoResponse.GET, "Se obtuvo el usuario correctamente", usuario);
-    }
-
     @PatchMapping("/{id}")
     public ResponseEntity actualizarRolUsuario(@PathVariable(name = "id") Long usuarioId, @RequestBody UpdateRolUsuarioDTO rol){
         usuarioService.actualizarRol(usuarioId, rol);

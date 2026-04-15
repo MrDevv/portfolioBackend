@@ -14,7 +14,7 @@ public class UsuarioMapper {
         List<ResponseUsuarioDTO> usuarioDTOS = usuarios.stream()
                 .map(usuario -> {
                     Long usuarioId = ((Number) usuario[0]).longValue();
-                    String username = usuario[1].toString();
+                    String email = usuario[1].toString();
                     String nombres = usuario[2].toString();
                     String apellidos = usuario[3].toString();
                     String puesto = usuario[4].toString();
@@ -23,7 +23,7 @@ public class UsuarioMapper {
                     String estado = Boolean.parseBoolean(usuario[7].toString()) ? "activo" : "inactivo";
                     String apiKey = usuario[8] != null ? usuario[8].toString() : null;
 
-                    return new ResponseUsuarioDTO(usuarioId, username, nombres, apellidos, puesto, new ResponseRolDTO(rolId, rol), estado, apiKey);
+                    return new ResponseUsuarioDTO(usuarioId, email, nombres, apellidos, puesto, new ResponseRolDTO(rolId, rol), estado, apiKey);
         }).collect(Collectors.toList());
 
         return usuarioDTOS;
@@ -32,7 +32,7 @@ public class UsuarioMapper {
     public static ResponseUsuarioDTO toResponseUsuario(Usuario usuario){
         return new ResponseUsuarioDTO(
                 usuario.getUsuarioId(),
-                usuario.getUsername(),
+                usuario.getEmail(),
                 usuario.getDesarrollador().getNombres(),
                 usuario.getDesarrollador().getApellidos(),
                 usuario.getDesarrollador().getPuesto(),
@@ -45,7 +45,7 @@ public class UsuarioMapper {
     public static ResponseUsuarioLoginDTO toResponseUsuarioLogin(Usuario usuario, String jwt){
         return new ResponseUsuarioLoginDTO(
                 usuario.getUsuarioId(),
-                usuario.getUsername(),
+                usuario.getEmail(),
                 usuario.getDesarrollador().getNombres(),
                 usuario.getDesarrollador().getApellidos(),
                 usuario.getDesarrollador().getPuesto(),

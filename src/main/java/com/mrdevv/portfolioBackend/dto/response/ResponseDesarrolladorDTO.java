@@ -12,7 +12,8 @@ public record ResponseDesarrolladorDTO(
         Long desarrolladorId,
         String nombres,
         String apellidos,
-        String correo,
+        @JsonProperty("correo_contacto")
+        String correoContacto,
         @JsonProperty("github_url")
         String githubUrl,
         @JsonProperty("linkedin_url")

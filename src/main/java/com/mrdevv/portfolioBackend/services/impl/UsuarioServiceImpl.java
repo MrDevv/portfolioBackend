@@ -54,6 +54,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
         usuarioRepository.actualizarRol(usuarioId, rolEntity);
     }
 
+    public Usuario obtenerUsuarioByEmail(String email){
+        return usuarioRepository.findByEmail(email).orElseThrow(() -> new ObjectNotFoundException(
+                ErrorMessage.NOT_FOUND_USUARIO_FRONT.getMessage(email),
+                ErrorMessage.NOT_FOUND_USUARIO_BACKEND.getMessage(email)));
+    }
+
     @Transactional
     @Override
     public ResponseApiKeyUsuario generarApiKey(Long usuarioId) {
@@ -84,4 +90,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
         return new ResponseApiKeyUsuario(apiKey);
     }
+
+
 }
