@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.repositories;
 
+import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
 import com.mrdevv.portfolioBackend.models.Rol;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -16,13 +17,12 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    @Query(value = "select u.usuarioId, u.email, " +
-            "d.nombres, d.apellidos, d.puesto, " +
-            "r.rolId, r.descripcion, u.estado, " +
-            "u.apiKey " +
+    @Query(value = "select " +
+            "d.nombres as nombres, d.apellidos as apellidos, u.email as email, " +
+            "d.puesto as puesto, r.descripcion as rol, u.estado as estado " +
             "from Usuario u join u.desarrollador d " +
             "join u.rol r")
-    List<Object[]> obtenerUsuarios();
+    List<UsuarioProjectionDTO> obtenerUsuarios();
 
     @Modifying
     @Query(value = "update Usuario u set u.rol = :rol where u.usuarioId = :usuarioId")

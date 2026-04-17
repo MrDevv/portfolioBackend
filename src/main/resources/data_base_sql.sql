@@ -17,6 +17,7 @@ CREATE TABLE desarrolladores (
 
 CREATE TABLE roles (
     rol_id NUMBER GENERATED ALWAYS AS IDENTITY,
+    rol_uuid VARCHAR2(36) NOT NULL,
     descripcion VARCHAR2(100) NOT NULL,
     CONSTRAINT pk_roles
         PRIMARY KEY (rol_id)
@@ -24,6 +25,7 @@ CREATE TABLE roles (
 
 CREATE TABLE usuarios (
     usuario_id NUMBER GENERATED ALWAYS AS IDENTITY,
+    usuario_uuid VARCHAR2(36) NOT NULL,
     email VARCHAR2(100) NOT NULL,
     password VARCHAR2(255) NOT NULL,
     estado NUMBER(1) DEFAULT 1 NOT NULL,

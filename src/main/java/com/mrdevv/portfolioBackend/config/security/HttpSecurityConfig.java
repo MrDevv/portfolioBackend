@@ -3,6 +3,7 @@ package com.mrdevv.portfolioBackend.config.security;
 import com.mrdevv.portfolioBackend.config.security.filters.ApiKeyAuthenticationFilter;
 import com.mrdevv.portfolioBackend.config.security.filters.JwtAuthenticationFilter;
 import com.mrdevv.portfolioBackend.config.security.handler.CustomAuthenticationEntryPoint;
+import com.mrdevv.portfolioBackend.config.security.handler.CustomDeniedEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,7 @@ public class HttpSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomDeniedEntryPoint customDeniedEntryPoint;
 
     @Bean
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
@@ -50,6 +52,7 @@ public class HttpSecurityConfig {
                 .sessionManagement(sessManagement -> sessManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(excep -> {
                     excep.authenticationEntryPoint(customAuthenticationEntryPoint);
+                    excep.accessDeniedHandler(customDeniedEntryPoint);
                 })
                 .cors(Customizer.withDefaults())
                 .authenticationProvider(authenticationProvider)
@@ -57,6 +60,7 @@ public class HttpSecurityConfig {
                 .addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> {
                     requests.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+                    requests.requestMatchers(HttpMethod.GET, "/usuarios").hasAnyRole("admin");
 
                     requests.anyRequest().authenticated();
                 })

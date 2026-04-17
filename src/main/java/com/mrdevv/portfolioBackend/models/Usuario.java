@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Builder
 @AllArgsConstructor
@@ -21,6 +22,9 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usuario_id")
     Long usuarioId;
+
+    @Column(name = "usuario_uuid")
+    UUID usuarioUUID = UUID.randomUUID();
 
     String email;
 

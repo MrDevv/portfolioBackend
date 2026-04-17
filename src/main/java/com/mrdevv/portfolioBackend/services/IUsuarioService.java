@@ -11,8 +11,6 @@ public interface IUsuarioService {
 
     List<ResponseUsuarioDTO> obtenerUsuarios();
 
-    ResponseUsuarioDTO obtenerUsuario(Long usuarioId);
-
     void actualizarRol(Long usuarioId, UpdateRolUsuarioDTO rol);
 
     ResponseApiKeyUsuario generarApiKey(Long usuarioId);
