@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.mappers;
 
+import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseRolDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
@@ -10,48 +11,45 @@ import java.util.stream.Collectors;
 
 public class UsuarioMapper {
 
-    public static List<ResponseUsuarioDTO> toResonseUsuarioDTOList(List<Object[]> usuarios){
+    public static List<ResponseUsuarioDTO> toResonseUsuarioDTOList(List<UsuarioProjectionDTO> usuarios){
         List<ResponseUsuarioDTO> usuarioDTOS = usuarios.stream()
                 .map(usuario -> {
-                    Long usuarioId = ((Number) usuario[0]).longValue();
-                    String email = usuario[1].toString();
-                    String nombres = usuario[2].toString();
-                    String apellidos = usuario[3].toString();
-                    String puesto = usuario[4].toString();
-                    Long rolId = ((Number) usuario[5]).longValue();
-                    String rol = usuario[6].toString();
-                    String estado = Boolean.parseBoolean(usuario[7].toString()) ? "activo" : "inactivo";
-                    String apiKey = usuario[8] != null ? usuario[8].toString() : null;
-
-                    return new ResponseUsuarioDTO(usuarioId, email, nombres, apellidos, puesto, new ResponseRolDTO(rolId, rol), estado, apiKey);
+                    String estado = usuario.getEstado() ? "activo" : "inactivo";
+                    return new ResponseUsuarioDTO(
+                            usuario.getEmail(),
+                            usuario.getNombres(),
+                            usuario.getApellidos(),
+                            usuario.getPuesto(),
+                            usuario.getRol(),
+                            estado);
         }).collect(Collectors.toList());
-
         return usuarioDTOS;
     }
 
-    public static ResponseUsuarioDTO toResponseUsuario(Usuario usuario){
-        return new ResponseUsuarioDTO(
-                usuario.getUsuarioId(),
-                usuario.getEmail(),
-                usuario.getDesarrollador().getNombres(),
-                usuario.getDesarrollador().getApellidos(),
-                usuario.getDesarrollador().getPuesto(),
-                RolMapper.toResponseRolDTO(usuario.getRol()),
-                usuario.getEstado() ? "activo" : "inactivo",
-                usuario.getApiKey()
-                );
-    }
+//    public static ResponseUsuarioDTO toResponseUsuario(Usuario usuario){
+//        return new ResponseUsuarioDTO(
+//                usuario.getUsuarioId(),
+//                usuario.getEmail(),
+//                usuario.getDesarrollador().getNombres(),
+//                usuario.getDesarrollador().getApellidos(),
+//                usuario.getDesarrollador().getPuesto(),
+//                RolMapper.toResponseRolDTO(usuario.getRol()),
+//                usuario.getEstado() ? "activo" : "inactivo",
+//                usuario.getApiKey()
+//                );
+//    }
 
     public static ResponseUsuarioLoginDTO toResponseUsuarioLogin(Usuario usuario, String jwt){
         return new ResponseUsuarioLoginDTO(
-                usuario.getUsuarioId(),
+                usuario.getUsuarioUUID(),
                 usuario.getEmail(),
                 usuario.getDesarrollador().getNombres(),
                 usuario.getDesarrollador().getApellidos(),
                 usuario.getDesarrollador().getPuesto(),
                 RolMapper.toResponseRolDTO(usuario.getRol()),
                 usuario.getEstado() ? "activo" : "inactivo",
-                jwt
+                jwt,
+                usuario.getApiKey()
         );
     }
 

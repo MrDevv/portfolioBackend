@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
+import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,19 +27,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final RolServiceImpl rolService;
 
-    @Override
-    public List<ResponseUsuarioDTO> obtenerUsuarios() {
-        List<Object[]> usuarios = usuarioRepository.obtenerUsuarios();
-        return UsuarioMapper.toResonseUsuarioDTOList(usuarios);
-    }
-
     @Transactional(readOnly = true)
     @Override
-    public ResponseUsuarioDTO obtenerUsuario(Long usuarioId) {
-        Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> {
-            throw new ObjectNotFoundException("No se encontró la usuario", "no se encontró al usuairo");
-        });
-        return UsuarioMapper.toResponseUsuario(usuario);
+    public List<ResponseUsuarioDTO> obtenerUsuarios() {
+        List<UsuarioProjectionDTO> usuarios = usuarioRepository.obtenerUsuarios();
+        return UsuarioMapper.toResonseUsuarioDTOList(usuarios);
     }
 
     @Transactional

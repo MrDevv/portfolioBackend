@@ -6,6 +6,6 @@ import com.mrdevv.portfolioBackend.models.Rol;
 public class RolMapper {
 
     public static ResponseRolDTO toResponseRolDTO(Rol rol){
-        return new ResponseRolDTO(rol.getRolId(), rol.getDescripcion());
+        return new ResponseRolDTO(rol.getRolUUID(), rol.getDescripcion());
     }
 }
