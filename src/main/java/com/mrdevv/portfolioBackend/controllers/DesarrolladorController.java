@@ -35,12 +35,6 @@ public class DesarrolladorController {
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron los desarrolladores correctamente", desarrolladorDTOS);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> obtenerDesarrolladorPorId(@PathVariable(name = "id") Long desarrolladorId){
-        ResponseDesarrolladorDTO desarrolladorDTO = desarrolladorService.obtenerDesarrolladorById(desarrolladorId);
-        return ResponseHandler.ok(TipoResponse.GET, "se obtuvieron los datos del desarrollador correctamente", desarrolladorDTO);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Object> actualizarDesarrollador(@PathVariable(name = "id") Long desarrolladorId, @RequestBody UpdateDesarrolladorDTO updateDesarrolladorDTO){
         ResponseDesarrolladorDTO desarrolladorDTO = desarrolladorService.actualizarDesarrollador(desarrolladorId, updateDesarrolladorDTO);

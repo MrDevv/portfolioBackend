@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
@@ -17,6 +18,9 @@ public class Desarrollador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "desarrollador_id")
     Long desarrolladorId;
+
+    @Column(name = "desarrollador_uuid")
+    UUID desarrolladorUUID = UUID.randomUUID();
 
     String nombres;
 

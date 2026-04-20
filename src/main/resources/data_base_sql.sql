@@ -1,8 +1,9 @@
 CREATE TABLE desarrolladores (
     desarrollador_id NUMBER GENERATED ALWAYS AS IDENTITY,
+    desarrollador_uuid VARCHAR2(36) NOT NULL,
     nombres VARCHAR2(100) NOT NULL,
     apellidos VARCHAR2(100) NOT NULL,
-    correo_contacto VARCHAR2(200) NOT NULL UNIQUE,
+    correo_contacto VARCHAR2(200),
     github_url CLOB,
     linkedin_url CLOB,
     cv_url CLOB,
@@ -26,7 +27,7 @@ CREATE TABLE roles (
 CREATE TABLE usuarios (
     usuario_id NUMBER GENERATED ALWAYS AS IDENTITY,
     usuario_uuid VARCHAR2(36) NOT NULL,
-    email VARCHAR2(100) NOT NULL,
+    email VARCHAR2(100) NOT NULL UNIQUE,
     password VARCHAR2(255) NOT NULL,
     estado NUMBER(1) DEFAULT 1 NOT NULL,
     desarrollador_id NUMBER NOT NULL,

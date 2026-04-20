@@ -9,7 +9,7 @@ public interface IDesarrolladorService {
 
     List<ResponseDesarrolladorDTO> obtenerDesarrolladores();
 
-    ResponseDesarrolladorDTO obtenerDesarrolladorById(Long desarrolladorId);
+//    ResponseDesarrolladorDTO obtenerDesarrolladorById(Long desarrolladorId);
 
     ResponseDesarrolladorDTO obtenerDatosDesarrollador();
 
