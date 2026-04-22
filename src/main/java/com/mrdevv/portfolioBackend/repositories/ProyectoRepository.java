@@ -14,7 +14,6 @@ import java.util.List;
 
 @Repository
 public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
-
     @EntityGraph(attributePaths = {
             "experiencia",
             "tipoProyecto"
@@ -25,12 +24,11 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
         join p.experiencia e
         join e.desarrollador d
         join d.usuario u
-        where (:api_key is null or u.apiKey = :api_key)
-        and (:usuario_id is null or u.usuarioId = :usuario_id)
+        where (:usuario_id is null or u.usuarioId = :usuario_id)
     """)
-    Page<ProyectoProjectionDTO> obtenerProyectos(@Param(value = "api_key") String apiKey,
-                                                @Param(value = "usuario_id") Long usuarioId,
+    Page<ProyectoProjectionDTO> obtenerProyectos(@Param(value = "usuario_id") Long usuarioId,
                                                  Pageable pageable);
+
 
 
 }

@@ -1,10 +1,11 @@
 package com.mrdevv.portfolioBackend.dto.projection;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ProyectoProjectionDTO {
 
-    Long getProyectoId();
+    UUID getProyectoUUID();
 
     String getTitulo();
 

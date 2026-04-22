@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface IProyectoService {
 
-    ResponseWithPageable obtenerProyectos(Long usuarioId, Pageable pageable);
+    ResponseWithPageable obtenerProyectos(Pageable pageable);
 
 }

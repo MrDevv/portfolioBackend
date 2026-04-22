@@ -3,10 +3,11 @@ package com.mrdevv.portfolioBackend.dto.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.UUID;
 
 public record ResponseProyectoDTO(
-        @JsonProperty("proyecto_id")
-        Long proyectoId,
+        @JsonProperty("proyecto_uuid")
+        UUID proyectoUUID,
         String titulo,
         String descripcion,
         @JsonProperty("url_produccion")

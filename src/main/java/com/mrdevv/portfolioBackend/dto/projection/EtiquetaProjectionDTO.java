@@ -1,8 +1,10 @@
 package com.mrdevv.portfolioBackend.dto.projection;
 
+import java.util.UUID;
+
 public interface EtiquetaProjectionDTO {
 
-    Long getEtiquetaId();
+    UUID getEtiquetaUUID();
 
     String getDescripcion();
 

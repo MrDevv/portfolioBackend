@@ -13,7 +13,7 @@ public class EtiquetaMapper {
     public static List<ResponseEtiquetaDTO> toEtiquetaListDTO(List<EtiquetaProjectionDTO> etiquetaProjectionDTOS){
         return etiquetaProjectionDTOS.stream().map(etiquetaProjection -> {
             return new ResponseEtiquetaDTO(
-                    etiquetaProjection.getEtiquetaId(),
+                    etiquetaProjection.getEtiquetaUUID(),
                     etiquetaProjection.getDescripcion()
             );
         }).collect(Collectors.toList());

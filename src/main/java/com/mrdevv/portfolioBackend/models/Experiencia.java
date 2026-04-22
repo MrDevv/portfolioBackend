@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Builder
 @AllArgsConstructor
@@ -16,6 +17,9 @@ public class Experiencia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "experiencia_id")
     Long experienciaId;
+
+    @Column(name = "experiencia_uuid")
+    UUID experienciaUUID = UUID.randomUUID();
 
     String descripcion;
 
