@@ -49,7 +49,9 @@ public class UsuarioMapper {
                 RolMapper.toResponseRolDTO(usuario.getRol()),
                 usuario.getEstado() ? "activo" : "inactivo",
                 jwt,
-                usuario.getApiKey()
+                usuario.getApiKey(),
+                usuario.getOrigenPermitido(),
+                usuario.getEstadoOrigen() ? "activo" : "inactivo"
         );
     }
 

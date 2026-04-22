@@ -16,6 +16,10 @@ public record ResponseUsuarioLoginDTO(
         String estado,
         String token,
         @JsonProperty("api_key")
-        String apiKey
+        String apiKey,
+        @JsonProperty("origen_permitido")
+        String origenPermitido,
+        @JsonProperty("estado_origen")
+        String estadoOrigen
 ) {
 }
