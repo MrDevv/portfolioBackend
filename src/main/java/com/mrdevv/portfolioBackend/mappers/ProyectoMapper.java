@@ -20,18 +20,8 @@ public class ProyectoMapper {
         PageableData pageableData = PageableMapper.toPageable(proyectoProjectionDTOS);
 
         List<ResponseProyectoDTO> proyectosListDTO = proyectoProjectionList.stream().map(proyecto -> {
-            ResponseExperienciaSimpleDTO experienciaSimpleDTO = new ResponseExperienciaSimpleDTO(
-                    proyecto.getExperiencia().getExperienciaId(),
-                    proyecto.getExperiencia().getDescripcion()
-            );
-
-            ResponseTipoProyectoDTO tipoProyectoDTO = new ResponseTipoProyectoDTO(
-                    proyecto.getTipoProyecto().getTipoProyectoId(),
-                    proyecto.getTipoProyecto().getDescripcion()
-            );
-
             return new ResponseProyectoDTO(
-                proyecto.getProyectoId(),
+                proyecto.getProyectoUUID(),
                 proyecto.getTitulo(),
                     proyecto.getDescripcion(),
                     proyecto.getUrlProduccion(),
@@ -39,7 +29,7 @@ public class ProyectoMapper {
                     proyecto.getUrlImagenPresentacion(),
                     proyecto.getEstado() ? "activo" : "inactivo",
                     ExperienciaMapper.toResponseExperienciaSimpleDTO(proyecto.getExperiencia()),
-                    tipoProyectoDTO,
+                    TipoProyectoMapper.toResponseTipoProyectoDTO(proyecto.getTipoProyecto()),
                     EtiquetaMapper.toEtiquetaListDTO(proyecto.getEtiquetas())
             );
         }).collect(Collectors.toList());

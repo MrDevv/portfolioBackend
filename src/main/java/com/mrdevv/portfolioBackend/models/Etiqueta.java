@@ -3,6 +3,8 @@ package com.mrdevv.portfolioBackend.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Builder
 @Getter
 @AllArgsConstructor
@@ -15,6 +17,9 @@ public class Etiqueta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "etiqueta_id")
     Long etiquetaId;
+
+    @Column(name = "etiqueta_uuid")
+    UUID etiquetaUUID = UUID.randomUUID();
 
     String descripcion;
 

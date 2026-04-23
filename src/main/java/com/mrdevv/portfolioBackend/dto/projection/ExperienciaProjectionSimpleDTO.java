@@ -1,9 +1,11 @@
 package com.mrdevv.portfolioBackend.dto.projection;
 
+import java.util.UUID;
+
 public interface ExperienciaProjectionSimpleDTO {
 
-    Long getExperienciaId();
+    UUID getExperienciaUUID();
 
-    String getDescripcion();
+    String getTitulo();
 
 }

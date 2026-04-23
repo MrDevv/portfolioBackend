@@ -27,7 +27,7 @@ public class ProyectoController {
                                            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
                                            @RequestParam(name = "size", required = false, defaultValue = "10") Integer size){
         Pageable pageable = PageRequest.of(page, size);
-        ResponseWithPageable proyectos = proyectoService.obtenerProyectos(usurioId, pageable);
+        ResponseWithPageable proyectos = proyectoService.obtenerProyectos(pageable);
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron los proyectos correctamente", proyectos);
     }
 

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,6 +20,9 @@ public class TipoProyecto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tipo_proyecto_id")
     Long tipoProyectoId;
+
+    @Column(name = "tipo_proyecto_uuid")
+    UUID tipoProyectoUUID = UUID.randomUUID();
 
     String descripcion;
 }

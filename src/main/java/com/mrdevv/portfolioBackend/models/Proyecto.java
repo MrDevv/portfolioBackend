@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
+import java.util.UUID;
 
 @Builder
 @AllArgsConstructor
@@ -18,6 +19,9 @@ public class Proyecto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "proyecto_id")
     Long proyectoId;
+
+    @Column(name = "proyecto_uuid")
+    UUID proyectoUUID = UUID.randomUUID();
 
     String titulo;
 

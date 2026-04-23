@@ -26,11 +26,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return request.getRequestURI().contains("/auth") || request.getRequestURI().contains("/me");
+        return (request.getRequestURI().contains("/auth") && !request.getRequestURI().contains("/auth/validate-token")) || request.getRequestURI().contains("/me");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String jwt;
+        String email;
+        Usuario usuarioAutenticado;
+
         String authorizationHeader = request.getHeader("Authorization");
 
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
@@ -38,19 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throw new InsufficientAuthenticationException("JWT faltante");
         }
 
-        if (!authorizationHeader.contains("Bearer ")){
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        String jwt = authorizationHeader.split(" ")[1];
-
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            request.setAttribute("auth_error", "JWT_MISSING");
-            throw new InsufficientAuthenticationException("JWT faltante");
-        }
-
-        String email;
+        jwt = authorizationHeader.split(" ")[1];
 
         try{
             email = jwtService.extractEmail(jwt);
@@ -59,7 +51,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throw new InsufficientAuthenticationException("JWT invalido");
         }
 
-        Usuario usuarioAutenticado = usuarioService.obtenerUsuarioByEmail(email);
+        usuarioAutenticado = usuarioService.obtenerUsuarioByEmail(email);
+
+        if (request.getRequestURI().contains("auth/validate-token")){
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
+                    usuarioAutenticado, null, usuarioAutenticado.getAuthorities()
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 usuarioAutenticado.getUsuarioId(), null, usuarioAutenticado.getAuthorities()
