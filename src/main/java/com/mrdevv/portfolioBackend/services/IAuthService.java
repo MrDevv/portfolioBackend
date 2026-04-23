@@ -10,4 +10,5 @@ public interface IAuthService {
 
     ResponseUsuarioLoginDTO login(AuthDTO authDTO);
 
+    ResponseUsuarioLoginDTO validateToken();
 }

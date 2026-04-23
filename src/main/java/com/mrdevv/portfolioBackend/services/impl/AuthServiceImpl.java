@@ -9,11 +9,13 @@ import com.mrdevv.portfolioBackend.repositories.UsuarioRepository;
 import com.mrdevv.portfolioBackend.services.IAuthService;
 import com.mrdevv.portfolioBackend.services.auth.JwtService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +27,11 @@ public class AuthServiceImpl implements IAuthService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UsuarioServiceImpl usuarioService;
 
-    @Transactional
+    private final HttpServletRequest httpServletReq;
+
+    @Transactional(readOnly = true)
     @Override
     public ResponseUsuarioLoginDTO login(AuthDTO authDTO) {
         Authentication usuarioRequest = new UsernamePasswordAuthenticationToken(
@@ -41,5 +46,14 @@ public class AuthServiceImpl implements IAuthService {
         }catch (BadCredentialsException exception){
             throw new BadCredentialsException("Usuario o contraseña incorrectas");
         }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ResponseUsuarioLoginDTO validateToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token = httpServletReq.getHeader("Authorization").split(" ")[1];
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        return UsuarioMapper.toResponseUsuarioLogin(usuario, token);
     }
 }

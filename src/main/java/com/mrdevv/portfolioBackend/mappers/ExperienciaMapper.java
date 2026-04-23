@@ -35,7 +35,7 @@ public class ExperienciaMapper {
     public static ResponseExperienciaSimpleDTO toResponseExperienciaSimpleDTO(ExperienciaProjectionSimpleDTO experienciaProjectionDTO){
         return new ResponseExperienciaSimpleDTO(
                 experienciaProjectionDTO.getExperienciaUUID(),
-                experienciaProjectionDTO.getDescripcion()
+                experienciaProjectionDTO.getTitulo()
         );
     }
 

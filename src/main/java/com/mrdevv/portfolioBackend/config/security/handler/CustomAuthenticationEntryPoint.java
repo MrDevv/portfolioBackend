@@ -24,6 +24,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         int httpStatus = HttpStatus.UNAUTHORIZED.value();
         ResponseError responseError = null;
 
+        System.out.println(authException.getMessage());
+
         String error = (String) request.getAttribute("auth_error");
 
         if (error.equals("JWT_MISSING")){

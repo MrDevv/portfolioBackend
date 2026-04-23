@@ -6,6 +6,6 @@ public interface ExperienciaProjectionSimpleDTO {
 
     UUID getExperienciaUUID();
 
-    String getDescripcion();
+    String getTitulo();
 
 }
