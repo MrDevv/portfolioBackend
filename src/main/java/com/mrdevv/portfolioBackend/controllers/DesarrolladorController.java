@@ -35,9 +35,9 @@ public class DesarrolladorController {
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron los desarrolladores correctamente", desarrolladorDTOS);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> actualizarDesarrollador(@PathVariable(name = "id") Long desarrolladorId, @RequestBody UpdateDesarrolladorDTO updateDesarrolladorDTO){
-        ResponseDesarrolladorDTO desarrolladorDTO = desarrolladorService.actualizarDesarrollador(desarrolladorId, updateDesarrolladorDTO);
+    @PutMapping()
+    public ResponseEntity<Object> actualizarDesarrollador(@RequestBody UpdateDesarrolladorDTO updateDesarrolladorDTO){
+        ResponseDesarrolladorDTO desarrolladorDTO = desarrolladorService.actualizarDesarrollador(updateDesarrolladorDTO);
         return ResponseHandler.ok(TipoResponse.UPDATE, "se actualizó el desarrollador correctamente", desarrolladorDTO);
     }
 

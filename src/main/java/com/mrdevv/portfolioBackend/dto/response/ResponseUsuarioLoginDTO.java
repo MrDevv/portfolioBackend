@@ -11,6 +11,8 @@ public record ResponseUsuarioLoginDTO(
         String nombres,
         String apellidos,
         String puesto,
+        @JsonProperty("logo_url")
+        String logoUrl,
         @JsonProperty("rol")
         ResponseRolDTO rolDTO,
         String estado,

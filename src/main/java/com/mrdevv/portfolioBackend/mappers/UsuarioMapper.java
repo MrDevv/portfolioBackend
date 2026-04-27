@@ -46,6 +46,7 @@ public class UsuarioMapper {
                 usuario.getDesarrollador().getNombres(),
                 usuario.getDesarrollador().getApellidos(),
                 usuario.getDesarrollador().getPuesto(),
+                usuario.getDesarrollador().getLogoUrl(),
                 RolMapper.toResponseRolDTO(usuario.getRol()),
                 usuario.getEstado() ? "activo" : "inactivo",
                 jwt,

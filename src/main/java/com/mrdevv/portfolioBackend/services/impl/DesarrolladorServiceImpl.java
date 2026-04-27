@@ -43,8 +43,10 @@ public class DesarrolladorServiceImpl implements IDesarrolladorService {
 
     @Transactional
     @Override
-    public ResponseDesarrolladorDTO actualizarDesarrollador(Long desarrolladorId, UpdateDesarrolladorDTO updateDesarrolladorDTO) {
-        Desarrollador desarrollador = buscarDesarrolladorPorId(desarrolladorId);
+    public ResponseDesarrolladorDTO actualizarDesarrollador(UpdateDesarrolladorDTO updateDesarrolladorDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
+        Desarrollador desarrollador = buscarDesarrolladorPorId(usuarioId);
         DesarrolladorMapper.updateDesarrollador(desarrollador, updateDesarrolladorDTO);
         return DesarrolladorMapper.toDesarrolladorDTO(desarrollador);
     }
