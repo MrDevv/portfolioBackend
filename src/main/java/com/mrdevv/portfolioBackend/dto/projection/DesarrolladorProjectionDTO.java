@@ -1,9 +1,7 @@
 package com.mrdevv.portfolioBackend.dto.projection;
 
-import java.util.UUID;
-
 public interface DesarrolladorProjectionDTO {
-    UUID getDesarrolladorUUID();
+    String getDesarrolladorUUID();
     String getNombres();
     String getApellidos();
     String getCorreoContacto();

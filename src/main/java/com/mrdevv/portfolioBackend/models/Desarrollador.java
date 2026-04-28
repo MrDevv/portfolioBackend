@@ -20,7 +20,7 @@ public class Desarrollador {
     Long desarrolladorId;
 
     @Column(name = "desarrollador_uuid")
-    UUID desarrolladorUUID = UUID.randomUUID();
+    String desarrolladorUUID;
 
     String nombres;
 
@@ -60,5 +60,12 @@ public class Desarrollador {
 
     @OneToOne(mappedBy = "desarrollador")
     Usuario usuario;
+
+    @PrePersist
+    void generarUUID(){
+        if (this.desarrolladorUUID == null){
+            this.desarrolladorUUID = UUID.randomUUID().toString();
+        }
+    }
 
 }

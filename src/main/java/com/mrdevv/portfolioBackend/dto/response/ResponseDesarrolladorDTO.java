@@ -10,7 +10,7 @@ import java.util.UUID;
         "desarrollador_uuid", "nombres", "apellidos", "correo_contacto", "github_url", "linkedin_url", "cv_url", "logo_url", "prefijo_telefono", "telefono", "biografia", "puesto"})
 public record ResponseDesarrolladorDTO(
         @JsonProperty("desarrollador_uuid")
-        UUID desarrolladorUUID,
+        String desarrolladorUUID,
         String nombres,
         String apellidos,
         @JsonProperty("correo_contacto")
