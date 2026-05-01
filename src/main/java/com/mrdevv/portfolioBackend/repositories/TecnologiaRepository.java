@@ -17,8 +17,8 @@ public interface TecnologiaRepository extends JpaRepository<Tecnologia, Long> {
         join d.usuario u
         join d.tecnologias t
         join t.tipoProyecto tp
-        where (:api_key is null or u.apiKey = :api_key)        
+        where (:usuario_id is null or u.usuarioId = :usuario_id)        
     """)
-    List<Tecnologia> obtenerTecnologias(@Param(value = "api_key") String apiKey);
+    List<Tecnologia> obtenerTecnologias(@Param(value = "usuario_id") Long usuarioId);
 
 }

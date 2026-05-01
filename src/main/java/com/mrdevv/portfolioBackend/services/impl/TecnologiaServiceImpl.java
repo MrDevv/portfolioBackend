@@ -47,8 +47,8 @@ public class TecnologiaServiceImpl implements ITecnologiaService {
     @Override
     public List<ResponseTecnologiaSimpleDTO> obtenerTecnologiasDesarrollador() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String apiKey = authentication.getPrincipal().toString();
-        List<Tecnologia> tecnologias = tecnologiaRepository.obtenerTecnologias(apiKey);
+        Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
+        List<Tecnologia> tecnologias = tecnologiaRepository.obtenerTecnologias(usuarioId);
         return TecnologiaMapper.toResponseTecnologiaSimpleDTOList(tecnologias);
     }
 }
