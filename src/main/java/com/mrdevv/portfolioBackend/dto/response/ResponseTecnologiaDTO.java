@@ -12,6 +12,6 @@ public record ResponseTecnologiaDTO(
         String logoUrl,
 
         @JsonProperty("tipo_tecnologia")
-        ResponseTipoProyectoDTO tipoProyecto
+        ResponseTipoTecnologiaDTO tipoTecnologiaDTO
 ) {
 }

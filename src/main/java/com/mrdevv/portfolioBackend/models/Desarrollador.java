@@ -50,14 +50,6 @@ public class Desarrollador {
 
     String puesto;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "desarrollador_tecnologias",
-            joinColumns = @JoinColumn(name = "desarrollador_id"),
-            inverseJoinColumns = @JoinColumn(name = "tecnologia_id")
-    )
-    List<Tecnologia> tecnologias;
-
     @OneToOne(mappedBy = "desarrollador")
     Usuario usuario;
 

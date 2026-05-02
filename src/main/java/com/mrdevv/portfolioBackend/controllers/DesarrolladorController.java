@@ -3,13 +3,12 @@ package com.mrdevv.portfolioBackend.controllers;
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.request.UpdateDesarrolladorDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseDesarrolladorDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseDesarrolladorTecnologia;
 import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaSimpleDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
-import com.mrdevv.portfolioBackend.services.IDesarrolladorService;
-import com.mrdevv.portfolioBackend.services.IExperienciaService;
-import com.mrdevv.portfolioBackend.services.IProyectoService;
-import com.mrdevv.portfolioBackend.services.ITecnologiaService;
+import com.mrdevv.portfolioBackend.models.DesarrolladorTecnologia;
+import com.mrdevv.portfolioBackend.services.*;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +27,7 @@ public class DesarrolladorController {
     private final IExperienciaService experienciaService;
     private final IProyectoService proyectoService;
     private final ITecnologiaService tecnologiaService;
+    private final IDesarrolladorTecnologiaService desarrolladorTecnologiaService;
 
     @GetMapping
     public ResponseEntity<Object> obtenerDesarrolladores(){
@@ -65,7 +65,7 @@ public class DesarrolladorController {
 
     @GetMapping("me/tecnologias")
     public ResponseEntity obtenerTecnologiasDesarrollador(){
-        List<ResponseTecnologiaSimpleDTO> tecnologias = tecnologiaService.obtenerTecnologiasDesarrollador();
+        List<ResponseDesarrolladorTecnologia> tecnologias = desarrolladorTecnologiaService.obtenerTecnologiasDesarrollador();
         return ResponseHandler.ok(TipoResponse.GETALL, "Se obtuvieron las tecnologías correctamente", tecnologias);
     }
 

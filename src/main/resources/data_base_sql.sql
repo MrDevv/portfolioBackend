@@ -72,10 +72,12 @@ CREATE TABLE tecnologias (
 );
 
 CREATE TABLE desarrollador_tecnologias (
+    desarrollador_tecnologia_id NUMBER GENERATED ALWAYS AS IDENTITY,
     desarrollador_id NUMBER NOT NULL,
     tecnologia_id NUMBER NOT NULL,
+    nivel VARCHAR2(20),
     CONSTRAINT pk_desarrollador_tecnologias
-        PRIMARY KEY (desarrollador_id, tecnologia_id),
+        PRIMARY KEY (desarrollador_tecnologia_id),
     CONSTRAINT fk_dt_desarrollador
         FOREIGN KEY (desarrollador_id) REFERENCES desarrolladores(desarrollador_id),
     CONSTRAINT fk_dt_tecnologia

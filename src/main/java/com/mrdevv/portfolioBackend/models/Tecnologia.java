@@ -19,6 +19,9 @@ public class Tecnologia {
     @Column(name = "tecnologia_id")
     Long tecnologiaId;
 
+    @Column(name = "tecnologia_uuid")
+    String tecnologiaUUID;
+
     String descripcion;
 
     @Column(name = "logo_url")
@@ -26,6 +29,6 @@ public class Tecnologia {
 
     @ManyToOne
     @JoinColumn(name = "tipo_tecnologia_id")
-    TipoProyecto tipoProyecto;
+    TipoTecnologia tipoTecnologia;
 
 }

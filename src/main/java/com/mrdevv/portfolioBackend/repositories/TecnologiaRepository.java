@@ -11,14 +11,4 @@ import java.util.List;
 @Repository
 public interface TecnologiaRepository extends JpaRepository<Tecnologia, Long> {
 
-    @Query(value = """
-        select t, tp
-        from Desarrollador d 
-        join d.usuario u
-        join d.tecnologias t
-        join t.tipoProyecto tp
-        where (:usuario_id is null or u.usuarioId = :usuario_id)        
-    """)
-    List<Tecnologia> obtenerTecnologias(@Param(value = "usuario_id") Long usuarioId);
-
 }

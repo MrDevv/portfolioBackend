@@ -42,13 +42,4 @@ public class TecnologiaServiceImpl implements ITecnologiaService {
 
         return TecnologiaMapper.toResponseTecnologiaDTO(tecnologia);
     }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<ResponseTecnologiaSimpleDTO> obtenerTecnologiasDesarrollador() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
-        List<Tecnologia> tecnologias = tecnologiaRepository.obtenerTecnologias(usuarioId);
-        return TecnologiaMapper.toResponseTecnologiaSimpleDTOList(tecnologias);
-    }
 }
