@@ -21,7 +21,9 @@ public interface DesarrolladorTecnologiaRepository extends JpaRepository<Desarro
         join dt.tecnologia t
         join t.tipoTecnologia tt 
         join dt.desarrollador d         
-        join d.usuario u where u.usuarioId = :usuario_id  
+        join d.usuario u 
+        where u.usuarioId = :usuario_id
+        and (:nombre is null or upper(t.descripcion) like upper(concat(:nombre, '%')))            
     """)
-    List<DesarrolladorTecnologiaProjection> obtenerTecnologiasDelDesarrollador(@Param("usuario_id") Long usuarioId);
+    List<DesarrolladorTecnologiaProjection> obtenerTecnologiasDelDesarrollador(@Param("usuario_id") Long usuarioId, @Param("nombre") String nombre);
 }

@@ -65,7 +65,7 @@ public class DesarrolladorController {
 
     @GetMapping("me/tecnologias")
     public ResponseEntity obtenerTecnologiasDesarrollador(){
-        List<ResponseDesarrolladorTecnologia> tecnologias = desarrolladorTecnologiaService.obtenerTecnologiasDesarrollador();
+        List<ResponseDesarrolladorTecnologia> tecnologias = desarrolladorTecnologiaService.obtenerTecnologiasDesarrollador(null);
         return ResponseHandler.ok(TipoResponse.GETALL, "Se obtuvieron las tecnologías correctamente", tecnologias);
     }
 

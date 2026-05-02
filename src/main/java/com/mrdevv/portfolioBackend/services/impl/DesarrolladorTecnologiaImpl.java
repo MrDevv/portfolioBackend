@@ -22,10 +22,10 @@ public class DesarrolladorTecnologiaImpl implements IDesarrolladorTecnologiaServ
 
     @Transactional(readOnly = true)
     @Override
-    public List<ResponseDesarrolladorTecnologia> obtenerTecnologiasDesarrollador() {
+    public List<ResponseDesarrolladorTecnologia> obtenerTecnologiasDesarrollador(String nombreTecnologia) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
-        List<DesarrolladorTecnologiaProjection> desarrolladorTecnologias = desarrolladorTecnologiaRepository.obtenerTecnologiasDelDesarrollador(usuarioId);
+        List<DesarrolladorTecnologiaProjection> desarrolladorTecnologias = desarrolladorTecnologiaRepository.obtenerTecnologiasDelDesarrollador(usuarioId, nombreTecnologia);
         return DesarrolladorTecnologiaMapper.toDesarrolladorTecnologiaDTOList(desarrolladorTecnologias);
     }
 }

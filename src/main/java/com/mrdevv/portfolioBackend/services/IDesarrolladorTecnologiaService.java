@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IDesarrolladorTecnologiaService {
 
-    List<ResponseDesarrolladorTecnologia> obtenerTecnologiasDesarrollador();
+    List<ResponseDesarrolladorTecnologia> obtenerTecnologiasDesarrollador(String nombreTecnologia);
 }

@@ -6,15 +6,19 @@ import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import com.mrdevv.portfolioBackend.utils.FormateadorFechas;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -23,7 +27,9 @@ public class GlobalExceptionHandler {
         Exception.class,
         ObjectNotFoundException.class,
         HttpMessageNotReadableException.class,
-        BadCredentialsException.class
+        BadCredentialsException.class,
+        ConstraintViolationException.class,
+        HandlerMethodValidationException.class
     })
     public ResponseEntity<Object> handlerAllException(Exception exception, HttpServletRequest request, HttpServletResponse response){
         ZoneId zoneId = ZoneId.of("America/Lima");
@@ -67,6 +73,44 @@ public class GlobalExceptionHandler {
                     ErrorMessage.BAD_CREDENTIALS_LOGIN_BACKEND.getMessage(),
                     localDateTime,
                     null
+            );
+            return ResponseEntity.status(code).body(responseError);
+        }else if (exception instanceof ConstraintViolationException constraintViolationException){
+            Integer code = HttpStatus.BAD_REQUEST.value();
+            List<String> details = constraintViolationException.getConstraintViolations()
+                    .stream()
+                    .map(constraintViolation -> {
+                        String field = constraintViolation.getPropertyPath().toString();
+                        String paramName = field.contains(".") ? field.substring(field.lastIndexOf(".") + 1) : field;
+                        return paramName + ": " + constraintViolation.getMessage();
+                    })
+                    .toList();
+
+            ResponseError responseError = new ResponseError(
+                    "Failed", code,
+                    request.getRequestURL().toString(),
+                    request.getMethod(),
+                    "Parámetro inválido",
+                    constraintViolationException.getMessage(),
+                    localDateTime, details
+            );
+            return ResponseEntity.status(code).body(responseError);
+        }else if (exception instanceof HandlerMethodValidationException handlerException){
+            Integer code = HttpStatus.BAD_REQUEST.value();
+
+            List<String> details = handlerException.getAllErrors()
+                    .stream()
+                    .map(error -> error.getDefaultMessage())
+                    .toList();
+
+            ResponseError responseError = new ResponseError(
+                    "Failed", code,
+                    request.getRequestURL().toString(),
+                    request.getMethod(),
+                    "Parámetros inválidos",
+                    handlerException.getMessage(),
+                    localDateTime,
+                    details
             );
             return ResponseEntity.status(code).body(responseError);
         }
