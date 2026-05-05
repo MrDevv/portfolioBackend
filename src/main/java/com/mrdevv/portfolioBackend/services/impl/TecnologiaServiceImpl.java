@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
+import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseTecnologiaSimpleDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
@@ -9,6 +10,8 @@ import com.mrdevv.portfolioBackend.repositories.TecnologiaRepository;
 import com.mrdevv.portfolioBackend.services.ITecnologiaService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,8 +28,8 @@ public class TecnologiaServiceImpl implements ITecnologiaService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ResponseTecnologiaDTO> obtenerTecnologias() {
-        List<Tecnologia> tecnologias = tecnologiaRepository.findAll();
+    public ResponseWithPageable obtenerTecnologias(String nombre, Pageable pageable) {
+        Page<Tecnologia> tecnologias = tecnologiaRepository.obtenerTecnologias(nombre, pageable);
         return TecnologiaMapper.toResponseTecnologiaDTOList(tecnologias);
     }
 
