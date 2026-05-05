@@ -34,7 +34,7 @@ public class Usuario implements UserDetails {
 
     @OneToOne
     @JoinColumn(name = "desarrollador_id")
-    Desarrollador desarrollador;
+    Profesional profesional;
 
     @ManyToOne
     @JoinColumn(name = "rol_id")

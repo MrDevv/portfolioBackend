@@ -1,4 +1,4 @@
-package com.mrdevv.portfolioBackend.controllers;
+package com.mrdevv.portfolioBackend.controllers.admin;
 
 import com.mrdevv.portfolioBackend.dto.response.ResponseTipoProyectoDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("tipos-proyectos")
+@RequestMapping("admin/tipos-proyectos")
 public class TipoProyectoController {
 
     private final ITipoProyectoService proyectoService;

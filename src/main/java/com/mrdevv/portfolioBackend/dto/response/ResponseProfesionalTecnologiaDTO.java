@@ -3,7 +3,7 @@ package com.mrdevv.portfolioBackend.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record ResponseDesarrolladorTecnologia(
+public record ResponseProfesionalTecnologiaDTO(
         String tecnologia,
         @JsonProperty("logo_url")
         String logoUrl,

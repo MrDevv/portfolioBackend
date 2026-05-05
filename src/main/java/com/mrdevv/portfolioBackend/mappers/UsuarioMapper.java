@@ -1,7 +1,6 @@
 package com.mrdevv.portfolioBackend.mappers;
 
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseRolDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
 import com.mrdevv.portfolioBackend.models.Usuario;
@@ -26,27 +25,14 @@ public class UsuarioMapper {
         return usuarioDTOS;
     }
 
-//    public static ResponseUsuarioDTO toResponseUsuario(Usuario usuario){
-//        return new ResponseUsuarioDTO(
-//                usuario.getUsuarioId(),
-//                usuario.getEmail(),
-//                usuario.getDesarrollador().getNombres(),
-//                usuario.getDesarrollador().getApellidos(),
-//                usuario.getDesarrollador().getPuesto(),
-//                RolMapper.toResponseRolDTO(usuario.getRol()),
-//                usuario.getEstado() ? "activo" : "inactivo",
-//                usuario.getApiKey()
-//                );
-//    }
-
     public static ResponseUsuarioLoginDTO toResponseUsuarioLogin(Usuario usuario, String jwt){
         return new ResponseUsuarioLoginDTO(
                 usuario.getUsuarioUUID(),
                 usuario.getEmail(),
-                usuario.getDesarrollador().getNombres(),
-                usuario.getDesarrollador().getApellidos(),
-                usuario.getDesarrollador().getPuesto(),
-                usuario.getDesarrollador().getLogoUrl(),
+                usuario.getProfesional().getNombres(),
+                usuario.getProfesional().getApellidos(),
+                usuario.getProfesional().getPuesto(),
+                usuario.getProfesional().getLogoUrl(),
                 RolMapper.toResponseRolDTO(usuario.getRol()),
                 usuario.getEstado() ? "activo" : "inactivo",
                 jwt,

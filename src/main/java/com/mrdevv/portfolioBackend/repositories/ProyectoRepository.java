@@ -22,8 +22,8 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
         select p
         from Proyecto p
         join p.experiencia e
-        join e.desarrollador d
-        join d.usuario u
+        join e.profesional pr
+        join pr.usuario u
         where (:usuario_id is null or u.usuarioId = :usuario_id)
     """)
     Page<ProyectoProjectionDTO> obtenerProyectos(@Param(value = "usuario_id") Long usuarioId,

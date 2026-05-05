@@ -1,7 +1,6 @@
-package com.mrdevv.portfolioBackend.controllers;
+package com.mrdevv.portfolioBackend.controllers.me;
 
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciasDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IExperienciaService;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
@@ -14,20 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("experiencias")
-public class ExperienciaController {
+@RequestMapping("me/experiencias")
+public class MeExperienciaController {
 
     private final IExperienciaService experienciaService;
 
     @GetMapping
-    public ResponseEntity obtenerExperiencias(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+    public ResponseEntity obtenerExperienciasProfesionalAutenticado(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
                                               @RequestParam(name = "size", defaultValue = "4", required = false) Integer size){
         Pageable pageable = PageRequest.of(page, size);
-        ResponseWithPageable experiencias = experienciaService.obtenerExperiencias(pageable);
+        ResponseWithPageable experiencias = experienciaService.obtenerExperienciasProfesionalAutenticado(pageable);
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron las experiencias correctamente", experiencias);
     }
 

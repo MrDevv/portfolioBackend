@@ -1,4 +1,4 @@
-package com.mrdevv.portfolioBackend.controllers;
+package com.mrdevv.portfolioBackend.controllers.admin;
 
 import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("admin/usuarios")
 public class UsuarioController {
 
     private final UsuarioServiceImpl usuarioService;

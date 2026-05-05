@@ -18,9 +18,9 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query(value = "select " +
-            "d.nombres as nombres, d.apellidos as apellidos, u.email as email, " +
-            "d.puesto as puesto, r.descripcion as rol, u.estado as estado " +
-            "from Usuario u join u.desarrollador d " +
+            "p.nombres as nombres, p.apellidos as apellidos, u.email as email, " +
+            "p.puesto as puesto, r.descripcion as rol, u.estado as estado " +
+            "from Usuario u join u.profesional p " +
             "join u.rol r")
     List<UsuarioProjectionDTO> obtenerUsuarios();
 
@@ -32,7 +32,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "update Usuario u set u.apiKey = :apiKey where u.usuarioId = :usuarioId")
     void crearApiKey(@Param("usuarioId") Long usuarioId, @Param("apiKey") String apiKey);
 
-    @EntityGraph(attributePaths = {"desarrollador", "rol"})
+    @EntityGraph(attributePaths = {"profesional", "rol"})
     Optional<Usuario> findByEmail(String email);
 
     @EntityGraph(attributePaths = {})

@@ -1,8 +1,13 @@
-package com.mrdevv.portfolioBackend.dto.request;
+package com.mrdevv.portfolioBackend.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-public record UpdateDesarrolladorDTO(
+@JsonPropertyOrder({
+        "profesional_uuid", "nombres", "apellidos", "correo_contacto", "github_url", "linkedin_url", "cv_url", "logo_url", "prefijo_telefono", "telefono", "biografia", "puesto"})
+public record ResponseProfesionalDTO(
+        @JsonProperty("profesional_uuid")
+        String profesionalUUID,
         String nombres,
         String apellidos,
         @JsonProperty("correo_contacto")

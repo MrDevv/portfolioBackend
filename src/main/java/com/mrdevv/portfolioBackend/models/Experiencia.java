@@ -38,5 +38,5 @@ public class Experiencia {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "desarrollador_id")
-    Desarrollador desarrollador;
+    Profesional profesional;
 }

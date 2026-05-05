@@ -3,7 +3,6 @@ package com.mrdevv.portfolioBackend.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -12,15 +11,15 @@ import java.util.UUID;
 @Data
 @Builder
 @Table(name = "desarrolladores")
-public class Desarrollador {
+public class Profesional {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "desarrollador_id")
-    Long desarrolladorId;
+    Long profesionalId;
 
     @Column(name = "desarrollador_uuid")
-    String desarrolladorUUID;
+    String profesionalUUID;
 
     String nombres;
 
@@ -50,13 +49,13 @@ public class Desarrollador {
 
     String puesto;
 
-    @OneToOne(mappedBy = "desarrollador")
+    @OneToOne(mappedBy = "profesional")
     Usuario usuario;
 
     @PrePersist
     void generarUUID(){
-        if (this.desarrolladorUUID == null){
-            this.desarrolladorUUID = UUID.randomUUID().toString();
+        if (this.profesionalUUID == null){
+            this.profesionalUUID = UUID.randomUUID().toString();
         }
     }
 

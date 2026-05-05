@@ -16,6 +16,6 @@ public record ResponseExperienciasDTO(
         @JsonProperty("nombre_empresa")
         String nombreEmpresa,
         String puesto,
-        String desarrollador
+        String profesional
 ) {
 }

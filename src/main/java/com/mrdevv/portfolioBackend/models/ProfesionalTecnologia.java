@@ -12,16 +12,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "desarrollador_tecnologias")
-public class DesarrolladorTecnologia {
+public class ProfesionalTecnologia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "desarrollador_tecnologia_id")
-    Long desarrolladorTecnologiaId;
+    Long profesionalTecnologiaId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "desarrollador_id")
-    Desarrollador desarrollador;
+    Profesional profesional;
 
     @ManyToOne
     @JoinColumn(name = "tecnologia_id")

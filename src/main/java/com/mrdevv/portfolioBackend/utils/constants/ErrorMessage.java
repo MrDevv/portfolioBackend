@@ -2,8 +2,8 @@ package com.mrdevv.portfolioBackend.utils.constants;
 
 public enum ErrorMessage {
 
-    NOT_FOUND_DESARROLLADOR_FRONT("No se encontró el desarrollador con id '%s'"),
-    NOT_FOUND_DESARROLLADOR_BACKEND("No se encontró el OBJECT 'DESARROLLADOR' con ID '%s' en la base de datos."),
+    NOT_FOUND_PROFESIONAL_FRONT("No se encontró el profesional con id '%s'"),
+    NOT_FOUND_PROFESIONAL_BACKEND("No se encontró el OBJECT 'PROFESIONAL' con ID '%s' en la base de datos."),
     INVALID_VALUE_ROL_ENUM_FRONT("El rol ingresado no es válido, solo se permite el rol 'administrador' o 'usuario'"),
     INVALID_VALUE_ROL_ENUM_BACKEND("El rol ingresado no forma parte del sistema"),
     NOT_FOUND_ROL_FRONT("No se encontró el rol con descripción '%s'"),

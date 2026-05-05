@@ -20,10 +20,10 @@ public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> 
             "e.fechaFin, " +
             "e.nombreEmpresa, " +
             "e.puesto, " +
-            "d.nombres, " +
-            "d.apellidos " +
-            "from Experiencia e join e.desarrollador d " +
-            "join d.usuario u where (:usuario_id is null or u.usuarioId = :usuario_id) order by e.fechaInicio desc"
+            "p.nombres, " +
+            "p.apellidos " +
+            "from Experiencia e join e.profesional p " +
+            "join p.usuario u where (:usuario_id is null or u.usuarioId = :usuario_id) order by e.fechaInicio desc"
     )
     Page<ExperienciaProjectionDTO> obtenerExperiencias(@Param("usuario_id") Long usuarioId, Pageable pageable);
 

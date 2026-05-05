@@ -1,9 +1,8 @@
-package com.mrdevv.portfolioBackend.controllers;
+package com.mrdevv.portfolioBackend.controllers.auth;
 
 import com.mrdevv.portfolioBackend.dto.request.AuthDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
-import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.services.impl.AuthServiceImpl;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
 import lombok.RequiredArgsConstructor;

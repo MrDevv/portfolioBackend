@@ -60,7 +60,7 @@ public class HttpSecurityConfig {
                 .addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> {
                     requests.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
-                    requests.requestMatchers(HttpMethod.GET, "/usuarios").hasAnyRole("admin");
+                    requests.requestMatchers(HttpMethod.GET, "/admin/usuarios").hasAnyRole("admin");
 
                     requests.anyRequest().authenticated();
                 })

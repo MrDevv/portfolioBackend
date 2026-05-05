@@ -24,7 +24,7 @@ public class ProyectoServiceImpl implements IProyectoService {
 
     @Transactional(readOnly = true)
     @Override
-    public ResponseWithPageable obtenerProyectos(Pageable pageable) {
+    public ResponseWithPageable obtenerProyectosProfesionalAutenticado(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
         Page<ProyectoProjectionDTO> proyectosProjection = proyectoRepository.obtenerProyectos(

@@ -1,6 +1,6 @@
 package com.mrdevv.portfolioBackend.dto.projection;
 
-public interface DesarrolladorTecnologiaProjection {
+public interface ProfesionalTecnologiaProjection {
     String getDescripcion();
     String getLogoUrl();
     String getTipoTecnologia();
