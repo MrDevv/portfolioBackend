@@ -45,6 +45,7 @@ public class ProfesionalMapper {
         profesional.setNombres(updateProfesionalDTO.nombres());
         profesional.setApellidos(updateProfesionalDTO.apellidos());
         profesional.setCorreoContacto(updateProfesionalDTO.correoContacto());
+        profesional.setLinkedinUrl(updateProfesionalDTO.linkedinUrl());
         profesional.setGithubUrl(updateProfesionalDTO.githubUrl());
         profesional.setCvUrl(updateProfesionalDTO.cvUrl());
         profesional.setLogoUrl(updateProfesionalDTO.logoUrl());
