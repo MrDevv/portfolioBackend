@@ -33,7 +33,7 @@ public class Usuario implements UserDetails {
     Boolean estado;
 
     @OneToOne
-    @JoinColumn(name = "desarrollador_id")
+    @JoinColumn(name = "profesional_id")
     Profesional profesional;
 
     @ManyToOne

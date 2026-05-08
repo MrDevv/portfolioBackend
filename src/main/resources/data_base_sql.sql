@@ -1,6 +1,6 @@
-CREATE TABLE desarrolladores (
-    desarrollador_id NUMBER GENERATED ALWAYS AS IDENTITY,
-    desarrollador_uuid VARCHAR2(36) NOT NULL UNIQUE,
+CREATE TABLE profesionales (
+    profesional_id NUMBER GENERATED ALWAYS AS IDENTITY,
+    profesional_uuid VARCHAR2(36) NOT NULL UNIQUE,
     nombres VARCHAR2(100) NOT NULL,
     apellidos VARCHAR2(100) NOT NULL,
     correo_contacto VARCHAR2(200),
@@ -12,8 +12,8 @@ CREATE TABLE desarrolladores (
     telefono VARCHAR2(20),
     biografia VARCHAR2(4000),
     puesto VARCHAR2(100),
-    CONSTRAINT pk_desarrolladores
-        PRIMARY KEY (desarrollador_id)
+    CONSTRAINT pk_profesionales
+        PRIMARY KEY (profesional_id)
 );
 
 CREATE TABLE roles (
@@ -30,15 +30,15 @@ CREATE TABLE usuarios (
     email VARCHAR2(100) NOT NULL UNIQUE,
     password VARCHAR2(255) NOT NULL,
     estado NUMBER(1) DEFAULT 1 NOT NULL,
-    desarrollador_id NUMBER NOT NULL,
+    profesional_id NUMBER NOT NULL,
     rol_id NUMBER NOT NULL,
     api_key VARCHAR2(100),
     origen_permitido VARCHAR2(300),
     estado_origen NUMBER(1) DEFAULT 0 NOT NULL,
     CONSTRAINT pk_usuarios
         PRIMARY KEY (usuario_id),
-    CONSTRAINT fk_usuario_desarrollador
-        FOREIGN KEY (desarrollador_id) REFERENCES desarrolladores(desarrollador_id),
+    CONSTRAINT fk_usuario_profesional
+        FOREIGN KEY (profesional_id) REFERENCES profesionales(profesional_id),
     CONSTRAINT fk_usuario_rol
         FOREIGN KEY (rol_id) REFERENCES roles(rol_id)
 );
@@ -71,15 +71,15 @@ CREATE TABLE tecnologias (
         FOREIGN KEY (tipo_tecnologia_id) REFERENCES tipos_tecnologias(tipo_tecnologia_id)
 );
 
-CREATE TABLE desarrollador_tecnologias (
-    desarrollador_tecnologia_id NUMBER GENERATED ALWAYS AS IDENTITY,
-    desarrollador_id NUMBER NOT NULL,
+CREATE TABLE profesional_tecnologias (
+    profesional_tecnologia_id NUMBER GENERATED ALWAYS AS IDENTITY,
+    profesional_id NUMBER NOT NULL,
     tecnologia_id NUMBER NOT NULL,
     nivel VARCHAR2(20),
-    CONSTRAINT pk_desarrollador_tecnologias
-        PRIMARY KEY (desarrollador_tecnologia_id),
-    CONSTRAINT fk_dt_desarrollador
-        FOREIGN KEY (desarrollador_id) REFERENCES desarrolladores(desarrollador_id),
+    CONSTRAINT pk_profesional_tecnologias
+        PRIMARY KEY (profesional_tecnologia_id),
+    CONSTRAINT fk_dt_profesional
+        FOREIGN KEY (profesional_id) REFERENCES profesionales(profesional_id),
     CONSTRAINT fk_dt_tecnologia
         FOREIGN KEY (tecnologia_id) REFERENCES tecnologias(tecnologia_id)
 );
@@ -93,11 +93,11 @@ CREATE TABLE experiencias(
     fecha_fin DATE,
     nombre_empresa VARCHAR2(60) NOT NULL,
     puesto VARCHAR2(60) NOT NULL,
-    desarrollador_id NUMBER NOT NULL,
+    profesional_id NUMBER NOT NULL,
     CONSTRAINT pk_experiencia
         PRIMARY KEY (experiencia_id),
-    CONSTRAINT fk_experiencia_desarrollador
-        FOREIGN KEY (desarrollador_id) REFERENCES desarrolladores(desarrollador_id)
+    CONSTRAINT fk_experiencia_profesional
+        FOREIGN KEY (profesional_id) REFERENCES profesionales(profesional_id)
 );
 
 CREATE TABLE proyectos(

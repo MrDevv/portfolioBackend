@@ -10,15 +10,15 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Builder
-@Table(name = "desarrolladores")
+@Table(name = "profesionales")
 public class Profesional {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "desarrollador_id")
+    @Column(name = "profesional_id")
     Long profesionalId;
 
-    @Column(name = "desarrollador_uuid")
+    @Column(name = "profesional_uuid")
     String profesionalUUID;
 
     String nombres;

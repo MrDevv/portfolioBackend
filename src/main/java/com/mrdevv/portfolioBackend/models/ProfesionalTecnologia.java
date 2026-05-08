@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "desarrollador_tecnologias")
+@Table(name = "profesional_tecnologias")
 public class ProfesionalTecnologia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "desarrollador_tecnologia_id")
+    @Column(name = "profesional_tecnologia_id")
     Long profesionalTecnologiaId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "desarrollador_id")
+    @JoinColumn(name = "profesional_id")
     Profesional profesional;
 
     @ManyToOne
