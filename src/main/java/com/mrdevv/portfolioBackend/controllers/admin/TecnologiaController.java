@@ -33,7 +33,7 @@ public class TecnologiaController {
 
     @GetMapping("/{id}")
     public ResponseEntity obtenerTecnologiaPorId(@PathVariable(name = "id") Long tecnologiaId){
-        ResponseTecnologiaDTO tecnologia = tecnologiaService.obtenerTecnologiaPorId(tecnologiaId);
+        ResponseTecnologiaDTO tecnologia = tecnologiaService.obtenerTecnologiaPorUUID(tecnologiaId);
         return ResponseHandler.ok(TipoResponse.GET, "Se obtuvo la tecnología correctamente", tecnologia);
     }
 

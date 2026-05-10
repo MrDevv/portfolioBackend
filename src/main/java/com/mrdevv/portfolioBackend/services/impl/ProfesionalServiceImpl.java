@@ -40,6 +40,14 @@ public class ProfesionalServiceImpl implements IProfesionalService {
         return ProfesionalMapper.toProfesionalDTO(profesional);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Profesional obtenerProfesionalPorUsuarioId(Long usuarioId) {
+        return profesionalRepository.obtenerProfesionalPorUsuarioId(usuarioId).orElseThrow(() -> {
+            throw new ObjectNotFoundException(ErrorMessage.NOT_FOUND_PROFESIONAL_BACKEND.getMessage(), ErrorMessage.NOT_FOUND_USUARIO_BY_EMAIL_FRONT.getMessage());
+        });
+    }
+
     private Profesional buscarProfesionalPorId(Long profesionalId){
         return profesionalRepository.findById(profesionalId).orElseThrow(() -> {
             throw new ObjectNotFoundException(ErrorMessage.NOT_FOUND_PROFESIONAL_FRONT.getMessage(profesionalId),

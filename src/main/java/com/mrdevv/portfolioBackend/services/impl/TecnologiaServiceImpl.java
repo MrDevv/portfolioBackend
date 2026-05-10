@@ -35,7 +35,7 @@ public class TecnologiaServiceImpl implements ITecnologiaService {
 
     @Transactional(readOnly = true)
     @Override
-    public ResponseTecnologiaDTO obtenerTecnologiaPorId(Long tipoProyectoId) {
+    public ResponseTecnologiaDTO obtenerTecnologiaPorUUID(Long tipoProyectoId) {
         Tecnologia tecnologia = tecnologiaRepository.findById(tipoProyectoId).orElseThrow(() -> {
             throw new ObjectNotFoundException(
                     ErrorMessage.NOT_FOUND_TECNOLOGIA_FRONT.getMessage(tipoProyectoId),
@@ -44,5 +44,16 @@ public class TecnologiaServiceImpl implements ITecnologiaService {
         });
 
         return TecnologiaMapper.toResponseTecnologiaDTO(tecnologia);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Tecnologia obtenerTecnologiaPorUUID(String tecnologiaUUID) {
+        return tecnologiaRepository.obtenerTecnologiaPorUUID(tecnologiaUUID).orElseThrow(() -> {
+            throw new ObjectNotFoundException(
+                    ErrorMessage.NOT_FOUND_TECNOLOGIA_BACKEND.getMessage(tecnologiaUUID),
+                    ErrorMessage.NOT_FOUND_TECNOLOGIA_FRONT.getMessage(tecnologiaUUID)
+            );
+        });
     }
 }
