@@ -3,7 +3,7 @@ package com.mrdevv.portfolioBackend.dto.projection;
 import java.time.LocalDate;
 
 public record ExperienciaProjectionDTO(
-        Long experienciaId,
+        String experienciaUUID,
         String descripcion,
         String titulo,
         LocalDate fechaInicio,

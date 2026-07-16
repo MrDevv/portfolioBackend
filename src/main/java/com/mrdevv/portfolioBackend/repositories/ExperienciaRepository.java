@@ -13,7 +13,7 @@ import java.util.List;
 public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> {
 
     @Query(value = "select " +
-            "e.experienciaId, " +
+            "e.experienciaUUID, " +
             "e.descripcion, " +
             "e.titulo, " +
             "e.fechaInicio, " +
@@ -26,7 +26,7 @@ public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> 
             "from Experiencia e left join e.proyectos pr join e.profesional p " +
             "join p.usuario u where (:usuario_id is null or u.usuarioId = :usuario_id) " +
             "and (:nombre_empresa is null or lower(e.nombreEmpresa) like concat(lower(:nombre_empresa), '%')) " +
-            "group by e.experienciaId, e.descripcion, e.titulo, e.fechaInicio, e.fechaFin, e.nombreEmpresa, e.puesto, p.nombres, p.apellidos " +
+            "group by e.experienciaUUID, e.descripcion, e.titulo, e.fechaInicio, e.fechaFin, e.nombreEmpresa, e.puesto, p.nombres, p.apellidos " +
             "order by e.fechaInicio desc"
     )
     Page<ExperienciaProjectionDTO> obtenerExperiencias(@Param("usuario_id") Long usuarioId, @Param("nombre_empresa") String nombreEmpresa, Pageable pageable);

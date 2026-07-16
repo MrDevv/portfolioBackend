@@ -20,7 +20,7 @@ public class Experiencia {
     Long experienciaId;
 
     @Column(name = "experiencia_uuid")
-    UUID experienciaUUID = UUID.randomUUID();
+    String experienciaUUID;
 
     String descripcion;
 
@@ -43,4 +43,9 @@ public class Experiencia {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profesional_id")
     Profesional profesional;
+
+    @PrePersist
+    void generarUUID(){
+        experienciaUUID = UUID.randomUUID().toString();
+    }
 }

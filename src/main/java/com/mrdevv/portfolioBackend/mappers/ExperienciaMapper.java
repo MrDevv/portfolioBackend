@@ -18,7 +18,7 @@ public class ExperienciaMapper {
 
         List<ResponseExperienciasDTO> experienciasDTOS = experienciasProjection.getContent().stream().map(experienciaProjection -> {
             return new ResponseExperienciasDTO(
-                    experienciaProjection.experienciaId(),
+                    experienciaProjection.experienciaUUID(),
                     experienciaProjection.titulo(),
                     experienciaProjection.descripcion(),
                     experienciaProjection.fechaInicio(),

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 public record ResponseExperienciasDTO(
-        @JsonProperty("experiencia_id")
-        Long experienciaId,
+        @JsonProperty("experiencia_uuid")
+        String experienciaUUID,
         String titulo,
         String descripcion,
         @JsonProperty("fecha_inicio")
