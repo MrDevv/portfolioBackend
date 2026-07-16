@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface IExperienciaService {
 
-    ResponseWithPageable obtenerExperienciasProfesionalAutenticado(Pageable pageable);
+    ResponseWithPageable obtenerExperienciasProfesionalAutenticado(String nombreEmpresa, Pageable pageable);
 
 }

@@ -24,7 +24,7 @@ public class DevExperienciaController {
     public ResponseEntity obtenerExperienciasProfesional(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
                                                            @RequestParam(name = "size", defaultValue = "4", required = false) Integer size){
         Pageable pageable = PageRequest.of(page, size);
-        ResponseWithPageable experienciasDTO = experienciaService.obtenerExperienciasProfesionalAutenticado(pageable);
+        ResponseWithPageable experienciasDTO = experienciaService.obtenerExperienciasProfesionalAutenticado(null, pageable);
         return ResponseHandler.ok(TipoResponse.GETALL, "Se obtuvieron las experiencias correctamente", experienciasDTO);
     }
 }

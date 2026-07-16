@@ -24,11 +24,10 @@ public class ExperienciaServiceImpl implements IExperienciaService {
 
     @Transactional(readOnly = true)
     @Override
-    public ResponseWithPageable obtenerExperienciasProfesionalAutenticado(Pageable pageable) {
+    public ResponseWithPageable obtenerExperienciasProfesionalAutenticado(String nombreEmpresa, Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
-
-        Page<ExperienciaProjectionDTO> experiencias = experienciaRepository.obtenerExperiencias(usuarioId, pageable);
+        Page<ExperienciaProjectionDTO> experiencias = experienciaRepository.obtenerExperiencias(usuarioId, nombreEmpresa, pageable);
         return ExperienciaMapper.toResponseExperienciasListDTO(experiencias);
     }
 }

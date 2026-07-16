@@ -22,9 +22,10 @@ public class MeExperienciaController {
 
     @GetMapping
     public ResponseEntity obtenerExperienciasProfesionalAutenticado(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-                                              @RequestParam(name = "size", defaultValue = "4", required = false) Integer size){
+                                                                     @RequestParam(name = "size", defaultValue = "4", required = false) Integer size,
+                                                                    @RequestParam(name = "nombre_empresa", required = false) String nombreEmpresa){
         Pageable pageable = PageRequest.of(page, size);
-        ResponseWithPageable experiencias = experienciaService.obtenerExperienciasProfesionalAutenticado(pageable);
+        ResponseWithPageable experiencias = experienciaService.obtenerExperienciasProfesionalAutenticado(nombreEmpresa, pageable);
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron las experiencias correctamente", experiencias);
     }
 

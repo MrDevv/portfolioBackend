@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -35,6 +36,9 @@ public class Experiencia {
     String nombreEmpresa;
 
     String puesto;
+
+    @OneToMany(mappedBy = "experiencia", fetch = FetchType.LAZY)
+    List<Proyecto> proyectos;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profesional_id")
