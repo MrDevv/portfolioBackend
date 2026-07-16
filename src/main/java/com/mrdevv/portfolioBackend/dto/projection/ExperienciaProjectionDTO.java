@@ -11,6 +11,7 @@ public record ExperienciaProjectionDTO(
         String nombreEmpresa,
         String puesto,
         String nombres,
-        String apellidos
+        String apellidos,
+        Long cantidadProyectos
 ) {
 }
