@@ -20,6 +20,8 @@ public enum ErrorMessage {
     NOT_FOUND_TECNOLOGIA_BACKEND("No se encontró el OBJECT 'TECNOLOGIA' con UUID '%s' en la base de datos."),
     REPLICATE_OBJECT_TECNOLOGIA_PROFESIONAL_FRONT("La tecnología '%s' ya se encuentra registrada para el profesional"),
     REPLICATE_OBJECT_TECNOLOGIA_PROFESIONAL_BACKEND("El OBJECT 'TECNOLOGIA' con UUID '%s' ya se encuentra registrada para el OBJECT 'PROFESIONAL'."),
+    REPLICATE_OBJECT_EXPERIENCIA_PROFESIONAL_FRONT("La experiencia profesional con el título '%s' ya está registrada para este profesional"),
+    REPLICATE_OBJECT_EXPERIENCIA_PROFESIONAL_BACKEND("El OBJECT 'EXPERIENCIA' con TITULO '%s' ya está registrada para el OBJECT 'PROFESIONAL'."),
     BAD_CREDENTIALS_LOGIN_FRONT("Usuario o contraseña incorrectos, revise sus datos"),
     BAD_CREDENTIALS_LOGIN_BACKEND("Credenciales incorrectas");
 

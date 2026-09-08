@@ -48,4 +48,11 @@ public class Experiencia {
     void generarUUID(){
         experienciaUUID = UUID.randomUUID().toString();
     }
+
+    public String obtenerNombreCompletoProfesional() {
+        if (profesional != null) {
+            return profesional.getNombres() + " " + profesional.getApellidos();
+        }
+        return null;
+    }
 }

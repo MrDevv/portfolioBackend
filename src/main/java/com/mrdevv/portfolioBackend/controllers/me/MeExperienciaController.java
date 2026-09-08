@@ -1,17 +1,18 @@
 package com.mrdevv.portfolioBackend.controllers.me;
 
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
+import com.mrdevv.portfolioBackend.dto.request.CreateExperienciaDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaCreatedDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciasDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IExperienciaService;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,6 +28,12 @@ public class MeExperienciaController {
         Pageable pageable = PageRequest.of(page, size);
         ResponseWithPageable experiencias = experienciaService.obtenerExperienciasProfesionalAutenticado(nombreEmpresa, pageable);
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron las experiencias correctamente", experiencias);
+    }
+
+    @PostMapping
+    public ResponseEntity registrarExperienciaProfesionalAutenticado(@Valid @RequestBody CreateExperienciaDTO createExperienciaDTO) {
+        ResponseExperienciaCreatedDTO nuevaExperiencia = experienciaService.registrarExperienciaProfesionalAutenticado(createExperienciaDTO);
+        return ResponseHandler.ok(TipoResponse.CREATE, "Se registró correctamente la experiencia profesional", nuevaExperiencia);
     }
 
 }

@@ -31,4 +31,7 @@ public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> 
     )
     Page<ExperienciaProjectionDTO> obtenerExperiencias(@Param("usuario_id") Long usuarioId, @Param("nombre_empresa") String nombreEmpresa, Pageable pageable);
 
+    @Query(value = "select count(e) > 0 from Experiencia e join e.profesional p join p.usuario u where lower(e.titulo) = lower(:experiencia_titulo) and u.usuarioId = :usuario_id")
+    boolean existeExperienciaProfesional(@Param("usuario_id") Long usuarioId, @Param("experiencia_titulo") String experienciaTitulo);
+
 }
