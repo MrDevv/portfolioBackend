@@ -18,6 +18,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -35,6 +36,7 @@ public class GlobalExceptionHandler {
         BadCredentialsException.class,
         ObjectReplicatedException.class,
         ConstraintViolationException.class,
+        NoResourceFoundException.class,
         MethodArgumentNotValidException.class
     })
     public ResponseEntity<Object> handlerAllException(Exception exception, HttpServletRequest request, HttpServletResponse response){
@@ -77,11 +79,12 @@ public class GlobalExceptionHandler {
             if (path.contains("usuarios")) {
                 messageFront = ErrorMessage.INVALID_VALUE_ROL_ENUM_FRONT.getMessage() + Arrays.stream(Roles.values()).map(Roles::getRol).toList();
                 messageBack = ErrorMessage.INVALID_VALUE_ROL_ENUM_BACKEND.getMessage();
-            }
-
-            if (path.contains("tecnologias")) {
+            } else if (path.contains("tecnologias")) {
                 messageFront = ErrorMessage.INVALID_VALUE_NIVEL_TEC_ENUM_FRONT.getMessage() + Arrays.stream(NivelTecnologia.values()).map(NivelTecnologia::getNivel).toList();
                 messageBack = ErrorMessage.INVALID_VALUE_NIVEL_TEC_ENUM_BACKEND.getMessage();
+            } else {
+                messageFront = "El cuerpo de la petición es obligatorio o el formato JSON es incorrecto.";
+                messageBack = "Required request body is missing or JSON is malformed.";
             }
 
             ResponseError responseError = new ResponseError(
@@ -144,6 +147,19 @@ public class GlobalExceptionHandler {
                     "El o los parámetros del BODY son inválidos",
                     localDateTime,
                     details
+            );
+            return ResponseEntity.status(code).body(responseError);
+         }else if (exception instanceof NoResourceFoundException noResourceFoundException){
+            Integer code = HttpStatus.NOT_FOUND.value();
+            ResponseError responseError = new ResponseError(
+                    "Failed",
+                    code,
+                    request.getRequestURL().toString(),
+                    request.getMethod(),
+                    noResourceFoundException.getMessage(),
+                    noResourceFoundException.getMessage(),
+                    localDateTime,
+                    null
             );
             return ResponseEntity.status(code).body(responseError);
         }
