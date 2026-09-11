@@ -2,8 +2,10 @@ package com.mrdevv.portfolioBackend.controllers.me;
 
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.request.CreateExperienciaDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateExperienceDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaCreatedDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciasDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaUpdatedDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IExperienciaService;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
@@ -30,10 +32,22 @@ public class MeExperienciaController {
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron las experiencias correctamente", experiencias);
     }
 
+    @GetMapping("/{uuid}")
+    public ResponseEntity obtenerExperienciaProfesionalAutenticada(@PathVariable(name = "uuid") String experienciaUUID) {
+        ResponseExperienciaDTO experiencia = experienciaService.obtenerExperienciaProfesionalAutenticado(experienciaUUID);
+        return ResponseHandler.ok(TipoResponse.GET, "Se obtuvo correctamente la experiencia profesional", experiencia);
+    }
+
     @PostMapping
     public ResponseEntity registrarExperienciaProfesionalAutenticado(@Valid @RequestBody CreateExperienciaDTO createExperienciaDTO) {
-        ResponseExperienciaCreatedDTO nuevaExperiencia = experienciaService.registrarExperienciaProfesionalAutenticado(createExperienciaDTO);
+        ResponseExperienciaDTO nuevaExperiencia = experienciaService.registrarExperienciaProfesionalAutenticado(createExperienciaDTO);
         return ResponseHandler.ok(TipoResponse.CREATE, "Se registró correctamente la experiencia profesional", nuevaExperiencia);
+    }
+
+    @PutMapping("{uuid}")
+    public ResponseEntity actualizarExperienciaProfesionalAutenticada(@Valid @RequestBody UpdateExperienceDTO updateExperienceDTO, @PathVariable(name = "uuid") String experienciaUUD) {
+        ResponseExperienciaDTO experienciaUpdatedDTO =  experienciaService.actualizarExperienciaProfesionalAutenticada(updateExperienceDTO, experienciaUUD);
+        return ResponseHandler.ok(TipoResponse.UPDATE, "Se actualizó correctamente la experiencia profesional", experienciaUpdatedDTO);
     }
 
 }

@@ -34,4 +34,6 @@ public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> 
     @Query(value = "select count(e) > 0 from Experiencia e join e.profesional p join p.usuario u where lower(e.titulo) = lower(:experiencia_titulo) and u.usuarioId = :usuario_id")
     boolean existeExperienciaProfesional(@Param("usuario_id") Long usuarioId, @Param("experiencia_titulo") String experienciaTitulo);
 
+    @Query(value = "select e from Experiencia e join e.profesional p join p.usuario u where e.experienciaUUID = :experiencia_uuid and u.usuarioId = :usuario_id")
+    Experiencia obtenerExperienciaPorUUIDyUsuarioId(@Param("usuario_id") Long usuarioId, @Param("experiencia_uuid") String experienciaUUID);
 }

@@ -1,12 +1,11 @@
 package com.mrdevv.portfolioBackend.mappers;
 
+import com.mrdevv.portfolioBackend.dto.request.UpdateExperienceDTO;
 import com.mrdevv.portfolioBackend.dto.PageableData;
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.projection.ExperienciaProjectionSimpleDTO;
 import com.mrdevv.portfolioBackend.dto.request.CreateExperienciaDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaCreatedDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaSimpleDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciasDTO;
+import com.mrdevv.portfolioBackend.dto.response.*;
 import com.mrdevv.portfolioBackend.dto.projection.ExperienciaProjectionDTO;
 import com.mrdevv.portfolioBackend.models.Experiencia;
 import com.mrdevv.portfolioBackend.models.Profesional;
@@ -20,8 +19,8 @@ public class ExperienciaMapper {
     public static ResponseWithPageable toResponseExperienciasListDTO(Page<ExperienciaProjectionDTO> experienciasProjection){
         PageableData pageableData = PageableMapper.toPageable(experienciasProjection);
 
-        List<ResponseExperienciasDTO> experienciasDTOS = experienciasProjection.getContent().stream().map(experienciaProjection -> {
-            return new ResponseExperienciasDTO(
+        List<ResponseExperienciaDetailDTO> experienciasDTOS = experienciasProjection.getContent().stream().map(experienciaProjection -> {
+            return new ResponseExperienciaDetailDTO(
                     experienciaProjection.experienciaUUID(),
                     experienciaProjection.titulo(),
                     experienciaProjection.descripcion(),
@@ -56,8 +55,17 @@ public class ExperienciaMapper {
                 .build();
     }
 
-    public static ResponseExperienciaCreatedDTO toResponseExperienciaCreatedDTO(Experiencia experiencia) {
-        return new ResponseExperienciaCreatedDTO(
+    public static void actualizarExperienciaEntity(Experiencia experiencia, UpdateExperienceDTO updateExperienceDTO) {
+        experiencia.setTitulo(updateExperienceDTO.titulo().trim());
+        experiencia.setDescripcion(updateExperienceDTO.descripcion().trim());
+        experiencia.setFechaInicio(updateExperienceDTO.fechaInicio());
+        experiencia.setFechaFin(updateExperienceDTO.fechaFin());
+        experiencia.setNombreEmpresa(updateExperienceDTO.nombreEmpresa().trim());
+        experiencia.setPuesto(updateExperienceDTO.puesto().trim());
+    }
+
+    public static ResponseExperienciaDTO toResponseExperienciaDTO(Experiencia experiencia) {
+        return new ResponseExperienciaDTO(
                 experiencia.getExperienciaUUID(),
                 experiencia.getTitulo(),
                 experiencia.getDescripcion(),

@@ -1,10 +1,13 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
+import com.mrdevv.portfolioBackend.dto.request.UpdateExperienceDTO;
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.request.CreateExperienciaDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaCreatedDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciasDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaUpdatedDTO;
 import com.mrdevv.portfolioBackend.dto.projection.ExperienciaProjectionDTO;
+import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.exceptions.ObjectReplicatedException;
 import com.mrdevv.portfolioBackend.mappers.ExperienciaMapper;
 import com.mrdevv.portfolioBackend.models.Experiencia;
@@ -19,8 +22,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,15 +39,45 @@ public class ExperienciaServiceImpl implements IExperienciaService {
         return ExperienciaMapper.toResponseExperienciasListDTO(experiencias);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public ResponseExperienciaDTO obtenerExperienciaProfesionalAutenticado(String experienciaUUID) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
+        Experiencia experiencia = experienciaRepository.obtenerExperienciaPorUUIDyUsuarioId(usuarioId, experienciaUUID);
+        if (experiencia == null) {
+            throw new ObjectNotFoundException(
+                    ErrorMessage.NOT_FOUND_EXPERIENCIA_BACKEND.getMessage(experienciaUUID),
+                    ErrorMessage.NOT_FOUND_EXPERIENCIA_FRONT.getMessage(experienciaUUID));
+        }
+        return ExperienciaMapper.toResponseExperienciaDTO(experiencia);
+    }
+
     @Transactional
     @Override
-    public ResponseExperienciaCreatedDTO registrarExperienciaProfesionalAutenticado(CreateExperienciaDTO createExperienciaDTO) {
+    public ResponseExperienciaDTO registrarExperienciaProfesionalAutenticado(CreateExperienciaDTO createExperienciaDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
         validarExperienciaNoRegistradaPorProfesional(usuarioId, createExperienciaDTO.titulo().trim());
         Experiencia experiencia = experienciaRepository.save(ExperienciaMapper.toExperienciaEntity(createExperienciaDTO, usuarioId));
-        return ExperienciaMapper.toResponseExperienciaCreatedDTO(experiencia);
+        return ExperienciaMapper.toResponseExperienciaDTO(experiencia);
     }
+
+    @Transactional
+    @Override
+    public ResponseExperienciaDTO actualizarExperienciaProfesionalAutenticada(UpdateExperienceDTO updateExperienceDTO, String experienciaUUID) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
+        Experiencia experiencia = experienciaRepository.obtenerExperienciaPorUUIDyUsuarioId(usuarioId, experienciaUUID);
+        if (experiencia == null) {
+            throw new ObjectNotFoundException(
+                    ErrorMessage.NOT_FOUND_EXPERIENCIA_BACKEND.getMessage(experienciaUUID),
+                    ErrorMessage.NOT_FOUND_EXPERIENCIA_FRONT.getMessage(experienciaUUID));
+        }
+        ExperienciaMapper.actualizarExperienciaEntity(experiencia, updateExperienceDTO);
+        return ExperienciaMapper.toResponseExperienciaDTO(experiencia);
+    }
+
 
     void validarExperienciaNoRegistradaPorProfesional(Long usuarioId, String experienciaTitulo){
         if (experienciaRepository.existeExperienciaProfesional(usuarioId, experienciaTitulo)){
