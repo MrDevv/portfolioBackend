@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> {
 
@@ -35,5 +36,5 @@ public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> 
     boolean existeExperienciaProfesional(@Param("usuario_id") Long usuarioId, @Param("experiencia_titulo") String experienciaTitulo);
 
     @Query(value = "select e from Experiencia e join e.profesional p join p.usuario u where e.experienciaUUID = :experiencia_uuid and u.usuarioId = :usuario_id")
-    Experiencia obtenerExperienciaPorUUIDyUsuarioId(@Param("usuario_id") Long usuarioId, @Param("experiencia_uuid") String experienciaUUID);
+    Optional<Experiencia> obtenerExperienciaPorUUIDyUsuarioId(@Param("usuario_id") Long usuarioId, @Param("experiencia_uuid") String experienciaUUID);
 }

@@ -38,11 +38,9 @@ public class Experiencia {
 
     String puesto;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "experiencia", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "experiencia", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     List<Proyecto> proyectos;
 
-    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profesional_id")
     Profesional profesional;

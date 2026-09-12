@@ -50,4 +50,10 @@ public class MeExperienciaController {
         return ResponseHandler.ok(TipoResponse.UPDATE, "Se actualizó correctamente la experiencia profesional", experienciaUpdatedDTO);
     }
 
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity eliminarExperienciaProfesionalAutenticado(@PathVariable(name = "uuid") String experienciaUUID) {
+        experienciaService.eliminarExperienciaProfesionalAutenticado(experienciaUUID);
+        return ResponseHandler.ok(TipoResponse.DELETE, "Se eliminó correctamente la experiencia profesional", null);
+    }
+
 }

@@ -44,12 +44,10 @@ public class ExperienciaServiceImpl implements IExperienciaService {
     public ResponseExperienciaDTO obtenerExperienciaProfesionalAutenticado(String experienciaUUID) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
-        Experiencia experiencia = experienciaRepository.obtenerExperienciaPorUUIDyUsuarioId(usuarioId, experienciaUUID);
-        if (experiencia == null) {
-            throw new ObjectNotFoundException(
-                    ErrorMessage.NOT_FOUND_EXPERIENCIA_BACKEND.getMessage(experienciaUUID),
-                    ErrorMessage.NOT_FOUND_EXPERIENCIA_FRONT.getMessage(experienciaUUID));
-        }
+        Experiencia experiencia = experienciaRepository.obtenerExperienciaPorUUIDyUsuarioId(usuarioId, experienciaUUID).orElseThrow(() -> new ObjectNotFoundException(
+                ErrorMessage.NOT_FOUND_EXPERIENCIA_BACKEND.getMessage(experienciaUUID),
+                ErrorMessage.NOT_FOUND_EXPERIENCIA_FRONT.getMessage(experienciaUUID)
+        ));
         return ExperienciaMapper.toResponseExperienciaDTO(experiencia);
     }
 
@@ -68,14 +66,24 @@ public class ExperienciaServiceImpl implements IExperienciaService {
     public ResponseExperienciaDTO actualizarExperienciaProfesionalAutenticada(UpdateExperienceDTO updateExperienceDTO, String experienciaUUID) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
-        Experiencia experiencia = experienciaRepository.obtenerExperienciaPorUUIDyUsuarioId(usuarioId, experienciaUUID);
-        if (experiencia == null) {
-            throw new ObjectNotFoundException(
-                    ErrorMessage.NOT_FOUND_EXPERIENCIA_BACKEND.getMessage(experienciaUUID),
-                    ErrorMessage.NOT_FOUND_EXPERIENCIA_FRONT.getMessage(experienciaUUID));
-        }
+        Experiencia experiencia = experienciaRepository.obtenerExperienciaPorUUIDyUsuarioId(usuarioId, experienciaUUID).orElseThrow(() -> new ObjectNotFoundException(
+                ErrorMessage.NOT_FOUND_EXPERIENCIA_BACKEND.getMessage(experienciaUUID),
+                ErrorMessage.NOT_FOUND_EXPERIENCIA_FRONT.getMessage(experienciaUUID)
+        ));
         ExperienciaMapper.actualizarExperienciaEntity(experiencia, updateExperienceDTO);
         return ExperienciaMapper.toResponseExperienciaDTO(experiencia);
+    }
+
+    @Transactional
+    @Override
+    public void eliminarExperienciaProfesionalAutenticado(String experienciaUUID) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
+        Experiencia experiencia = experienciaRepository.obtenerExperienciaPorUUIDyUsuarioId(usuarioId, experienciaUUID).orElseThrow(() -> new ObjectNotFoundException(
+                ErrorMessage.NOT_FOUND_EXPERIENCIA_BACKEND.getMessage(experienciaUUID),
+                ErrorMessage.NOT_FOUND_EXPERIENCIA_FRONT.getMessage(experienciaUUID)
+        ));
+        experienciaRepository.delete(experiencia);
     }
 
 
