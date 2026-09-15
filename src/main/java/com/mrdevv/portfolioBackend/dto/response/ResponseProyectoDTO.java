@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.UUID;
 
 public record ResponseProyectoDTO(
         @JsonProperty("proyecto_uuid")
-        UUID proyectoUUID,
+        String proyectoUUID,
         String titulo,
         String descripcion,
         @JsonProperty("url_produccion")
@@ -17,6 +18,7 @@ public record ResponseProyectoDTO(
         @JsonProperty("url_imagen_presentacion")
         String urlImagenPresentacion,
         String estado,
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         @JsonProperty("experiencia")
         ResponseExperienciaSimpleDTO experienciaSimpleDTO,
         @JsonProperty("tipo_proyecto")

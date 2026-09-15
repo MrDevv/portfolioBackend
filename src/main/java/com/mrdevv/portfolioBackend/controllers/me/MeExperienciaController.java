@@ -3,9 +3,8 @@ package com.mrdevv.portfolioBackend.controllers.me;
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.request.CreateExperienciaDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateExperienceDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaCreatedDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaUpdatedDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaConProyectosDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IExperienciaService;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
@@ -54,6 +53,12 @@ public class MeExperienciaController {
     public ResponseEntity eliminarExperienciaProfesionalAutenticado(@PathVariable(name = "uuid") String experienciaUUID) {
         experienciaService.eliminarExperienciaProfesionalAutenticado(experienciaUUID);
         return ResponseHandler.ok(TipoResponse.DELETE, "Se eliminó correctamente la experiencia profesional", null);
+    }
+
+    @GetMapping("/{uuid}/proyectos")
+    public ResponseEntity obtenerExperienciaConProyectosProfesionalAutenticado(@PathVariable(name = "uuid") String experienciaUUID) {
+        ResponseExperienciaConProyectosDTO experiencia = experienciaService.obtenerExperienciaConProyectosProfesionalAutenticado(experienciaUUID);
+        return ResponseHandler.ok(TipoResponse.GET, "Se obtuvo correctamente el detalle de la experiencia profesional", experiencia);
     }
 
 }

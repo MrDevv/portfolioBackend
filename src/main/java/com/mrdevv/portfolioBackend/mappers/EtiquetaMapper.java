@@ -18,5 +18,4 @@ public class EtiquetaMapper {
             );
         }).collect(Collectors.toList());
     }
-
 }

@@ -1,9 +1,8 @@
 package com.mrdevv.portfolioBackend.dto.projection;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface ProyectoProjectionDTO {
+public interface ProyectoSinExperienciaProjectionDTO {
 
     String getProyectoUUID();
 
@@ -18,8 +17,6 @@ public interface ProyectoProjectionDTO {
     String getUrlImagenPresentacion();
 
     Boolean getEstado();
-
-    ExperienciaProjectionSimpleDTO getExperiencia();
 
     TipoProyectoProjectionSimpleDTO getTipoProyecto();
 

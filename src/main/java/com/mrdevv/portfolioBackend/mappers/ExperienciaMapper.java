@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.mappers;
 
+import com.mrdevv.portfolioBackend.dto.projection.ExperienciaConProyectosProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateExperienceDTO;
 import com.mrdevv.portfolioBackend.dto.PageableData;
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
@@ -34,6 +35,19 @@ public class ExperienciaMapper {
         }).collect(Collectors.toList());
 
         return new ResponseWithPageable(experienciasDTOS, pageableData);
+    }
+
+    public static ResponseExperienciaConProyectosDTO toResponseExperienciaConProyectosDTO(ExperienciaConProyectosProjectionDTO experienciaDetalleProjectionDTO){
+        return new ResponseExperienciaConProyectosDTO(
+                experienciaDetalleProjectionDTO.getExperienciaUUID(),
+                experienciaDetalleProjectionDTO.getTitulo(),
+                experienciaDetalleProjectionDTO.getDescripcion(),
+                experienciaDetalleProjectionDTO.getFechaInicio(),
+                experienciaDetalleProjectionDTO.getFechaFin(),
+                experienciaDetalleProjectionDTO.getNombreEmpresa(),
+                experienciaDetalleProjectionDTO.getPuesto(),
+                ProyectoMapper.toResponseProyectoDTO(experienciaDetalleProjectionDTO.getProyectos())
+        );
     }
 
     public static ResponseExperienciaSimpleDTO toResponseExperienciaSimpleDTO(ExperienciaProjectionSimpleDTO experienciaProjectionDTO){

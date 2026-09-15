@@ -1,11 +1,11 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
+import com.mrdevv.portfolioBackend.dto.projection.ExperienciaConProyectosProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateExperienceDTO;
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.request.CreateExperienciaDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaCreatedDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaUpdatedDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaConProyectosDTO;
 import com.mrdevv.portfolioBackend.dto.projection.ExperienciaProjectionDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.exceptions.ObjectReplicatedException;
@@ -84,6 +84,18 @@ public class ExperienciaServiceImpl implements IExperienciaService {
                 ErrorMessage.NOT_FOUND_EXPERIENCIA_FRONT.getMessage(experienciaUUID)
         ));
         experienciaRepository.delete(experiencia);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ResponseExperienciaConProyectosDTO obtenerExperienciaConProyectosProfesionalAutenticado(String experienciaUUID) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
+        ExperienciaConProyectosProjectionDTO experienciaProyectosProjection = experienciaRepository.obtenerDetalleExperiencia(usuarioId, experienciaUUID).orElseThrow(() -> new ObjectNotFoundException(
+                ErrorMessage.NOT_FOUND_EXPERIENCIA_BACKEND.getMessage(experienciaUUID),
+                ErrorMessage.NOT_FOUND_EXPERIENCIA_FRONT.getMessage(experienciaUUID)
+        ));
+        return ExperienciaMapper.toResponseExperienciaConProyectosDTO(experienciaProyectosProjection);
     }
 
 

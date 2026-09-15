@@ -3,10 +3,7 @@ package com.mrdevv.portfolioBackend.services;
 import com.mrdevv.portfolioBackend.dto.request.UpdateExperienceDTO;
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.request.CreateExperienciaDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaCreatedDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaUpdatedDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaDetailDTO;
+import com.mrdevv.portfolioBackend.dto.response.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 
@@ -21,4 +18,6 @@ public interface IExperienciaService {
     ResponseExperienciaDTO actualizarExperienciaProfesionalAutenticada(@Valid UpdateExperienceDTO updateExperienceDTO, String experienciaUUID);
 
     void eliminarExperienciaProfesionalAutenticado(String experienciaUUID);
+
+    ResponseExperienciaConProyectosDTO obtenerExperienciaConProyectosProfesionalAutenticado(String experienciaUUID);
 }

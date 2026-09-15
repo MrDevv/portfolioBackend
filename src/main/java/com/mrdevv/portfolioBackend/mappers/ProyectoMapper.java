@@ -3,9 +3,8 @@ package com.mrdevv.portfolioBackend.mappers;
 import com.mrdevv.portfolioBackend.dto.PageableData;
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.projection.ProyectoProjectionDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaSimpleDTO;
+import com.mrdevv.portfolioBackend.dto.projection.ProyectoSinExperienciaProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProyectoDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseTipoProyectoDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -36,6 +35,21 @@ public class ProyectoMapper {
 
         return new ResponseWithPageable(proyectosListDTO, pageableData);
 
+    }
+
+    public static List<ResponseProyectoDTO> toResponseProyectoDTO(List<ProyectoSinExperienciaProjectionDTO> proyectoProjectionDTOS){
+        return proyectoProjectionDTOS.stream().map(proyectoProjectionDTO -> new ResponseProyectoDTO(
+                proyectoProjectionDTO.getProyectoUUID(),
+                proyectoProjectionDTO.getTitulo(),
+                proyectoProjectionDTO.getDescripcion(),
+                proyectoProjectionDTO.getUrlProduccion(),
+                proyectoProjectionDTO.getUrlRepositorio(),
+                proyectoProjectionDTO.getUrlImagenPresentacion(),
+                proyectoProjectionDTO.getEstado() ? "activo" : "inactivo",
+                null,
+                TipoProyectoMapper.toResponseTipoProyectoDTO(proyectoProjectionDTO.getTipoProyecto()),
+                EtiquetaMapper.toEtiquetaListDTO(proyectoProjectionDTO.getEtiquetas())
+        )).toList();
     }
 
 }
