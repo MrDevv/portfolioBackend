@@ -21,11 +21,11 @@ public class MeProyectoController {
     private final IProyectoService proyectoService;
 
     @GetMapping
-    public ResponseEntity obtenerProyectosProfesionalAutenticado(@RequestParam(name = "usuarioId", required = false) Long usurioId,
+    public ResponseEntity obtenerProyectosProfesionalAutenticado(@RequestParam(name = "titulo", required = false) String titulo,
                                            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
                                            @RequestParam(name = "size", required = false, defaultValue = "10") Integer size){
         Pageable pageable = PageRequest.of(page, size);
-        ResponseWithPageable proyectos = proyectoService.obtenerProyectosProfesionalAutenticado(pageable);
+        ResponseWithPageable proyectos = proyectoService.obtenerProyectosProfesionalAutenticado(titulo, pageable);
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron los proyectos correctamente", proyectos);
     }
 }

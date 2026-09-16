@@ -24,7 +24,7 @@ public class DevProyectoController {
     public ResponseEntity obtenerProyectosProfesional(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
                                                        @RequestParam(name = "size", defaultValue = "4", required = false) Integer size){
         Pageable pageable = PageRequest.of(page, size);
-        ResponseWithPageable proyectosDTO = proyectoService.obtenerProyectosProfesionalAutenticado(pageable);
+        ResponseWithPageable proyectosDTO = proyectoService.obtenerProyectosProfesional(pageable);
         return ResponseHandler.ok(TipoResponse.GETALL, "Se obtuvieron los proyectos correctamente", proyectosDTO);
     }
 }
