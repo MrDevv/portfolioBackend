@@ -22,7 +22,14 @@ public class TipoProyecto {
     Long tipoProyectoId;
 
     @Column(name = "tipo_proyecto_uuid")
-    UUID tipoProyectoUUID = UUID.randomUUID();
+    String tipoProyectoUUID;
 
     String descripcion;
+
+    @PrePersist
+    void generarUUID(){
+        if (this.tipoProyectoUUID == null){
+            this.tipoProyectoUUID = UUID.randomUUID().toString();
+        }
+    }
 }

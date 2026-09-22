@@ -19,8 +19,15 @@ public class Etiqueta {
     Long etiquetaId;
 
     @Column(name = "etiqueta_uuid")
-    UUID etiquetaUUID = UUID.randomUUID();
+    String etiquetaUUID;
 
     String descripcion;
+
+    @PrePersist
+    void generarUUID(){
+        if (this.etiquetaUUID == null){
+            this.etiquetaUUID = UUID.randomUUID().toString();
+        }
+    }
 
 }

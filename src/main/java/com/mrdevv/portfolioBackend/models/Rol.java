@@ -22,8 +22,15 @@ public class Rol {
     Long rolId;
 
     @Column(name = "rol_uuid")
-    UUID rolUUID = UUID.randomUUID();
+    String rolUUID;
 
     String descripcion;
+
+    @PrePersist
+    void generarUUID(){
+        if (this.rolUUID == null){
+            this.rolUUID = UUID.randomUUID().toString();
+        }
+    }
 
 }

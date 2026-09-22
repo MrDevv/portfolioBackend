@@ -24,7 +24,7 @@ public class Usuario implements UserDetails {
     Long usuarioId;
 
     @Column(name = "usuario_uuid")
-    UUID usuarioUUID = UUID.randomUUID();
+    String usuarioUUID;
 
     String email;
 
@@ -48,6 +48,13 @@ public class Usuario implements UserDetails {
 
     @Column(name = "estado_origen")
     Boolean estadoOrigen;
+
+    @PrePersist
+    void generarUUID() {
+        if (this.usuarioUUID == null){
+            this.usuarioUUID = UUID.randomUUID().toString();
+        }
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

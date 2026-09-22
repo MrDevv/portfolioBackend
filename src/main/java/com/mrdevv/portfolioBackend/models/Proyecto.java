@@ -21,7 +21,7 @@ public class Proyecto {
     Long proyectoId;
 
     @Column(name = "proyecto_uuid")
-    UUID proyectoUUID = UUID.randomUUID();
+    String proyectoUUID;
 
     String titulo;
 
@@ -51,5 +51,12 @@ public class Proyecto {
             inverseJoinColumns = @JoinColumn(name = "etiqueta_id")
     )
     List<Etiqueta> etiquetas;
+
+    @PrePersist
+    void generarUUID(){
+        if (this.proyectoUUID == null){
+            this.proyectoUUID = UUID.randomUUID().toString();
+        }
+    }
 
 }

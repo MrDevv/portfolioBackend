@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public record ResponseUsuarioLoginDTO(
         @JsonProperty("usuario_uuid")
-        UUID usuarioUUid,
+        String usuarioUUid,
         String email,
         String nombres,
         String apellidos,
