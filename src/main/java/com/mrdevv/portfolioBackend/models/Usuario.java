@@ -30,6 +30,7 @@ public class Usuario implements UserDetails {
 
     String password;
 
+    @Column(name = "estado", insertable = false)
     Boolean estado;
 
     @OneToOne
@@ -46,7 +47,7 @@ public class Usuario implements UserDetails {
     @Column(name = "origen_permitido")
     String origenPermitido;
 
-    @Column(name = "estado_origen")
+    @Column(name = "estado_origen", insertable = false)
     Boolean estadoOrigen;
 
     @PrePersist

@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 public class JwtService {
 
-    @Value("${JWT_SECRET_KEY}")
+    @Value("${security.jwt.secret-key}")
     String secretKey;
 
     public Map<String, Object> generarExtraClaims(Usuario usuario){

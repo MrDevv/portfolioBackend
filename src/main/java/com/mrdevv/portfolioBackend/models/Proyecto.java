@@ -33,6 +33,7 @@ public class Proyecto {
 
     String urlImagenPresentacion;
 
+    @Column(name = "estado", insertable = false)
     Boolean estado;
 
     @ManyToOne

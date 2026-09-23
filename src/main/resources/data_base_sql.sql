@@ -33,12 +33,12 @@ CREATE TABLE usuarios (
     usuario_uuid VARCHAR(36) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    estado SMALLINT DEFAULT 1 NOT NULL,
+    estado BOOLEAN DEFAULT TRUE NOT NULL,
     profesional_id BIGINT NOT NULL,
     rol_id BIGINT NOT NULL,
     api_key VARCHAR(100),
     origen_permitido VARCHAR(300),
-    estado_origen SMALLINT DEFAULT 0 NOT NULL,
+    estado_origen BOOLEAN DEFAULT FALSE NOT NULL,
     CONSTRAINT pk_usuarios
         PRIMARY KEY (usuario_id),
     CONSTRAINT uq_usuario_uuid
@@ -126,7 +126,7 @@ CREATE TABLE proyectos(
     url_produccion VARCHAR(1000),
     url_repositorio VARCHAR(1000),
     url_imagen_presentacion VARCHAR(500),
-    estado SMALLINT DEFAULT 1 NOT NULL,
+    estado BOOLEAN DEFAULT TRUE NOT NULL,
     experiencia_id BIGINT NOT NULL,
     tipo_proyecto_id BIGINT NOT NULL,
     CONSTRAINT pk_proyecto
