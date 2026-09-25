@@ -29,7 +29,8 @@ public class TecnologiaServiceImpl implements ITecnologiaService {
     @Transactional(readOnly = true)
     @Override
     public ResponseWithPageable obtenerTecnologias(String nombre, Pageable pageable) {
-        Page<Tecnologia> tecnologias = tecnologiaRepository.obtenerTecnologias(nombre, pageable);
+        String nombreUpperCase = nombre != null ? nombre.toUpperCase() : "";
+        Page<Tecnologia> tecnologias = tecnologiaRepository.obtenerTecnologias(nombreUpperCase, pageable);
         return TecnologiaMapper.toResponseTecnologiaDTOList(tecnologias);
     }
 

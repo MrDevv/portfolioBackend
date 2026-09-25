@@ -1,6 +1,8 @@
 package com.mrdevv.portfolioBackend.controllers.me;
 
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
+import com.mrdevv.portfolioBackend.dto.request.CreateProyectoDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseProyectoDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IProyectoService;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
@@ -8,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,5 +26,11 @@ public class MeProyectoController {
         Pageable pageable = PageRequest.of(page, size);
         ResponseWithPageable proyectos = proyectoService.obtenerProyectosProfesionalAutenticado(titulo, pageable);
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron los proyectos correctamente", proyectos);
+    }
+
+    @PostMapping
+    public ResponseEntity crearProyecto(@RequestBody CreateProyectoDTO proyectoDTO){
+        ResponseProyectoDTO proyectoCreado = proyectoService.crearProyecto(proyectoDTO);
+        return ResponseHandler.ok(TipoResponse.CREATE, "Se creó el proyecto correctamente", proyectoCreado);
     }
 }

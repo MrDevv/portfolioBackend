@@ -43,9 +43,9 @@ public class ProfesionalTecnologiaImpl implements IProfesionalTecnologiaService 
     @Override
     public ResponseProfesionalTecnologiaDTO registrarTecnologiaProfesionalAutenticado(CreateTecnologiaProfesionalDTO tecnologiaProfesionalDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
+        Long profesionalId = Long.parseLong(authentication.getPrincipal().toString());
         Tecnologia tecnologia = tecnologiaService.obtenerTecnologiaPorUUID(tecnologiaProfesionalDTO.tecnologiaUUID());
-        Profesional profesional = profesionalService.obtenerProfesionalPorUsuarioId(usuarioId);
+        Profesional profesional = profesionalService.obtenerProfesionalPorId(profesionalId);
         validarTecnologiaNoRegistradaPorProfesional(profesional, tecnologia);
 
         ProfesionalTecnologia profesionalTecnologia = profesionalTecnologiaRepository.save(

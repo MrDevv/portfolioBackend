@@ -1,6 +1,8 @@
 package com.mrdevv.portfolioBackend.services;
 
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
+import com.mrdevv.portfolioBackend.dto.request.CreateProyectoDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseProyectoDTO;
 import com.mrdevv.portfolioBackend.models.Proyecto;
 import org.springframework.data.domain.Pageable;
 
@@ -12,4 +14,5 @@ public interface IProyectoService {
 
     ResponseWithPageable obtenerProyectosProfesional(Pageable pageable);
 
+    ResponseProyectoDTO crearProyecto(CreateProyectoDTO proyectoDTO);
 }

@@ -29,9 +29,9 @@ public interface ProfesionalRepository extends JpaRepository<Profesional, Long> 
         p.telefono as telefono,
         p.biografia as biografia,
         p.puesto as puesto 
-    from Profesional p join p.usuario u where u.usuarioId = :usuarioId
+    from Profesional p where p.profesionalId = :profesionalId
     """)
-    ProfesionalProjectionDTO obtenerDatosProfesionalesPorUsuarioId(@Param("usuarioId") Long usuarioId);
+    Optional<ProfesionalProjectionDTO> obtenerDatosProfesionales(@Param("profesionalId") Long profesionalId);
 
     @EntityGraph(attributePaths = {"usuario"})
     @Query(value = "select p from Profesional p join p.usuario u where u.usuarioId = :usuario_id")

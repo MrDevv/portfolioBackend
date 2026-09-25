@@ -23,11 +23,10 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
         from Proyecto p
         join p.experiencia e
         join e.profesional pr
-        join pr.usuario u
-        where (:usuario_id is null or u.usuarioId = :usuario_id)
-        and (:titulo is null or lower(p.titulo) like lower(concat('%', :titulo, '%')))
+        where (:profesional_id is null or pr.profesionalId = :profesional_id)
+        and lower(p.titulo) like concat('%', :titulo, '%')
     """)
-    Page<ProyectoProjectionDTO> obtenerProyectos(@Param(value = "usuario_id") Long usuarioId,
+    Page<ProyectoProjectionDTO> obtenerProyectos(@Param(value = "profesional_id") Long profesionalId,
                                                  @Param(value = "titulo") String titulo,
                                                  Pageable pageable);
 

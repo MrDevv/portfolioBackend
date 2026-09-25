@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.repositories;
 
+import com.mrdevv.portfolioBackend.dto.projection.UsuarioAuthPrincipalProjection;
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
 import com.mrdevv.portfolioBackend.models.Rol;
 import com.mrdevv.portfolioBackend.models.Usuario;
@@ -8,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,6 +35,31 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @EntityGraph(attributePaths = {"profesional", "rol"})
     Optional<Usuario> findByEmail(String email);
 
-    @EntityGraph(attributePaths = {})
-    Optional<Usuario> findByApiKey(String apiKey);
+    Usuario findByUsuarioId(Long usuarioId);
+
+    @Query(value = """
+        select 
+            u.usuarioId as usuarioId,
+            p.profesionalId as profesionalId,
+            u.email as email,
+            r.descripcion as rol
+        from Usuario u
+        join u.profesional p
+        join u.rol r
+        where u.apiKey = :apiKey
+    """)
+    Optional<UsuarioAuthPrincipalProjection> findUsuarioAuthPrincipalProjectionByApiKey(String apiKey);
+
+    @Query(value = """
+        select 
+            u.usuarioId as usuarioId,
+            p.profesionalId as profesionalId,
+            u.email as email,
+            r.descripcion as rol
+        from Usuario u
+        join u.profesional p
+        join u.rol r
+        where u.email = :email
+    """)
+    Optional<UsuarioAuthPrincipalProjection> findUsuarioAuthPrincipalProjectionByEmail(String email);
 }

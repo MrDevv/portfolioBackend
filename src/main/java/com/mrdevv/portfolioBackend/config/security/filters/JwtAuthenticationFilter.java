@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.config.security.filters;
 
+import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.services.auth.JwtService;
 import com.mrdevv.portfolioBackend.services.impl.UsuarioServiceImpl;
@@ -33,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt;
         String email;
-        Usuario usuarioAutenticado;
+        UsuarioAuthPrincipal usuarioAutenticado;
 
         String authorizationHeader = request.getHeader("Authorization");
 
@@ -51,11 +52,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throw new InsufficientAuthenticationException("JWT invalido");
         }
 
-        usuarioAutenticado = usuarioService.obtenerUsuarioByEmail(email);
+        usuarioAutenticado = usuarioService.findUsuarioAuthPrincipalProjectionByEmail(email);
 
         if (request.getRequestURI().contains("auth/validate-token")){
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    usuarioAutenticado, null, usuarioAutenticado.getAuthorities()
+                    usuarioAutenticado, null, usuarioAutenticado.authorities()
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -64,7 +65,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-                usuarioAutenticado.getUsuarioId(), null, usuarioAutenticado.getAuthorities()
+                usuarioAutenticado, null, usuarioAutenticado.authorities()
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);

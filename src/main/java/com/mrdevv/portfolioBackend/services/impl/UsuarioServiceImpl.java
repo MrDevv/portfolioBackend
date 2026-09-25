@@ -1,5 +1,7 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
+import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
+import com.mrdevv.portfolioBackend.dto.projection.UsuarioAuthPrincipalProjection;
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
@@ -12,11 +14,12 @@ import com.mrdevv.portfolioBackend.repositories.UsuarioRepository;
 import com.mrdevv.portfolioBackend.services.IUsuarioService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +37,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
         return UsuarioMapper.toResonseUsuarioDTOList(usuarios);
     }
 
+    @Transactional(readOnly = true)
+    public Usuario findByUsuarioId(Long usuarioId) {
+        return usuarioRepository.findByUsuarioId(usuarioId);
+    }
+
     @Transactional
     @Override
     public void actualizarRol(Long usuarioId, UpdateRolUsuarioDTO rolDto) {
@@ -48,10 +56,22 @@ public class UsuarioServiceImpl implements IUsuarioService {
         usuarioRepository.actualizarRol(usuarioId, rolEntity);
     }
 
-    public Usuario obtenerUsuarioByEmail(String email){
-        return usuarioRepository.findByEmail(email).orElseThrow(() -> new ObjectNotFoundException(
+    @Transactional(readOnly = true)
+    public UsuarioAuthPrincipal findUsuarioAuthPrincipalProjectionByEmail(String email){
+        UsuarioAuthPrincipalProjection usuarioProjectionDTO = usuarioRepository.findUsuarioAuthPrincipalProjectionByEmail(email).orElseThrow(() -> new ObjectNotFoundException(
                 ErrorMessage.NOT_FOUND_USUARIO_FRONT.getMessage(email),
-                ErrorMessage.NOT_FOUND_USUARIO_BACKEND.getMessage(email)));
+                ErrorMessage.NOT_FOUND_USUARIO_BACKEND.getMessage(email)
+        ));
+
+        GrantedAuthority authority =
+                new SimpleGrantedAuthority("ROLE_" + usuarioProjectionDTO.getRol());
+
+        return new UsuarioAuthPrincipal(
+                usuarioProjectionDTO.getUsuarioId(),
+                usuarioProjectionDTO.getProfesionalId(),
+                usuarioProjectionDTO.getEmail(),
+                List.of(authority)
+        );
     }
 
     @Transactional

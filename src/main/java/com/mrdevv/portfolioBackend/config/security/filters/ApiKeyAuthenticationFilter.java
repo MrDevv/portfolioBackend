@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.config.security.filters;
 
+import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.services.auth.ApiKeyService;
 import jakarta.servlet.FilterChain;
@@ -39,17 +40,15 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 
         String apiKey = authorizationHeader.split(" ")[1];
 
-        Optional<Usuario> usuario = apiKeyService.obtenerUsuarioPorApiKey(apiKey);
+        Optional<UsuarioAuthPrincipal> usuario = apiKeyService.obtenerUsuarioPorApiKey(apiKey);
 
         if(usuario.isEmpty()){
             request.setAttribute("auth_error", "API_KEY_INVALID");
             throw new InsufficientAuthenticationException("API_KEY invalida");
         };
 
-        Long usuarioId = usuario.get().getUsuarioId();
-
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-                usuarioId, null, null
+                usuario.get(), null, null
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);

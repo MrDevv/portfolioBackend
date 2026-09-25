@@ -10,5 +10,5 @@ public interface IProfesionalService {
 
     ResponseProfesionalDTO actualizarProfesionalAutenticado(UpdateProfesionalDTO updateProfesionalDTO);
 
-    Profesional obtenerProfesionalPorUsuarioId(Long usuarioId);
+    Profesional obtenerProfesionalPorId(Long profesionalId);
 }

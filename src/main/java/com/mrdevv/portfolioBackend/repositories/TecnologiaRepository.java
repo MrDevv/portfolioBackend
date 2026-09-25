@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface TecnologiaRepository extends JpaRepository<Tecnologia, Long> {
 
-    @Query(value = "select t from Tecnologia t where upper(t.descripcion) like upper(concat(:nombre, '%'))")
+    @Query(value = "select t from Tecnologia t where upper(t.descripcion) like concat(:nombre, '%')")
     Page<Tecnologia> obtenerTecnologias(@Param("nombre") String nombre, Pageable pageable);
 
     @EntityGraph(attributePaths = {"tipoTecnologia"})

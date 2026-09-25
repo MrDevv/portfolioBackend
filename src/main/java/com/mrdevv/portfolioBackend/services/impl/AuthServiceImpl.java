@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
+import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.dto.request.AuthDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
@@ -53,7 +54,8 @@ public class AuthServiceImpl implements IAuthService {
     public ResponseUsuarioLoginDTO validateToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String token = httpServletReq.getHeader("Authorization").split(" ")[1];
-        Usuario usuario = (Usuario) authentication.getPrincipal();
+        UsuarioAuthPrincipal usuarioAuthPrincipal = (UsuarioAuthPrincipal) authentication.getPrincipal();
+        Usuario usuario = usuarioService.findByUsuarioId(usuarioAuthPrincipal.usuarioId());
         return UsuarioMapper.toResponseUsuarioLogin(usuario, token);
     }
 }
