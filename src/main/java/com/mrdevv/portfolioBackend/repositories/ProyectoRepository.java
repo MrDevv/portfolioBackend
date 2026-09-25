@@ -30,6 +30,8 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
                                                  @Param(value = "titulo") String titulo,
                                                  Pageable pageable);
 
+    @Query(value = "select count(p) > 0 from Proyecto p join p.experiencia e where lower(p.titulo) = lower(:titulo) and e.experienciaUUID = :experiencia_uuid")
+    boolean existeProyectoEnExperiencia(@Param(value = "titulo") String titulo, @Param(value = "experiencia_uuid") String experienciaUUID);
 
 
 }

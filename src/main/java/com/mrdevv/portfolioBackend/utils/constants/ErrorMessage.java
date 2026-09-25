@@ -22,6 +22,8 @@ public enum ErrorMessage {
     REPLICATE_OBJECT_TECNOLOGIA_PROFESIONAL_BACKEND("El OBJECT 'TECNOLOGIA' con UUID '%s' ya se encuentra registrada para el OBJECT 'PROFESIONAL'."),
     REPLICATE_OBJECT_EXPERIENCIA_PROFESIONAL_FRONT("La experiencia profesional con el título '%s' ya está registrada para este profesional"),
     REPLICATE_OBJECT_EXPERIENCIA_PROFESIONAL_BACKEND("El OBJECT 'EXPERIENCIA' con TITULO '%s' ya está registrada para el OBJECT 'PROFESIONAL'."),
+    REPLICATE_OBJECT_PROYECTO_EXPERIENCIA_FRONT("El proyecto con el título '%s' ya está registrado para esta experiencia"),
+    REPLICATE_OBJECT_PROYECTO_EXPERIENCIA_BACKEND("El OBJECT 'PROYECTO' con TITULO '%s' ya está registrada para el OBJECT 'EXPERIENCIA'."),
     NOT_FOUND_EXPERIENCIA_FRONT("No se encontró la experiencia con uuid '%s'"),
     NOT_FOUND_EXPERIENCIA_BACKEND("No se encontró el OBJECT 'EXPERIENCIA' con UUID '%s' en la base de datos."),
     BAD_CREDENTIALS_LOGIN_FRONT("Usuario o contraseña incorrectos, revise sus datos"),

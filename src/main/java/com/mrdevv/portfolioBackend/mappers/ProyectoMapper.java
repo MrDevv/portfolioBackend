@@ -4,7 +4,12 @@ import com.mrdevv.portfolioBackend.dto.PageableData;
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.projection.ProyectoProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.projection.ProyectoSinExperienciaProjectionDTO;
+import com.mrdevv.portfolioBackend.dto.request.CreateProyectoDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProyectoDTO;
+import com.mrdevv.portfolioBackend.models.Etiqueta;
+import com.mrdevv.portfolioBackend.models.Experiencia;
+import com.mrdevv.portfolioBackend.models.Proyecto;
+import com.mrdevv.portfolioBackend.models.TipoProyecto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -52,4 +57,31 @@ public class ProyectoMapper {
         )).toList();
     }
 
+    public static ResponseProyectoDTO toResponseProyectoDTO(Proyecto proyecto){
+        return new ResponseProyectoDTO(
+                proyecto.getProyectoUUID(),
+                proyecto.getTitulo(),
+                proyecto.getDescripcion(),
+                proyecto.getUrlProduccion(),
+                proyecto.getUrlRepositorio(),
+                proyecto.getUrlImagenPresentacion(),
+                proyecto.getEstado() ? "activo" : "inactivo",
+                ExperienciaMapper.toResponseExperienciaSimpleDTO(proyecto.getExperiencia()),
+                TipoProyectoMapper.toResponseTipoProyectoDTO(proyecto.getTipoProyecto()),
+                EtiquetaMapper.toEtiquetaListDTOFromEntity(proyecto.getEtiquetas())
+        );
+    }
+
+    public static Proyecto toProyectoEntity(CreateProyectoDTO proyectoDTO, Experiencia experiencia,  TipoProyecto tipoProyecto, List<Etiqueta> etiquetas) {
+        return Proyecto.builder()
+                .titulo(proyectoDTO.titulo())
+                .descripcion(proyectoDTO.descripcion())
+                .urlProduccion(proyectoDTO.urlProduccion())
+                .urlRepositorio(proyectoDTO.urlRepositorio())
+                .urlImagenPresentacion(proyectoDTO.urlImagenPresentacion())
+                .experiencia(experiencia)
+                .tipoProyecto(tipoProyecto)
+                .etiquetas(etiquetas)
+                .build();
+    }
 }

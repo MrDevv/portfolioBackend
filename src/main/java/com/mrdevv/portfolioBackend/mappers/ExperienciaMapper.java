@@ -57,6 +57,13 @@ public class ExperienciaMapper {
         );
     }
 
+    public static ResponseExperienciaSimpleDTO toResponseExperienciaSimpleDTO(Experiencia experiencia){
+        return new ResponseExperienciaSimpleDTO(
+                experiencia.getExperienciaUUID(),
+                experiencia.getTitulo()
+        );
+    }
+
     public static Experiencia toExperienciaEntity(CreateExperienciaDTO createExperienciaDTO, Long profesionalId) {
         return Experiencia.builder()
                 .titulo(createExperienciaDTO.titulo().trim())

@@ -54,6 +54,7 @@ public class ExperienciaServiceImpl implements IExperienciaService {
     }
 
     @Transactional(readOnly = true)
+    @Override
     public Experiencia obtenerExperienciaPorUUIDyProfesionalId(Long profesionalId, String experienciaUUID) {
         Experiencia experiencia = experienciaRepository.obtenerExperienciaPorUUIDyProfesionalId(profesionalId, experienciaUUID).orElseThrow(() -> new ObjectNotFoundException(
                 ErrorMessage.NOT_FOUND_EXPERIENCIA_BACKEND.getMessage(experienciaUUID),

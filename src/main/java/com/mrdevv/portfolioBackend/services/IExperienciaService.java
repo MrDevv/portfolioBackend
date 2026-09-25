@@ -16,6 +16,8 @@ public interface IExperienciaService {
 
     ResponseExperienciaDTO obtenerExperienciaProfesionalAutenticado(String experienciaUUID);
 
+    Experiencia obtenerExperienciaPorUUIDyProfesionalId(Long profesionalId, String experienciaUUID);
+
     ResponseExperienciaDTO registrarExperienciaProfesionalAutenticado(@Valid CreateExperienciaDTO createExperienciaDTO);
 
     ResponseExperienciaDTO actualizarExperienciaProfesionalAutenticada(@Valid UpdateExperienceDTO updateExperienceDTO, String experienciaUUID);

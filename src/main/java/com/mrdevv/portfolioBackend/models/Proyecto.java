@@ -3,6 +3,7 @@ package com.mrdevv.portfolioBackend.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Generated;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +34,7 @@ public class Proyecto {
 
     String urlImagenPresentacion;
 
+    @Generated
     @Column(name = "estado", insertable = false)
     Boolean estado;
 

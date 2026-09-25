@@ -6,6 +6,7 @@ import com.mrdevv.portfolioBackend.dto.response.ResponseProyectoDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IProyectoService;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +30,7 @@ public class MeProyectoController {
     }
 
     @PostMapping
-    public ResponseEntity crearProyecto(@RequestBody CreateProyectoDTO proyectoDTO){
+    public ResponseEntity crearProyecto(@Valid @RequestBody CreateProyectoDTO proyectoDTO){
         ResponseProyectoDTO proyectoCreado = proyectoService.crearProyecto(proyectoDTO);
         return ResponseHandler.ok(TipoResponse.CREATE, "Se creó el proyecto correctamente", proyectoCreado);
     }

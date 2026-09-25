@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public interface ExperienciaProjectionSimpleDTO {
 
-    UUID getExperienciaUUID();
+    String getExperienciaUUID();
 
     String getTitulo();
 

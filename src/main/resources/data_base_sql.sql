@@ -136,7 +136,9 @@ CREATE TABLE proyectos(
     CONSTRAINT fk_proyecto_tipo_proyecto
         FOREIGN KEY (tipo_proyecto_id) REFERENCES tipos_proyectos(tipo_proyecto_id),
     CONSTRAINT uq_proyecto_uuid
-        UNIQUE (proyecto_uuid)
+        UNIQUE (proyecto_uuid),
+    CONSTRAINT uq_proyecto_titulo_experiencia
+        UNIQUE (titulo, experiencia_id)
     );
 
 CREATE TABLE etiquetas(

@@ -3,6 +3,7 @@ package com.mrdevv.portfolioBackend.services;
 import com.mrdevv.portfolioBackend.dto.request.CreateTipoProyecto;
 import com.mrdevv.portfolioBackend.dto.response.ResponseTipoProyectoDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateTipoProyectoDTO;
+import com.mrdevv.portfolioBackend.models.TipoProyecto;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface ITipoProyectoService {
     ResponseTipoProyectoDTO crearTipoProyecto(CreateTipoProyecto createTipoProyecto);
 
     ResponseTipoProyectoDTO actualizarTipoProyecto(Long tipoProyectoId, UpdateTipoProyectoDTO updateTipoProyecto);
+
+    TipoProyecto obtenerTipoProyectoPorUUID(String tipoProyectoUUID);
 }

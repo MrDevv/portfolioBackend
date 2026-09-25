@@ -2,6 +2,7 @@ package com.mrdevv.portfolioBackend.mappers;
 
 import com.mrdevv.portfolioBackend.dto.projection.EtiquetaProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseEtiquetaDTO;
+import com.mrdevv.portfolioBackend.models.Etiqueta;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,4 +19,14 @@ public class EtiquetaMapper {
             );
         }).collect(Collectors.toList());
     }
+
+    public static List<ResponseEtiquetaDTO> toEtiquetaListDTOFromEntity(List<Etiqueta> etiquetas){
+        return etiquetas.stream().map(etiqueta -> {
+            return new ResponseEtiquetaDTO(
+                    etiqueta.getEtiquetaUUID(),
+                    etiqueta.getDescripcion()
+            );
+        }).collect(Collectors.toList());
+    }
+
 }

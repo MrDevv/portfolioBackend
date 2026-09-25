@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public record ResponseExperienciaSimpleDTO(
         @JsonProperty("experiencia_uuid")
-        UUID experienciaUUID,
+        String experienciaUUID,
         String titulo
 ) {
 }

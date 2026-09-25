@@ -51,4 +51,15 @@ public class TipoProyectoServiceImpl implements ITipoProyectoService {
     public ResponseTipoProyectoDTO actualizarTipoProyecto(Long tipoProyectoId, UpdateTipoProyectoDTO updateTipoProyecto) {
         return null;
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public TipoProyecto obtenerTipoProyectoPorUUID(String tipoProyectoUUID) {
+        return tipoProyectoRepository.obtenerTipoProyectoPorUUID(tipoProyectoUUID).orElseGet(() -> {
+            throw new ObjectNotFoundException(
+                    ErrorMessage.NOT_FOUND_TIPO_PROYECTO_BACKEND.getMessage(tipoProyectoUUID),
+                    ErrorMessage.NOT_FOUND_TIPO_PROYECTO_FRONT.getMessage(tipoProyectoUUID)
+            );
+        });
+    }
 }
