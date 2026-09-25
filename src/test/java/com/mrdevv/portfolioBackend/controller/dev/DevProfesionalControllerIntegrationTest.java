@@ -1,9 +1,7 @@
-package com.mrdevv.portfolioBackend.controller.auth;
+package com.mrdevv.portfolioBackend.controller.dev;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mrdevv.portfolioBackend.config.TestContainerConfiguration;
-import com.mrdevv.portfolioBackend.dto.request.AuthDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseProfesionalDTO;
 import com.mrdevv.portfolioBackend.models.Profesional;
 import com.mrdevv.portfolioBackend.models.Rol;
 import com.mrdevv.portfolioBackend.models.Usuario;
@@ -21,39 +19,37 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.ObjectMapper;
 
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Import(TestContainerConfiguration.class)
 @ActiveProfiles("test")
-public class AuthControllerIntegrationTest {
+public class DevProfesionalControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private JsonMapper objectMapper;
-
-    @Autowired
     private UsuarioRepository usuarioRepository;
-
-    @Autowired
-    private RolRepository rolRepository;
 
     @Autowired
     private ProfesionalRepository profesionalRepository;
 
     @Autowired
+    private RolRepository rolRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
-
         usuarioRepository.deleteAllInBatch();
         profesionalRepository.deleteAllInBatch();
         rolRepository.deleteAllInBatch();
@@ -65,16 +61,18 @@ public class AuthControllerIntegrationTest {
         rol = rolRepository.save(rol);
 
         Profesional profesional = Profesional.builder()
-                .nombres("Usuario")
-                .apellidos("Integracion")
+                .nombres("Miguel Angel")
+                .apellidos("Vega Perez")
+                .biografia("Desarrollador Full Stack con experiencia en Java y Spring Boot, apasionado por la creación de aplicaciones web escalables y eficientes. Con habilidades en front-end y back-end, me especializo en el desarrollo de soluciones innovadoras que mejoran la experiencia del usuario y optimizan los procesos empresariales.")
                 .build();
 
         profesional = profesionalRepository.save(profesional);
 
         Usuario usuario = Usuario.builder()
-                .email("miguelvegap10@gmail.com")
-                .password(passwordEncoder.encode("admin"))
+                .email("miguelvega@gmail.com")
+                .password(passwordEncoder.encode("password123"))
                 .rol(rol)
+                .apiKey("your_api_key_here")
                 .profesional(profesional)
                 .build();
 
@@ -82,14 +80,21 @@ public class AuthControllerIntegrationTest {
     }
 
     @Test
-    void deberiaAutenticarUsuarioConCredencialesValidas() throws Exception {
+    void deberiaObtenerLosDatosDelProfesional() throws Exception {
 
-        AuthDTO authDTO = new AuthDTO("miguelvegap10@gmail.com", "admin");
+        String response = """
+                {
+                    "nombres": "Miguel Angel",
+                    "apellidos": "Vega Perez",
+                    "correo_contacto": "miguelvega@gmail.com"
+                }
+                """;
 
-
-        mockMvc.perform(post("/auth/login")
+        mockMvc.perform(get("/dev/me/datos")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(authDTO)))
-                .andExpect(status().isOk());
+                .header("Authorization", "Bearer your_api_key_here")
+                .content(objectMapper.writeValueAsString(response))
+                ).andExpect(status().isOk());
     }
+
 }

@@ -22,11 +22,10 @@ public interface ProfesionalTecnologiaRepository extends JpaRepository<Profesion
         join pt.tecnologia t
         join t.tipoTecnologia tt 
         join pt.profesional p      
-        join p.usuario u 
-        where u.usuarioId = :usuario_id
-        and (:nombre is null or upper(t.descripcion) like upper(concat(:nombre, '%')))            
+        where p.profesionalId = :profesional_id
+        and upper(t.descripcion) like upper(concat(:nombre, '%'))            
     """)
-    List<ProfesionalTecnologiaProjection> obtenerTecnologiasDelProfesional(@Param("usuario_id") Long usuarioId, @Param("nombre") String nombre);
+    List<ProfesionalTecnologiaProjection> obtenerTecnologiasDelProfesional(@Param("profesional_id") Long profesionalId, @Param("nombre") String nombre);
 
     @Query(value = "select count(pt) > 0 from ProfesionalTecnologia pt join pt.profesional p join pt.tecnologia t where t.tecnologiaId = :tecnologia_id and p.profesionalId = :profesional_id")
     boolean existeTecnologiaProfesional(@Param("profesional_id") Long profesionalId, @Param("tecnologia_id") Long tecnologiaId);

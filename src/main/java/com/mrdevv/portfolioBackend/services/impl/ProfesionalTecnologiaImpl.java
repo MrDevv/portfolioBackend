@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
+import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.dto.projection.ProfesionalTecnologiaProjection;
 import com.mrdevv.portfolioBackend.dto.request.CreateTecnologiaProfesionalDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProfesionalTecnologiaDTO;
@@ -34,8 +35,9 @@ public class ProfesionalTecnologiaImpl implements IProfesionalTecnologiaService 
     @Override
     public List<ResponseProfesionalTecnologiaDTO> obtenerTecnologiasProfesionalAutenticado(String nombreTecnologia) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long usuarioId = Long.parseLong(authentication.getPrincipal().toString());
-        List<ProfesionalTecnologiaProjection> profesionalTecnologiaProjections = profesionalTecnologiaRepository.obtenerTecnologiasDelProfesional(usuarioId, nombreTecnologia);
+        Long profesionalId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).profesionalId();
+        String nombreTecnologiaUpperCase = nombreTecnologia != null ? nombreTecnologia.toUpperCase() : "";
+        List<ProfesionalTecnologiaProjection> profesionalTecnologiaProjections = profesionalTecnologiaRepository.obtenerTecnologiasDelProfesional(profesionalId, nombreTecnologiaUpperCase);
         return ProfesionalTecnologiaMapper.toProfesionalTecnologiaDTOList(profesionalTecnologiaProjections);
     }
 
@@ -43,7 +45,7 @@ public class ProfesionalTecnologiaImpl implements IProfesionalTecnologiaService 
     @Override
     public ResponseProfesionalTecnologiaDTO registrarTecnologiaProfesionalAutenticado(CreateTecnologiaProfesionalDTO tecnologiaProfesionalDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long profesionalId = Long.parseLong(authentication.getPrincipal().toString());
+        Long profesionalId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).profesionalId();
         Tecnologia tecnologia = tecnologiaService.obtenerTecnologiaPorUUID(tecnologiaProfesionalDTO.tecnologiaUUID());
         Profesional profesional = profesionalService.obtenerProfesionalPorId(profesionalId);
         validarTecnologiaNoRegistradaPorProfesional(profesional, tecnologia);
