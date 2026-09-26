@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.config.security.filters;
 
+import com.mrdevv.portfolioBackend.config.security.handler.CustomAuthenticationEntryPoint;
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.services.auth.ApiKeyService;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 
     private final ApiKeyService apiKeyService;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -35,7 +37,11 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             request.setAttribute("auth_error", "API_KEY_MISSING");
-            throw new InsufficientAuthenticationException("API_KEY faltante");
+            authenticationEntryPoint.commence(
+                    request,
+                    response,
+                    new InsufficientAuthenticationException("API_KEY faltante")
+            );
         }
 
         String apiKey = authorizationHeader.split(" ")[1];
@@ -44,7 +50,14 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 
         if(usuario.isEmpty()){
             request.setAttribute("auth_error", "API_KEY_INVALID");
-            throw new InsufficientAuthenticationException("API_KEY invalida");
+
+            authenticationEntryPoint.commence(
+                    request,
+                    response,
+                    new InsufficientAuthenticationException("API_KEY invalida")
+            );
+
+            return;
         };
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(

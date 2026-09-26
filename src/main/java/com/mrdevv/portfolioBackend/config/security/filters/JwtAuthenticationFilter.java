@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.config.security.filters;
 
+import com.mrdevv.portfolioBackend.config.security.handler.CustomAuthenticationEntryPoint;
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.services.auth.JwtService;
@@ -24,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UsuarioServiceImpl usuarioService;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -40,7 +42,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             request.setAttribute("auth_error", "JWT_MISSING");
-            throw new InsufficientAuthenticationException("JWT faltante");
+            authenticationEntryPoint.commence(
+                    request,
+                    response,
+                    new InsufficientAuthenticationException("JWT faltante")
+            );
+
+            return;
         }
 
         jwt = authorizationHeader.split(" ")[1];
@@ -49,7 +57,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             email = jwtService.extractEmail(jwt);
         }catch (Exception e){
             request.setAttribute("auth_error", "JWT_INVALID");
-            throw new InsufficientAuthenticationException("JWT invalido");
+
+            authenticationEntryPoint.commence(
+                    request,
+                    response,
+                    new InsufficientAuthenticationException("JWT invalido")
+            );
+
+            return;
         }
 
         usuarioAutenticado = usuarioService.findUsuarioAuthPrincipalProjectionByEmail(email);
