@@ -57,6 +57,15 @@ public class ExperienciaMapper {
         );
     }
 
+    public static List<ResponseExperienciaSimpleDTO> toResponseExperienciaSimpleDTOList(List<ExperienciaProjectionSimpleDTO> experienciasProjectionDTO){
+        return experienciasProjectionDTO.stream().map(experienciaProjectionDTO -> {
+            return new ResponseExperienciaSimpleDTO(
+                    experienciaProjectionDTO.getExperienciaUUID(),
+                    experienciaProjectionDTO.getTitulo()
+            );
+        }).collect(Collectors.toList());
+    }
+
     public static ResponseExperienciaSimpleDTO toResponseExperienciaSimpleDTO(Experiencia experiencia){
         return new ResponseExperienciaSimpleDTO(
                 experiencia.getExperienciaUUID(),

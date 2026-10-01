@@ -2,12 +2,14 @@ package com.mrdevv.portfolioBackend.services.impl;
 
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.dto.projection.ExperienciaConProyectosProjectionDTO;
+import com.mrdevv.portfolioBackend.dto.projection.ExperienciaProjectionSimpleDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateExperienceDTO;
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.request.CreateExperienciaDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaConProyectosDTO;
 import com.mrdevv.portfolioBackend.dto.projection.ExperienciaProjectionDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaSimpleDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.exceptions.ObjectReplicatedException;
 import com.mrdevv.portfolioBackend.mappers.ExperienciaMapper;
@@ -25,6 +27,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -108,6 +111,15 @@ public class ExperienciaServiceImpl implements IExperienciaService {
                 ErrorMessage.NOT_FOUND_EXPERIENCIA_FRONT.getMessage(experienciaUUID)
         ));
         return ExperienciaMapper.toResponseExperienciaConProyectosDTO(experienciaProyectosProjection);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ResponseExperienciaSimpleDTO> obtenerExperienciasSimpleProfesionalAutenticado() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long profesionalId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).profesionalId();
+        List<ExperienciaProjectionSimpleDTO> experiencias = experienciaRepository.obtenerExperienciasSimple(profesionalId);
+        return ExperienciaMapper.toResponseExperienciaSimpleDTOList(experiencias);
     }
 
 

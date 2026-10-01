@@ -8,6 +8,7 @@ import com.mrdevv.portfolioBackend.models.Experiencia;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IExperienciaService {
@@ -26,4 +27,5 @@ public interface IExperienciaService {
 
     ResponseExperienciaConProyectosDTO obtenerExperienciaConProyectosProfesionalAutenticado(String experienciaUUID);
 
+    List<ResponseExperienciaSimpleDTO> obtenerExperienciasSimpleProfesionalAutenticado();
 }

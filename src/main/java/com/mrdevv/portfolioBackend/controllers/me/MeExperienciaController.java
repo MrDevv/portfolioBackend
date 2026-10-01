@@ -5,6 +5,7 @@ import com.mrdevv.portfolioBackend.dto.request.CreateExperienciaDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateExperienceDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaConProyectosDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaSimpleDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IExperienciaService;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,6 +31,12 @@ public class MeExperienciaController {
                                                                     @RequestParam(name = "nombre_empresa", required = false) String nombreEmpresa){
         Pageable pageable = PageRequest.of(page, size);
         ResponseWithPageable experiencias = experienciaService.obtenerExperienciasProfesionalAutenticado(nombreEmpresa, pageable);
+        return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron las experiencias correctamente", experiencias);
+    }
+
+    @GetMapping("/simple")
+    public ResponseEntity obtenerExperienciasSimpleProfesionalAutenticado(){
+        List<ResponseExperienciaSimpleDTO> experiencias = experienciaService.obtenerExperienciasSimpleProfesionalAutenticado();
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron las experiencias correctamente", experiencias);
     }
 
