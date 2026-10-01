@@ -73,7 +73,7 @@ public class DevProyectoControllerIntegrationTest {
         databaseCleaner.clean();
         LocalDate fechaInicio = LocalDate.of(2024, 3, 1);
         profesional = profesionalFixture.crearProfesional("Test", "User");
-        usuario = usuarioFixture.crearUsuario("Test", "User", "testuser@gmail.com", "password", null, "admin", profesional);
+        usuario = usuarioFixture.crearUsuario("testuser@gmail.com", "password", null, "admin", profesional);
         experiencia = experienciaFixture.crearExperiencia("Experiencia de prueba", "Descripción de la experiencia de prueba", fechaInicio, null, "proyecto persona", "fullstack", profesional);
         token = jwtService.generarToken(usuario);
     }

@@ -20,7 +20,7 @@ public class UsuarioFixture {
     private final PasswordEncoder passwordEncoder;
     private final ProfesionalFixture profesionalFixture;
 
-    public Usuario crearUsuario(String nombres, String apellidos, String email, String password, String apiKey, String rolDescripcion, Profesional profesional) {
+    public Usuario crearUsuario(String email, String password, String apiKey, String rolDescripcion, Profesional profesional) {
 
         Rol rol = rolRepository.buscarRolPorDescripcion(rolDescripcion).orElseThrow();
 
