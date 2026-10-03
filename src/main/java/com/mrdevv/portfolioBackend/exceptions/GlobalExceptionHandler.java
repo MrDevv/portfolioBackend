@@ -18,6 +18,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
@@ -37,7 +38,8 @@ public class GlobalExceptionHandler {
         ObjectReplicatedException.class,
         ConstraintViolationException.class,
         NoResourceFoundException.class,
-        MethodArgumentNotValidException.class
+        MethodArgumentNotValidException.class,
+        MethodArgumentTypeMismatchException.class
     })
     public ResponseEntity<Object> handlerAllException(Exception exception, HttpServletRequest request, HttpServletResponse response){
         ZoneId zoneId = ZoneId.of("America/Lima");
@@ -158,6 +160,21 @@ public class GlobalExceptionHandler {
                     request.getMethod(),
                     noResourceFoundException.getMessage(),
                     noResourceFoundException.getMessage(),
+                    localDateTime,
+                    null
+            );
+            return ResponseEntity.status(code).body(responseError);
+        } else if(exception instanceof MethodArgumentTypeMismatchException methodArgumentTypeMismatchException){
+            Integer code = HttpStatus.BAD_REQUEST.value();
+            String messageFront = "El parámetro '" + methodArgumentTypeMismatchException.getName() + "' debe ser de tipo '" + methodArgumentTypeMismatchException.getRequiredType().getSimpleName() + "'";
+            String messageBack = "The parameter '" + methodArgumentTypeMismatchException.getName() + "' must be of type '" + methodArgumentTypeMismatchException.getRequiredType().getSimpleName() + "'";
+            ResponseError responseError = new ResponseError(
+                    "Failed",
+                    code,
+                    request.getRequestURL().toString(),
+                    request.getMethod(),
+                    messageFront,
+                    messageBack,
                     localDateTime,
                     null
             );

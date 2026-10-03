@@ -25,6 +25,7 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
         join e.profesional pr
         where (:profesional_id is null or pr.profesionalId = :profesional_id)
         and lower(p.titulo) like concat('%', :titulo, '%')
+        order by p.proyectoId desc
     """)
     Page<ProyectoProjectionDTO> obtenerProyectos(@Param(value = "profesional_id") Long profesionalId,
                                                  @Param(value = "titulo") String titulo,
