@@ -2,6 +2,8 @@ package com.mrdevv.portfolioBackend.controllers.me;
 
 import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.request.CreateProyectoDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateProfesionalDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateProyectoDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProyectoDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IProyectoService;
@@ -33,5 +35,11 @@ public class MeProyectoController {
     public ResponseEntity crearProyecto(@Valid @RequestBody CreateProyectoDTO proyectoDTO){
         ResponseProyectoDTO proyectoCreado = proyectoService.crearProyecto(proyectoDTO);
         return ResponseHandler.ok(TipoResponse.CREATE, "Se creó el proyecto correctamente", proyectoCreado);
+    }
+
+    @PutMapping("/{uuid}")
+    public ResponseEntity actualizarProyecto(@PathVariable(name = "uuid") String proyectoUUID, @Valid @RequestBody UpdateProyectoDTO proyectoDTO){
+        ResponseProyectoDTO proyectoActualizado = proyectoService.actualizarProyecto(proyectoUUID, proyectoDTO);
+        return ResponseHandler.ok(TipoResponse.UPDATE, "Se actualizó el proyecto correctamente", proyectoActualizado);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
@@ -35,4 +36,6 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
     boolean existeProyectoEnExperiencia(@Param(value = "titulo") String titulo, @Param(value = "experiencia_uuid") String experienciaUUID);
 
 
+    @Query(value = "select p from Proyecto p join p.experiencia e where p.proyectoUUID = :proyecto_uuid and e.profesional.profesionalId = :profesional_id")
+    Optional<Proyecto> obtenerProyectoPorUUIDyProfesionalId(@Param(value = "proyecto_uuid") String proyectoUUID, @Param(value = "profesional_id") Long profesionalId);
 }

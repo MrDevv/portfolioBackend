@@ -4,14 +4,12 @@ import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.dto.projection.ProyectoProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.request.CreateProyectoDTO;
-import com.mrdevv.portfolioBackend.dto.response.ResponseExperienciaDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateProyectoDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProyectoDTO;
+import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.exceptions.ObjectReplicatedException;
-import com.mrdevv.portfolioBackend.mappers.ExperienciaMapper;
 import com.mrdevv.portfolioBackend.mappers.ProyectoMapper;
 import com.mrdevv.portfolioBackend.models.*;
-import com.mrdevv.portfolioBackend.repositories.EtiquetaRepository;
-import com.mrdevv.portfolioBackend.repositories.ExperienciaRepository;
 import com.mrdevv.portfolioBackend.repositories.ProyectoRepository;
 import com.mrdevv.portfolioBackend.services.IEtiquetaService;
 import com.mrdevv.portfolioBackend.services.IExperienciaService;
@@ -20,7 +18,6 @@ import com.mrdevv.portfolioBackend.services.ITipoProyectoService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -87,7 +83,27 @@ public class ProyectoServiceImpl implements IProyectoService {
         return ProyectoMapper.toResponseProyectoDTO(proyectoRepository.save(proyecto));
     }
 
-//    Valida que no exista un proyecto con el mismo título en la misma experiencia
+//    Actualizar un proyecto existente del profesional autenticado, validando que no exista un proyecto con el mismo título en la misma experiencia.
+    @Transactional
+    @Override
+    public ResponseProyectoDTO actualizarProyecto(String proyectoUUID, UpdateProyectoDTO proyectoDTO) {
+        List<Etiqueta> etiquetas = new ArrayList<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long profesionalId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).profesionalId();
+        Proyecto proyecto = obtenerProyectoPorUUIDyProfesionalId(proyectoUUID, profesionalId);
+        if (!proyecto.getTitulo().equalsIgnoreCase(proyectoDTO.titulo())) {
+            validarProyectoDuplicadoEnExperiencia(proyectoDTO.titulo(), proyectoDTO.experienciaUUID());
+        }
+        Experiencia experiencia = experienciaService.obtenerExperienciaPorUUIDyProfesionalId(profesionalId, proyectoDTO.experienciaUUID());
+        TipoProyecto tipoProyecto = tipoProyectoService.obtenerTipoProyectoPorUUID(proyectoDTO.tipoProyectoUUID());
+        if (proyectoDTO.etiquetas() != null) {
+            etiquetas = etiquetaService.obtenerEtiquetasPorUUIDs(List.of(proyectoDTO.etiquetas()));
+        }
+        ProyectoMapper.actualizarProyecto(proyecto, experiencia, tipoProyecto, etiquetas, proyectoDTO);
+        return ProyectoMapper.toResponseProyectoDTO(proyecto);
+    }
+
+    //    Valida que no exista un proyecto con el mismo título en la misma experiencia
     private void validarProyectoDuplicadoEnExperiencia(String titulo, String experienciaUUID) {
         boolean existeProyecto = proyectoRepository.existeProyectoEnExperiencia(titulo, experienciaUUID);
         if (existeProyecto) {
@@ -96,5 +112,12 @@ public class ProyectoServiceImpl implements IProyectoService {
                     ErrorMessage.REPLICATE_OBJECT_PROYECTO_EXPERIENCIA_FRONT.getMessage(titulo)
             );
         }
+    }
+
+    private Proyecto obtenerProyectoPorUUIDyProfesionalId(String proyectoUUID, Long profesionalId) {
+        return proyectoRepository.obtenerProyectoPorUUIDyProfesionalId(proyectoUUID, profesionalId).orElseThrow(() -> new ObjectNotFoundException(
+                ErrorMessage.NOT_FOUND_PROYECTO_BACKEND.getMessage(proyectoUUID),
+                ErrorMessage.NOT_FOUND_PROYECTO_FRONT.getMessage(proyectoUUID)
+        ));
     }
 }

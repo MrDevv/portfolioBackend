@@ -5,6 +5,7 @@ import com.mrdevv.portfolioBackend.dto.ResponseWithPageable;
 import com.mrdevv.portfolioBackend.dto.projection.ProyectoProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.projection.ProyectoSinExperienciaProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.request.CreateProyectoDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateProyectoDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProyectoDTO;
 import com.mrdevv.portfolioBackend.models.Etiqueta;
 import com.mrdevv.portfolioBackend.models.Experiencia;
@@ -83,5 +84,16 @@ public class ProyectoMapper {
                 .tipoProyecto(tipoProyecto)
                 .etiquetas(etiquetas)
                 .build();
+    }
+
+    public static void actualizarProyecto(Proyecto proyecto, Experiencia experiencia, TipoProyecto tipoProyecto, List<Etiqueta> etiquetas, UpdateProyectoDTO proyectoDTO) {
+        proyecto.setTitulo(proyectoDTO.titulo());
+        proyecto.setDescripcion(proyectoDTO.descripcion());
+        proyecto.setUrlProduccion(proyectoDTO.urlProduccion());
+        proyecto.setUrlRepositorio(proyectoDTO.urlRepositorio());
+        proyecto.setUrlImagenPresentacion(proyectoDTO.urlImagenPresentacion());
+        proyecto.setExperiencia(experiencia);
+        proyecto.setTipoProyecto(tipoProyecto);
+        proyecto.setEtiquetas(etiquetas);
     }
 }
