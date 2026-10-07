@@ -115,6 +115,15 @@ public class ProyectoServiceImpl implements IProyectoService {
         return ProyectoMapper.toResponseProyectoDTO(proyectoProjection);
     }
 
+    @Transactional
+    @Override
+    public void eliminarProyecto(String proyectoUUID) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long profesionalId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).profesionalId();
+        Proyecto proyecto = obtenerProyectoPorUUIDyProfesionalId(proyectoUUID, profesionalId);
+        proyectoRepository.delete(proyecto);
+    }
+
     //    Valida que no exista un proyecto con el mismo título en la misma experiencia
     private void validarProyectoDuplicadoEnExperiencia(String titulo, String experienciaUUID) {
         boolean existeProyecto = proyectoRepository.existeProyectoEnExperiencia(titulo, experienciaUUID);

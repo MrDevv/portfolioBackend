@@ -48,4 +48,10 @@ public class MeProyectoController {
         ResponseProyectoDTO proyectoActualizado = proyectoService.actualizarProyecto(proyectoUUID, proyectoDTO);
         return ResponseHandler.ok(TipoResponse.UPDATE, "Se actualizó el proyecto correctamente", proyectoActualizado);
     }
+
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity eliminarProyecto(@PathVariable(name = "uuid") String proyectoUUID){
+        proyectoService.eliminarProyecto(proyectoUUID);
+        return ResponseHandler.ok(TipoResponse.DELETE, "Se eliminó el proyecto correctamente", null);
+    }
 }

@@ -21,4 +21,6 @@ public interface IProyectoService {
     ResponseProyectoDTO actualizarProyecto(String proyectoUUID, @Valid UpdateProyectoDTO proyectoDTO);
 
     ResponseProyectoDTO obtenerProyectoPorUUID(String proyectoUUID);
+
+    void eliminarProyecto(String proyectoUUID);
 }
