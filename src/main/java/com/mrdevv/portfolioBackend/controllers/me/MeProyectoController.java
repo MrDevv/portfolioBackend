@@ -31,6 +31,12 @@ public class MeProyectoController {
         return ResponseHandler.ok(TipoResponse.GETALL, "se obtuvieron los proyectos correctamente", proyectos);
     }
 
+    @GetMapping("/{uuid}")
+    public ResponseEntity obtenerProyectoPorUUID(@PathVariable(name = "uuid") String proyectoUUID){
+        ResponseProyectoDTO proyecto = proyectoService.obtenerProyectoPorUUID(proyectoUUID);
+        return ResponseHandler.ok(TipoResponse.GET, "Se obtuvo el proyecto correctamente", proyecto);
+    }
+
     @PostMapping
     public ResponseEntity crearProyecto(@Valid @RequestBody CreateProyectoDTO proyectoDTO){
         ResponseProyectoDTO proyectoCreado = proyectoService.crearProyecto(proyectoDTO);

@@ -43,7 +43,7 @@ public class ProyectoMapper {
 
     }
 
-    public static List<ResponseProyectoDTO> toResponseProyectoDTO(List<ProyectoSinExperienciaProjectionDTO> proyectoProjectionDTOS){
+    public static List<ResponseProyectoDTO> toResponseProyectoListDTO(List<ProyectoSinExperienciaProjectionDTO> proyectoProjectionDTOS){
         return proyectoProjectionDTOS.stream().map(proyectoProjectionDTO -> new ResponseProyectoDTO(
                 proyectoProjectionDTO.getProyectoUUID(),
                 proyectoProjectionDTO.getTitulo(),
@@ -95,5 +95,20 @@ public class ProyectoMapper {
         proyecto.setExperiencia(experiencia);
         proyecto.setTipoProyecto(tipoProyecto);
         proyecto.setEtiquetas(etiquetas);
+    }
+
+    public static ResponseProyectoDTO toResponseProyectoDTO(ProyectoProjectionDTO proyectoProjection) {
+        return new ResponseProyectoDTO(
+                proyectoProjection.getProyectoUUID(),
+                proyectoProjection.getTitulo(),
+                proyectoProjection.getDescripcion(),
+                proyectoProjection.getUrlProduccion(),
+                proyectoProjection.getUrlRepositorio(),
+                proyectoProjection.getUrlImagenPresentacion(),
+                proyectoProjection.getEstado() ? "activo" : "inactivo",
+                ExperienciaMapper.toResponseExperienciaSimpleDTO(proyectoProjection.getExperiencia()),
+                TipoProyectoMapper.toResponseTipoProyectoDTO(proyectoProjection.getTipoProyecto()),
+                EtiquetaMapper.toEtiquetaListDTO(proyectoProjection.getEtiquetas())
+        );
     }
 }

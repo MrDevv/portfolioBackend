@@ -103,6 +103,18 @@ public class ProyectoServiceImpl implements IProyectoService {
         return ProyectoMapper.toResponseProyectoDTO(proyecto);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public ResponseProyectoDTO obtenerProyectoPorUUID(String proyectoUUID) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long profesionalId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).profesionalId();
+        ProyectoProjectionDTO proyectoProjection = proyectoRepository.obtenerProyectoPorUUID(proyectoUUID, profesionalId).orElseThrow(() -> new ObjectNotFoundException(
+                ErrorMessage.NOT_FOUND_PROYECTO_BACKEND.getMessage(proyectoUUID),
+                ErrorMessage.NOT_FOUND_PROYECTO_FRONT.getMessage(proyectoUUID)
+        ));
+        return ProyectoMapper.toResponseProyectoDTO(proyectoProjection);
+    }
+
     //    Valida que no exista un proyecto con el mismo título en la misma experiencia
     private void validarProyectoDuplicadoEnExperiencia(String titulo, String experienciaUUID) {
         boolean existeProyecto = proyectoRepository.existeProyectoEnExperiencia(titulo, experienciaUUID);

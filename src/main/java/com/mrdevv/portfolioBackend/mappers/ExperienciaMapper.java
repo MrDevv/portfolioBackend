@@ -46,7 +46,7 @@ public class ExperienciaMapper {
                 experienciaDetalleProjectionDTO.getFechaFin(),
                 experienciaDetalleProjectionDTO.getNombreEmpresa(),
                 experienciaDetalleProjectionDTO.getPuesto(),
-                ProyectoMapper.toResponseProyectoDTO(experienciaDetalleProjectionDTO.getProyectos())
+                ProyectoMapper.toResponseProyectoListDTO(experienciaDetalleProjectionDTO.getProyectos())
         );
     }
 

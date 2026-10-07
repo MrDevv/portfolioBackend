@@ -19,4 +19,6 @@ public interface IProyectoService {
     ResponseProyectoDTO crearProyecto(CreateProyectoDTO proyectoDTO);
 
     ResponseProyectoDTO actualizarProyecto(String proyectoUUID, @Valid UpdateProyectoDTO proyectoDTO);
+
+    ResponseProyectoDTO obtenerProyectoPorUUID(String proyectoUUID);
 }
