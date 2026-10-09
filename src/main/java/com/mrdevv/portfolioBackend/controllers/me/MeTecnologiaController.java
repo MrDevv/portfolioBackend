@@ -1,6 +1,7 @@
 package com.mrdevv.portfolioBackend.controllers.me;
 
 import com.mrdevv.portfolioBackend.dto.request.CreateTecnologiaProfesionalDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateTecnologiaProfesionalDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProfesionalTecnologiaDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IProfesionalTecnologiaService;
@@ -32,6 +33,12 @@ public class MeTecnologiaController {
     public ResponseEntity registrarNuevaTecnologiaProfesionalAutenticado(@Valid @RequestBody CreateTecnologiaProfesionalDTO tecnologiaProfesionalDTO) {
         ResponseProfesionalTecnologiaDTO profesionalTecnologia = profesionalTecnologiaService.registrarTecnologiaProfesionalAutenticado(tecnologiaProfesionalDTO);
         return ResponseHandler.ok(TipoResponse.GETALL, "Se registró correctamente la tecnología para el profesional", profesionalTecnologia);
+    }
+
+    @PatchMapping("/{uuid}")
+    public ResponseEntity actualizarTecnologiaProfesionalAutenticado(@PathVariable(name = "uuid") String profesionalTecnologiaUUID, @Valid @RequestBody UpdateTecnologiaProfesionalDTO tecnologiaProfesionalDTO) {
+        ResponseProfesionalTecnologiaDTO profesionalTecnologia = profesionalTecnologiaService.actualizarTecnologiaProfesionalAutenticado(profesionalTecnologiaUUID, tecnologiaProfesionalDTO);
+        return ResponseHandler.ok(TipoResponse.UPDATE, "Se actualizó correctamente la tecnología del profesional", profesionalTecnologia);
     }
 
     @DeleteMapping("/{uuid}")

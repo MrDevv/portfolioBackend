@@ -3,6 +3,7 @@ package com.mrdevv.portfolioBackend.services.impl;
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.dto.projection.ProfesionalTecnologiaProjection;
 import com.mrdevv.portfolioBackend.dto.request.CreateTecnologiaProfesionalDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateTecnologiaProfesionalDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProfesionalTecnologiaDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.exceptions.ObjectReplicatedException;
@@ -62,12 +63,18 @@ public class ProfesionalTecnologiaImpl implements IProfesionalTecnologiaService 
     public void eliminarTecnologiaProfesionalAutenticado(String profesionalTecnologiaUUID) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long profesionalId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).profesionalId();
-        ProfesionalTecnologia profesionalTecnologia = profesionalTecnologiaRepository.findByProfesionalTecnologiaUUID(profesionalTecnologiaUUID, profesionalId)
-                .orElseThrow(() -> new ObjectNotFoundException(
-                        ErrorMessage.NOT_FOUND_TECNOLOGIA_PROFESIONAL_BACKEND.getMessage(profesionalTecnologiaUUID),
-                        ErrorMessage.NOT_FOUND_TECNOLOGIA_PROFESIONAL_FRONT.getMessage(profesionalTecnologiaUUID)
-                ));
+        ProfesionalTecnologia profesionalTecnologia = obtenerProfesionalTecnologiaPorUUID(profesionalTecnologiaUUID, profesionalId);
         profesionalTecnologiaRepository.delete(profesionalTecnologia);
+    }
+
+    @Transactional
+    @Override
+    public ResponseProfesionalTecnologiaDTO actualizarTecnologiaProfesionalAutenticado(String profesionalTecnologiaUUID, UpdateTecnologiaProfesionalDTO tecnologiaProfesionalDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long profesionalId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).profesionalId();
+        ProfesionalTecnologia profesionalTecnologia = obtenerProfesionalTecnologiaPorUUID(profesionalTecnologiaUUID, profesionalId);
+        profesionalTecnologia.setNivel(tecnologiaProfesionalDTO.nivel().getNivel());
+        return ProfesionalTecnologiaMapper.toProfesionalTecnologiaDTO(profesionalTecnologia);
     }
 
     void validarTecnologiaNoRegistradaPorProfesional(Profesional profesional, Tecnologia tecnologia){
@@ -77,5 +84,13 @@ public class ProfesionalTecnologiaImpl implements IProfesionalTecnologiaService 
                     ErrorMessage.REPLICATE_OBJECT_TECNOLOGIA_PROFESIONAL_FRONT.getMessage(tecnologia.getDescripcion())
             );
         }
+    }
+
+    private ProfesionalTecnologia obtenerProfesionalTecnologiaPorUUID(String profesionalTecnologiaUUID, Long profesionalId) {
+        return profesionalTecnologiaRepository.findByProfesionalTecnologiaUUID(profesionalTecnologiaUUID, profesionalId)
+                .orElseThrow(() -> new ObjectNotFoundException(
+                        ErrorMessage.NOT_FOUND_TECNOLOGIA_PROFESIONAL_BACKEND.getMessage(profesionalTecnologiaUUID),
+                        ErrorMessage.NOT_FOUND_TECNOLOGIA_PROFESIONAL_FRONT.getMessage(profesionalTecnologiaUUID)
+                ));
     }
 }
