@@ -46,4 +46,10 @@ public class MeTecnologiaController {
         profesionalTecnologiaService.eliminarTecnologiaProfesionalAutenticado(profesionalTecnologiaUUID);
         return ResponseHandler.ok(TipoResponse.DELETE, "Se eliminó correctamente la tecnología del profesional", null);
     }
+
+    @GetMapping("/{uuid}")
+    public ResponseEntity obtenerTecnologiaProfesionalAutenticado(@PathVariable(name = "uuid") String profesionalTecnologiaUUID) {
+        ResponseProfesionalTecnologiaDTO profesionalTecnologia = profesionalTecnologiaService.obtenerTecnologiaProfesionalAutenticado(profesionalTecnologiaUUID);
+        return ResponseHandler.ok(TipoResponse.GET, "Se obtuvo correctamente la tecnología del profesional", profesionalTecnologia);
+    }
 }

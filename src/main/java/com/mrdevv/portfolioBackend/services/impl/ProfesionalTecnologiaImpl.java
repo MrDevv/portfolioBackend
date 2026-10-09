@@ -73,7 +73,16 @@ public class ProfesionalTecnologiaImpl implements IProfesionalTecnologiaService 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long profesionalId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).profesionalId();
         ProfesionalTecnologia profesionalTecnologia = obtenerProfesionalTecnologiaPorUUID(profesionalTecnologiaUUID, profesionalId);
-        profesionalTecnologia.setNivel(tecnologiaProfesionalDTO.nivel().getNivel());
+        profesionalTecnologia.setNivel(tecnologiaProfesionalDTO.nivel() != null ? tecnologiaProfesionalDTO.nivel().getNivel() : null);
+        return ProfesionalTecnologiaMapper.toProfesionalTecnologiaDTO(profesionalTecnologia);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ResponseProfesionalTecnologiaDTO obtenerTecnologiaProfesionalAutenticado(String profesionalTecnologiaUUID) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long profesionalId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).profesionalId();
+        ProfesionalTecnologia profesionalTecnologia = obtenerProfesionalTecnologiaPorUUID(profesionalTecnologiaUUID, profesionalId);
         return ProfesionalTecnologiaMapper.toProfesionalTecnologiaDTO(profesionalTecnologia);
     }
 

@@ -16,4 +16,6 @@ public interface IProfesionalTecnologiaService {
     void eliminarTecnologiaProfesionalAutenticado(String profesionalTecnologiaUUID);
 
     ResponseProfesionalTecnologiaDTO actualizarTecnologiaProfesionalAutenticado(String profesionalTecnologiaUUID, @Valid UpdateTecnologiaProfesionalDTO tecnologiaProfesionalDTO);
+
+    ResponseProfesionalTecnologiaDTO obtenerTecnologiaProfesionalAutenticado(String profesionalTecnologiaUUID);
 }
