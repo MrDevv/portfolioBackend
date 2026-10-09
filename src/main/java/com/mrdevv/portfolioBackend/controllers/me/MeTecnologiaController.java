@@ -33,4 +33,10 @@ public class MeTecnologiaController {
         ResponseProfesionalTecnologiaDTO profesionalTecnologia = profesionalTecnologiaService.registrarTecnologiaProfesionalAutenticado(tecnologiaProfesionalDTO);
         return ResponseHandler.ok(TipoResponse.GETALL, "Se registró correctamente la tecnología para el profesional", profesionalTecnologia);
     }
+
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity eliminarTecnologiaProfesionalAutenticado(@PathVariable(name = "uuid") String profesionalTecnologiaUUID) {
+        profesionalTecnologiaService.eliminarTecnologiaProfesionalAutenticado(profesionalTecnologiaUUID);
+        return ResponseHandler.ok(TipoResponse.DELETE, "Se eliminó correctamente la tecnología del profesional", null);
+    }
 }

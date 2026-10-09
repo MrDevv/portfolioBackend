@@ -26,7 +26,7 @@ public class ProfesionalTecnologia {
     @JoinColumn(name = "profesional_id")
     Profesional profesional;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tecnologia_id")
     Tecnologia tecnologia;
 

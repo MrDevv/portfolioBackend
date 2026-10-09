@@ -10,4 +10,6 @@ public interface IProfesionalTecnologiaService {
     List<ResponseProfesionalTecnologiaDTO> obtenerTecnologiasProfesionalAutenticado(String nombreTecnologia);
 
     ResponseProfesionalTecnologiaDTO registrarTecnologiaProfesionalAutenticado(CreateTecnologiaProfesionalDTO tecnologiaProfesionalDTO);
+
+    void eliminarTecnologiaProfesionalAutenticado(String profesionalTecnologiaUUID);
 }

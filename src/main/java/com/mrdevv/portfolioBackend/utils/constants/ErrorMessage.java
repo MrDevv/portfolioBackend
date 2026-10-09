@@ -22,6 +22,8 @@ public enum ErrorMessage {
     NOT_FOUND_EXPERIENCIA_BACKEND("No se encontró el OBJECT 'EXPERIENCIA' con UUID '%s' en la base de datos."),
     NOT_FOUND_PROYECTO_FRONT("No se encontró el proyecto con uuid '%s'"),
     NOT_FOUND_PROYECTO_BACKEND("No se encontró el OBJECT 'PROYECTO' con UUID '%s' en la base de datos."),
+    NOT_FOUND_TECNOLOGIA_PROFESIONAL_BACKEND("El OBJECT 'TECNOLOGIA' con UUID '%s' no se encuentra registrada para el OBJECT 'PROFESIONAL'."),
+    NOT_FOUND_TECNOLOGIA_PROFESIONAL_FRONT("La tecnología con uuid '%s' no se encuentra registrada para el profesional"),
     REPLICATE_OBJECT_TECNOLOGIA_PROFESIONAL_FRONT("La tecnología '%s' ya se encuentra registrada para el profesional"),
     REPLICATE_OBJECT_TECNOLOGIA_PROFESIONAL_BACKEND("El OBJECT 'TECNOLOGIA' con UUID '%s' ya se encuentra registrada para el OBJECT 'PROFESIONAL'."),
     REPLICATE_OBJECT_EXPERIENCIA_PROFESIONAL_FRONT("La experiencia profesional con el título '%s' ya está registrada para este profesional"),
