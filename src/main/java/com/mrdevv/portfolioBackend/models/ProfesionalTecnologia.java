@@ -19,6 +19,9 @@ public class ProfesionalTecnologia {
     @Column(name = "profesional_tecnologia_id")
     Long profesionalTecnologiaId;
 
+    @Column(name = "profesional_tecnologia_uuid", unique = true, nullable = false)
+    String profesionalTecnologiaUUID;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profesional_id")
     Profesional profesional;
@@ -29,4 +32,10 @@ public class ProfesionalTecnologia {
 
     String nivel;
 
+    @PrePersist
+    public void generarUUID() {
+        if (profesionalTecnologiaUUID == null) {
+            this.profesionalTecnologiaUUID = java.util.UUID.randomUUID().toString();
+        }
+    }
 }

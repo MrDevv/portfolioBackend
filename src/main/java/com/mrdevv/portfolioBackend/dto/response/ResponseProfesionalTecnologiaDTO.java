@@ -4,10 +4,9 @@ package com.mrdevv.portfolioBackend.dto.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record ResponseProfesionalTecnologiaDTO(
+        String profesionalTecnologiaUUID,
         String tecnologia,
-        @JsonProperty("logo_url")
-        String logoUrl,
-        @JsonProperty("tipo_tecnologia")
+        String logoURL,
         String tipoTecnologia,
         String nivel
 ) {

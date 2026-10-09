@@ -87,6 +87,7 @@ CREATE TABLE tecnologias (
 
 CREATE TABLE profesional_tecnologias (
     profesional_tecnologia_id BIGINT GENERATED ALWAYS AS IDENTITY,
+    profesional_tecnologia_uuid VARCHAR(36) NOT NULL,
     profesional_id BIGINT NOT NULL,
     tecnologia_id BIGINT NOT NULL,
     nivel VARCHAR(20),

@@ -15,6 +15,7 @@ public class ProfesionalTecnologiaMapper {
     public static List<ResponseProfesionalTecnologiaDTO> toProfesionalTecnologiaDTOList(List<ProfesionalTecnologiaProjection> profesionalTecnologiaProjections){
         return profesionalTecnologiaProjections.stream().map(profesionalTecnologiaProjection -> {
             return new ResponseProfesionalTecnologiaDTO(
+                    profesionalTecnologiaProjection.getProfesionalTecnologiaUUID(),
                     profesionalTecnologiaProjection.getDescripcion(),
                     profesionalTecnologiaProjection.getLogoUrl(),
                     profesionalTecnologiaProjection.getTipoTecnologia(),
@@ -25,6 +26,7 @@ public class ProfesionalTecnologiaMapper {
 
     public static ResponseProfesionalTecnologiaDTO toProfesionalTecnologiaDTO(ProfesionalTecnologia profesionalTecnologiaEntity){
             return new ResponseProfesionalTecnologiaDTO(
+                    profesionalTecnologiaEntity.getProfesionalTecnologiaUUID(),
                     profesionalTecnologiaEntity.getTecnologia().getDescripcion(),
                     profesionalTecnologiaEntity.getTecnologia().getLogoUrl(),
                     profesionalTecnologiaEntity.getTecnologia().getTipoTecnologia().getDescripcion(),

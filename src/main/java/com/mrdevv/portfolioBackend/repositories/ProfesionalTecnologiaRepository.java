@@ -13,6 +13,7 @@ public interface ProfesionalTecnologiaRepository extends JpaRepository<Profesion
 
     @Query(value = """
         select
+            pt.profesionalTecnologiaUUID as profesionalTecnologiaUUID,
             t.descripcion as descripcion,
             t.logoUrl as logoUrl,
             tt.descripcion as tipoTecnologia,
@@ -23,7 +24,7 @@ public interface ProfesionalTecnologiaRepository extends JpaRepository<Profesion
         join t.tipoTecnologia tt 
         join pt.profesional p      
         where p.profesionalId = :profesional_id
-        and upper(t.descripcion) like upper(concat(:nombre, '%'))            
+        and upper(t.descripcion) like concat(:nombre, '%')            
     """)
     List<ProfesionalTecnologiaProjection> obtenerTecnologiasDelProfesional(@Param("profesional_id") Long profesionalId, @Param("nombre") String nombre);
 
