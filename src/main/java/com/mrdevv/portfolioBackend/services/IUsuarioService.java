@@ -6,6 +6,7 @@ import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
 import com.mrdevv.portfolioBackend.models.Usuario;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUsuarioService {
 
@@ -14,4 +15,6 @@ public interface IUsuarioService {
     void actualizarRol(Long usuarioId, UpdateRolUsuarioDTO rol);
 
     ResponseApiKeyUsuario generarApiKey(Long usuarioId);
+
+    Usuario findByEmail(String email);
 }

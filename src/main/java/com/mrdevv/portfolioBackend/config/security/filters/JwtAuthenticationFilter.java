@@ -67,17 +67,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        usuarioAutenticado = usuarioService.findUsuarioAuthPrincipalProjectionByEmail(email);
 
         if (request.getRequestURI().contains("auth/validate-token")){
+            Usuario usuario = usuarioService.findByEmail(email);
+
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    usuarioAutenticado, null, usuarioAutenticado.authorities()
+                    usuario, null, usuario.getAuthorities()
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
             return;
         }
+
+        usuarioAutenticado = usuarioService.findUsuarioAuthPrincipalProjectionByEmail(email);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 usuarioAutenticado, null, usuarioAutenticado.authorities()

@@ -54,8 +54,7 @@ public class AuthServiceImpl implements IAuthService {
     public ResponseUsuarioLoginDTO validateToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String token = httpServletReq.getHeader("Authorization").split(" ")[1];
-        UsuarioAuthPrincipal usuarioAuthPrincipal = (UsuarioAuthPrincipal) authentication.getPrincipal();
-        Usuario usuario = usuarioService.findByUsuarioId(usuarioAuthPrincipal.usuarioId());
+        Usuario usuario = (Usuario) authentication.getPrincipal();
         return UsuarioMapper.toResponseUsuarioLogin(usuario, token);
     }
 }

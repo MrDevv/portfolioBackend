@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -103,6 +104,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
         usuarioRepository.crearApiKey(usuarioId, apiKey);
 
         return new ResponseApiKeyUsuario(apiKey);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email).orElseThrow(() -> new ObjectNotFoundException(
+                ErrorMessage.NOT_FOUND_USUARIO_FRONT.getMessage(email),
+                ErrorMessage.NOT_FOUND_USUARIO_BACKEND.getMessage(email)
+        ));
     }
 
 
