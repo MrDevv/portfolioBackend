@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.services;
 
+import com.mrdevv.portfolioBackend.dto.request.UpdateOrigenPermitidoDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
@@ -19,4 +20,6 @@ public interface IUsuarioService {
     ResponseApiKeyUsuario generarApiKey();
 
     void revocarApiKey();
+
+    void actualizarOrigenPermitidoAutenticado(UpdateOrigenPermitidoDTO origenPermitido);
 }

@@ -66,4 +66,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Modifying
     @Query(value = "update Usuario u set u.apiKey = null where u.usuarioId = :usuarioId")
     void revocarApiKey(@Param("usuarioId") Long usuarioId);
+
+    @Modifying
+    @Query(value = "update Usuario u set u.origenPermitido = :origenPermitido, u.estadoOrigen = :estado where u.usuarioId = :usuarioId")
+    void actualizarOrigenPermitido(@Param("usuarioId") Long usuarioId, @Param("origenPermitido") String origenPermitido, @Param("estado") Boolean estado);
 }

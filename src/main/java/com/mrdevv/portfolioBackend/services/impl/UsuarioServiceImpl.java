@@ -3,6 +3,7 @@ package com.mrdevv.portfolioBackend.services.impl;
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioAuthPrincipalProjection;
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
+import com.mrdevv.portfolioBackend.dto.request.UpdateOrigenPermitidoDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
@@ -133,6 +134,19 @@ public class UsuarioServiceImpl implements IUsuarioService {
         }
 
         usuarioRepository.revocarApiKey(usuarioId);
+    }
+
+    @Transactional
+    @Override
+    public void actualizarOrigenPermitidoAutenticado(UpdateOrigenPermitidoDTO origenPermitido) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long usuarioId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).usuarioId();
+        if (!usuarioRepository.existsById(usuarioId)){
+            throw new ObjectNotFoundException(
+                    ErrorMessage.NOT_FOUND_USUARIO_FRONT.getMessage(usuarioId),
+                    ErrorMessage.NOT_FOUND_USUARIO_BACKEND.getMessage(usuarioId));
+        }
+        usuarioRepository.actualizarOrigenPermitido(usuarioId, origenPermitido.origenPermitido(), origenPermitido.estado());
     }
 
 

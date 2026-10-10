@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.controllers.me;
 
+import com.mrdevv.portfolioBackend.dto.request.UpdateOrigenPermitidoDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateProfesionalDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProfesionalDTO;
@@ -42,4 +43,11 @@ public class MeProfesionalController {
         usuarioService.revocarApiKey();
         return ResponseHandler.ok(TipoResponse.DELETE, "se eliminó la API key correctamente", null);
     }
+
+    @PatchMapping("/origen-permitido")
+    public ResponseEntity<Object> actualizarOrigenPermitido(@RequestBody UpdateOrigenPermitidoDTO origenPermitido){
+        usuarioService.actualizarOrigenPermitidoAutenticado(origenPermitido);
+        return ResponseHandler.ok(TipoResponse.UPDATE, "se actualizó el origen permitido correctamente", null);
+    }
+
 }
