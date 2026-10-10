@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProfesionalServiceImpl implements IProfesionalService {
 
     private final ProfesionalRepository profesionalRepository;
-    private final IUsuarioService usuarioService;
 
     @Transactional(readOnly = true)
     @Override
@@ -52,13 +51,6 @@ public class ProfesionalServiceImpl implements IProfesionalService {
     @Override
     public Profesional obtenerProfesionalPorId(Long profesionalId) {
         return buscarProfesionalPorId(profesionalId);
-    }
-
-    @Override
-    public ResponseApiKeyUsuario generarApiKeyParaProfesionalAutenticado() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long usuarioId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).usuarioId();
-        return usuarioService.generarApiKey(usuarioId);
     }
 
     private Profesional buscarProfesionalPorId(Long profesionalId){

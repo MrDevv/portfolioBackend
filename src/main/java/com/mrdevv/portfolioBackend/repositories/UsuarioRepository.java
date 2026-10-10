@@ -62,4 +62,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
         where u.email = :email
     """)
     Optional<UsuarioAuthPrincipalProjection> findUsuarioAuthPrincipalProjectionByEmail(String email);
+
+    @Modifying
+    @Query(value = "update Usuario u set u.apiKey = null where u.usuarioId = :usuarioId")
+    void revocarApiKey(@Param("usuarioId") Long usuarioId);
 }

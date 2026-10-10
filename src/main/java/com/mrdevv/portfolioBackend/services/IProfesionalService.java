@@ -13,5 +13,4 @@ public interface IProfesionalService {
 
     Profesional obtenerProfesionalPorId(Long profesionalId);
 
-    ResponseApiKeyUsuario generarApiKeyParaProfesionalAutenticado();
 }

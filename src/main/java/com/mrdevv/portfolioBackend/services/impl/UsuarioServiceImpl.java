@@ -14,8 +14,10 @@ import com.mrdevv.portfolioBackend.repositories.UsuarioRepository;
 import com.mrdevv.portfolioBackend.services.IUsuarioService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,7 +79,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Transactional
     @Override
-    public ResponseApiKeyUsuario generarApiKey(Long usuarioId) {
+    public ResponseApiKeyUsuario generarApiKey() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long usuarioId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).usuarioId();
+
         if (!usuarioRepository.existsById(usuarioId)){
             throw new ObjectNotFoundException(
                     ErrorMessage.NOT_FOUND_USUARIO_FRONT.getMessage(usuarioId),
@@ -113,6 +118,21 @@ public class UsuarioServiceImpl implements IUsuarioService {
                 ErrorMessage.NOT_FOUND_USUARIO_FRONT.getMessage(email),
                 ErrorMessage.NOT_FOUND_USUARIO_BACKEND.getMessage(email)
         ));
+    }
+
+    @Transactional
+    @Override
+    public void revocarApiKey() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long usuarioId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).usuarioId();
+
+        if (!usuarioRepository.existsById(usuarioId)){
+            throw new ObjectNotFoundException(
+                    ErrorMessage.NOT_FOUND_USUARIO_FRONT.getMessage(usuarioId),
+                    ErrorMessage.NOT_FOUND_USUARIO_BACKEND.getMessage(usuarioId));
+        }
+
+        usuarioRepository.revocarApiKey(usuarioId);
     }
 
 

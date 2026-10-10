@@ -14,7 +14,9 @@ public interface IUsuarioService {
 
     void actualizarRol(Long usuarioId, UpdateRolUsuarioDTO rol);
 
-    ResponseApiKeyUsuario generarApiKey(Long usuarioId);
-
     Usuario findByEmail(String email);
+
+    ResponseApiKeyUsuario generarApiKey();
+
+    void revocarApiKey();
 }
