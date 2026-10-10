@@ -31,10 +31,4 @@ public class UsuarioController {
         return ResponseHandler.ok(TipoResponse.PATCH, "Se actualizó el rol del usuario correctamente", null);
     }
 
-    @PostMapping("/{id}/generar-api-key")
-    public ResponseEntity generarApiKey(@PathVariable(name = "id") Long usuarioId){
-        ResponseApiKeyUsuario apiKey = usuarioService.generarApiKey(usuarioId);
-        return ResponseHandler.ok(TipoResponse.PATCH, "Se generó la api key del usuario correctamente", apiKey);
-    }
-
 }

@@ -1,6 +1,7 @@
 package com.mrdevv.portfolioBackend.controllers.me;
 
 import com.mrdevv.portfolioBackend.dto.request.UpdateProfesionalDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProfesionalDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.IProfesionalService;
@@ -26,5 +27,11 @@ public class MeProfesionalController {
     public ResponseEntity<Object> actualizarDatosProfesionales(@RequestBody UpdateProfesionalDTO updateProfesionalDTO){
         ResponseProfesionalDTO profesionalDTO = profesionalService.actualizarProfesionalAutenticado(updateProfesionalDTO);
         return ResponseHandler.ok(TipoResponse.UPDATE, "se actualizaron los datos profesionales correctamente", profesionalDTO);
+    }
+
+    @PostMapping("/api-key")
+    public ResponseEntity<Object> generarApiKey(){
+        ResponseApiKeyUsuario apiKey = profesionalService.generarApiKeyParaProfesionalAutenticado();
+        return ResponseHandler.ok(TipoResponse.CREATE, "se generó la API key correctamente", apiKey);
     }
 }

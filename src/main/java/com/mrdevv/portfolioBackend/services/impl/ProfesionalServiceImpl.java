@@ -3,6 +3,7 @@ package com.mrdevv.portfolioBackend.services.impl;
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.dto.projection.ProfesionalProjectionDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateProfesionalDTO;
+import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProfesionalDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.mappers.ProfesionalMapper;
@@ -10,6 +11,7 @@ import com.mrdevv.portfolioBackend.models.Profesional;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.repositories.ProfesionalRepository;
 import com.mrdevv.portfolioBackend.services.IProfesionalService;
+import com.mrdevv.portfolioBackend.services.IUsuarioService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProfesionalServiceImpl implements IProfesionalService {
 
     private final ProfesionalRepository profesionalRepository;
+    private final IUsuarioService usuarioService;
 
     @Transactional(readOnly = true)
     @Override
@@ -49,6 +52,13 @@ public class ProfesionalServiceImpl implements IProfesionalService {
     @Override
     public Profesional obtenerProfesionalPorId(Long profesionalId) {
         return buscarProfesionalPorId(profesionalId);
+    }
+
+    @Override
+    public ResponseApiKeyUsuario generarApiKeyParaProfesionalAutenticado() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long usuarioId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).usuarioId();
+        return usuarioService.generarApiKey(usuarioId);
     }
 
     private Profesional buscarProfesionalPorId(Long profesionalId){
