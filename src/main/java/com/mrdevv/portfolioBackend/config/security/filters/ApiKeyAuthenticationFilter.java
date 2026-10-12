@@ -1,6 +1,7 @@
 package com.mrdevv.portfolioBackend.config.security.filters;
 
 import com.mrdevv.portfolioBackend.config.security.handler.CustomAuthenticationEntryPoint;
+import com.mrdevv.portfolioBackend.config.security.handler.CustomDeniedEntryPoint;
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.services.auth.ApiKeyService;
@@ -9,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +27,7 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 
     private final ApiKeyService apiKeyService;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomDeniedEntryPoint deniedEntryPoint;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -59,6 +62,14 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 
             return;
         };
+
+        String origenPeticion = request.getHeader("Origin");
+        String origenPermitido = usuario.get().origenPermitido();
+
+        if (!origenPermitido.equals(origenPeticion) && usuario.get().estadoOrigen()) {
+            deniedEntryPoint.handle(request, response, new AccessDeniedException("Origen no permitido"));
+            return;
+        }
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 usuario.get(), null, null

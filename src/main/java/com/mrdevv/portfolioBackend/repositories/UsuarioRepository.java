@@ -42,6 +42,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
             u.usuarioId as usuarioId,
             p.profesionalId as profesionalId,
             u.email as email,
+            u.origenPermitido as origenPermitido,
+            u.estadoOrigen as estadoOrigen,
             r.descripcion as rol
         from Usuario u
         join u.profesional p

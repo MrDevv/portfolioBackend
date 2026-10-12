@@ -8,6 +8,8 @@ public record UsuarioAuthPrincipal(
         Long usuarioId,
         Long profesionalId,
         String email,
+        String origenPermitido,
+        Boolean estadoOrigen,
         Collection<? extends GrantedAuthority> authorities
 ) {
 }

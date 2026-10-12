@@ -29,7 +29,7 @@ public class CustomDeniedEntryPoint implements AccessDeniedHandler {
                 request.getRequestURL().toString(),
                 request.getMethod(),
                 "No tiene los permisos suficientes para realizar esa operación.",
-                "El ROL USER no puede realizar esta operación.",
+                "El acceso al recurso solicitado no está permitido.",
                 localDateTime,
                 null
         );

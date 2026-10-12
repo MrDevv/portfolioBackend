@@ -74,6 +74,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
                 usuarioProjectionDTO.getUsuarioId(),
                 usuarioProjectionDTO.getProfesionalId(),
                 usuarioProjectionDTO.getEmail(),
+                null,
+                null,
                 List.of(authority)
         );
     }

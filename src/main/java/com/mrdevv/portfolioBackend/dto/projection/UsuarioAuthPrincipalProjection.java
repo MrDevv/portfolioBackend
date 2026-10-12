@@ -7,5 +7,9 @@ public interface UsuarioAuthPrincipalProjection {
 
     String getEmail();
 
+    String getOrigenPermitido();
+
+    Boolean getEstadoOrigen();
+
     String getRol();
 }
