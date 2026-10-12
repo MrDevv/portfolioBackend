@@ -8,7 +8,9 @@ import com.mrdevv.portfolioBackend.exceptions.PasswordNotMatchException;
 import com.mrdevv.portfolioBackend.mappers.UsuarioMapper;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.services.IAuthService;
+import com.mrdevv.portfolioBackend.services.ITokenUsuarioService;
 import com.mrdevv.portfolioBackend.services.auth.JwtService;
+import com.mrdevv.portfolioBackend.services.mail.IMailService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +21,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements IAuthService {
@@ -26,6 +30,8 @@ public class AuthServiceImpl implements IAuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UsuarioServiceImpl usuarioService;
+    private final ITokenUsuarioService tokenUsuarioService;
+    private final IMailService mailService;
 
     private final HttpServletRequest httpServletReq;
 
@@ -69,10 +75,23 @@ public class AuthServiceImpl implements IAuthService {
         if (!isPasswordConfirmed(registerDTO.password(), registerDTO.confirmarPassword())) {
             throw new PasswordNotMatchException("La contraseña y la confirmación de contraseña no coinciden", "Las contraseñas no coinciden");
         }
-        usuarioService.createUsuario(registerDTO);
+        Usuario usuario = usuarioService.createUsuario(registerDTO);
+        String token = generarToken();
+        tokenUsuarioService.registrarTokenUsuario(token, usuario, "CONFIRMAR_CUENTA", LocalDateTime.now().plusHours(24));
+        mailService.enviarCorreoConfirmacionCuenta(token, registerDTO.email());
     }
 
     private boolean isPasswordConfirmed(String password, String confirmarPassword){
         return password.equals(confirmarPassword);
+    }
+
+    private String generarToken() {
+        LocalDateTime fechaActual = LocalDateTime.now();
+        String day = String.valueOf(fechaActual.getDayOfMonth());
+        String month = String.valueOf(fechaActual.getMonthValue());
+        String year = String.valueOf(fechaActual.getYear());
+        String hour = String.valueOf(fechaActual.getHour());
+        String uuid = java.util.UUID.randomUUID().toString();
+        return uuid.concat("-").concat(day).concat(month).concat(year).concat(hour);
     }
 }

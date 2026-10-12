@@ -162,3 +162,18 @@ CREATE TABLE proyecto_etiquetas(
     CONSTRAINT fk_pe_etiqueta
        FOREIGN KEY (etiqueta_id) REFERENCES etiquetas(etiqueta_id)
 );
+
+CREATE TABLE tokens_usuarios (
+    token_usuario_id BIGINT GENERATED ALWAYS AS IDENTITY,
+    usuario_id BIGINT NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    fecha_expiracion TIMESTAMP NOT NULL,
+    tipo_token VARCHAR(50) NOT NULL,
+    CONSTRAINT pk_token_usuario
+        PRIMARY KEY (token_usuario_id),
+    CONSTRAINT uq_token_usuario_token
+        UNIQUE (token),
+    CONSTRAINT fk_token_usuario
+        FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
+);
