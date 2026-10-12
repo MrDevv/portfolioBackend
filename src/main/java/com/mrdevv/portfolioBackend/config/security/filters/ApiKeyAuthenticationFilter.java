@@ -63,6 +63,16 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
             return;
         };
 
+        if (usuario.get().estado().equalsIgnoreCase("pendiente")){
+            request.setAttribute("auth_error", "EMAIL_NOT_VERIFIED");
+            deniedEntryPoint.handle(request, response, new AccessDeniedException("Email no verificado"));
+            return;
+        } else if (usuario.get().estado().equalsIgnoreCase("inactivo")){
+            request.setAttribute("auth_error", "ACCOUNT_INACTIVE");
+            deniedEntryPoint.handle(request, response, new AccessDeniedException("Cuenta inactiva"));
+            return;
+        }
+
         String origenPeticion = request.getHeader("Origin");
         String origenPermitido = usuario.get().origenPermitido();
 

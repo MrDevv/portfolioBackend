@@ -1,6 +1,7 @@
 package com.mrdevv.portfolioBackend.config.security.filters;
 
 import com.mrdevv.portfolioBackend.config.security.handler.CustomAuthenticationEntryPoint;
+import com.mrdevv.portfolioBackend.config.security.handler.CustomDeniedEntryPoint;
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.services.auth.JwtService;
@@ -10,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,6 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UsuarioServiceImpl usuarioService;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomDeniedEntryPoint deniedEntryPoint;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -71,6 +74,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (request.getRequestURI().contains("auth/validate-token")){
             Usuario usuario = usuarioService.findByEmail(email);
 
+            if (usuario.getEstado().equalsIgnoreCase("pendiente")){
+                request.setAttribute("auth_error", "EMAIL_NOT_VERIFIED");
+                deniedEntryPoint.handle(request, response, new AccessDeniedException("Email no verificado"));
+                return;
+            } else if (usuario.getEstado().equalsIgnoreCase("inactivo")){
+                request.setAttribute("auth_error", "ACCOUNT_INACTIVE");
+                deniedEntryPoint.handle(request, response, new AccessDeniedException("Cuenta inactiva"));
+                return;
+            }
+
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     usuario, null, usuario.getAuthorities()
             );
@@ -81,6 +94,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         usuarioAutenticado = usuarioService.findUsuarioAuthPrincipalProjectionByEmail(email);
+
+        if (usuarioAutenticado.estado().equalsIgnoreCase("pendiente")){
+            request.setAttribute("auth_error", "EMAIL_NOT_VERIFIED");
+            deniedEntryPoint.handle(request, response, new AccessDeniedException("Email no verificado"));
+            return;
+        } else if (usuarioAutenticado.estado().equalsIgnoreCase("inactivo")){
+            request.setAttribute("auth_error", "ACCOUNT_INACTIVE");
+            deniedEntryPoint.handle(request, response, new AccessDeniedException("Cuenta inactiva"));
+            return;
+        }
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 usuarioAutenticado, null, usuarioAutenticado.authorities()

@@ -1,34 +1,39 @@
 package com.mrdevv.portfolioBackend.exceptions;
 
 
+import com.mrdevv.portfolioBackend.config.security.handler.CustomDeniedEntryPoint;
 import com.mrdevv.portfolioBackend.handler.ResponseError;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import com.mrdevv.portfolioBackend.utils.FormateadorFechas;
 import com.mrdevv.portfolioBackend.utils.constants.NivelTecnologia;
 import com.mrdevv.portfolioBackend.utils.constants.Roles;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private final CustomDeniedEntryPoint deniedEntryPoint;
 
     @ExceptionHandler({
         Exception.class,
@@ -39,7 +44,8 @@ public class GlobalExceptionHandler {
         ConstraintViolationException.class,
         NoResourceFoundException.class,
         MethodArgumentNotValidException.class,
-        MethodArgumentTypeMismatchException.class
+        MethodArgumentTypeMismatchException.class,
+        PasswordNotMatchException.class,
     })
     public ResponseEntity<Object> handlerAllException(Exception exception, HttpServletRequest request, HttpServletResponse response){
         ZoneId zoneId = ZoneId.of("America/Lima");
@@ -179,6 +185,19 @@ public class GlobalExceptionHandler {
                     null
             );
             return ResponseEntity.status(code).body(responseError);
+        } else if (exception instanceof PasswordNotMatchException passwordNotMatchException) {
+            Integer code = HttpStatus.BAD_REQUEST.value();
+            ResponseError responseError = new ResponseError(
+                    "Failed",
+                    code,
+                    request.getRequestURL().toString(),
+                    request.getMethod(),
+                    passwordNotMatchException.getMessageFront(),
+                    passwordNotMatchException.getMessageBack(),
+                    localDateTime,
+                    null
+            );
+            return ResponseEntity.status(code).body(responseError);
         }
 
         Integer httStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
@@ -193,6 +212,12 @@ public class GlobalExceptionHandler {
                 null
         );
         return ResponseEntity.status(httStatus).body(responseError);
+    }
+
+    @ExceptionHandler(AccountNotEnabledException.class)
+    public void handleAccountNotEnabled(AccountNotEnabledException exception, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setAttribute(exception.getName(), exception.getTypeError());
+        deniedEntryPoint.handle(request, response, new AccessDeniedException(exception.getTypeError()));
     }
 
 }

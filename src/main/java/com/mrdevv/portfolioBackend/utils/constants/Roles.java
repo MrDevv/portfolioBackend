@@ -3,8 +3,8 @@ package com.mrdevv.portfolioBackend.utils.constants;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Roles {
-    ADMINISTRADOR("administrador"),
-    USUARIO("usuario");
+    ADMINISTRADOR("admin"),
+    USUARIO("user");
 
     private String rol;
 

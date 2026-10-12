@@ -33,7 +33,7 @@ CREATE TABLE usuarios (
     usuario_uuid VARCHAR(36) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    estado BOOLEAN DEFAULT TRUE NOT NULL,
+    estado VARCHAR(9) DEFAULT 'pendiente' NOT NULL,
     profesional_id BIGINT NOT NULL,
     rol_id BIGINT NOT NULL,
     api_key VARCHAR(100),

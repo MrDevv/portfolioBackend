@@ -53,6 +53,12 @@ public class ProfesionalServiceImpl implements IProfesionalService {
         return buscarProfesionalPorId(profesionalId);
     }
 
+    @Transactional
+    @Override
+    public Profesional crearProfesional(Profesional profesionalEntity) {
+        return profesionalRepository.save(profesionalEntity);
+    }
+
     private Profesional buscarProfesionalPorId(Long profesionalId){
         return profesionalRepository.findById(profesionalId).orElseThrow(() -> {
             throw new ObjectNotFoundException(ErrorMessage.NOT_FOUND_PROFESIONAL_FRONT.getMessage(profesionalId),

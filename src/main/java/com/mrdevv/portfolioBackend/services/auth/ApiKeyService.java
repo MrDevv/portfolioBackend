@@ -25,6 +25,7 @@ public class ApiKeyService {
                         projection.getEmail(),
                         projection.getOrigenPermitido(),
                         projection.getEstadoOrigen(),
+                        projection.getEstado(),
                         List.of(new SimpleGrantedAuthority("ROLE_" + projection.getRol()))
                 ));
     }

@@ -1,6 +1,7 @@
 package com.mrdevv.portfolioBackend.mappers;
 
 import com.mrdevv.portfolioBackend.dto.projection.ProfesionalProjectionDTO;
+import com.mrdevv.portfolioBackend.dto.request.RegisterDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateProfesionalDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseProfesionalDTO;
 import com.mrdevv.portfolioBackend.models.Profesional;
@@ -53,6 +54,13 @@ public class ProfesionalMapper {
         profesional.setTelefono(updateProfesionalDTO.telefono());
         profesional.setBiografia(updateProfesionalDTO.biografia());
         profesional.setPuesto(updateProfesionalDTO.puesto());
+    }
+
+    public static Profesional toProfesionalEntity(RegisterDTO registerDTO){
+        return Profesional.builder()
+                .nombres(registerDTO.nombres())
+                .apellidos(registerDTO.apellidos())
+                .build();
     }
 
 }

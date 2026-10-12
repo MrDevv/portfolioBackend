@@ -30,6 +30,8 @@ public enum ErrorMessage {
     REPLICATE_OBJECT_EXPERIENCIA_PROFESIONAL_BACKEND("El OBJECT 'EXPERIENCIA' con TITULO '%s' ya está registrada para el OBJECT 'PROFESIONAL'."),
     REPLICATE_OBJECT_PROYECTO_EXPERIENCIA_FRONT("El proyecto con el título '%s' ya está registrado para esta experiencia"),
     REPLICATE_OBJECT_PROYECTO_EXPERIENCIA_BACKEND("El OBJECT 'PROYECTO' con TITULO '%s' ya está registrada para el OBJECT 'EXPERIENCIA'."),
+    REPLICATED_USUARIO_BACKEND("El OBJECT 'USUARIO' con EMAIL '%s' ya se encuentra registrado en la base de datos."),
+    REPLICATED_USUARIO_FRONT("El usuario con EMAIL '%s' ya se encuentra registrado en la base de datos."),
     BAD_CREDENTIALS_LOGIN_FRONT("Usuario o contraseña incorrectos, revise sus datos"),
     BAD_CREDENTIALS_LOGIN_BACKEND("Credenciales incorrectas");
 

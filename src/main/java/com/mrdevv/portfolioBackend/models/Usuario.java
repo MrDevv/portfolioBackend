@@ -31,7 +31,7 @@ public class Usuario implements UserDetails {
     String password;
 
     @Column(name = "estado", insertable = false)
-    Boolean estado;
+    String estado;
 
     @OneToOne
     @JoinColumn(name = "profesional_id")

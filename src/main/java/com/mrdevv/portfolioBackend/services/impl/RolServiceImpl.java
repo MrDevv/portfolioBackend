@@ -17,7 +17,7 @@ public class RolServiceImpl implements IRolService {
 
     @Override
     public Rol findRolByDescripcion(Roles descripcion) {
-        return rolRepository.buscarRolPorDescripcion(descripcion.name().toLowerCase()).orElseThrow(() -> {
+        return rolRepository.buscarRolPorDescripcion(descripcion.getRol().toLowerCase()).orElseThrow(() -> {
             throw new ObjectInvalidEnumException(
                     ErrorMessage.NOT_FOUND_ROL_FRONT.getMessage(),
                     ErrorMessage.NOT_FOUND_ROL_BACKEND.getMessage());

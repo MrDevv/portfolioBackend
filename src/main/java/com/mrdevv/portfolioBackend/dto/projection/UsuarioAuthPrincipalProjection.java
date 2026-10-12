@@ -11,5 +11,7 @@ public interface UsuarioAuthPrincipalProjection {
 
     Boolean getEstadoOrigen();
 
+    String getEstado();
+
     String getRol();
 }

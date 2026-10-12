@@ -44,6 +44,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
             u.email as email,
             u.origenPermitido as origenPermitido,
             u.estadoOrigen as estadoOrigen,
+            u.estado as estado,
             r.descripcion as rol
         from Usuario u
         join u.profesional p
@@ -57,6 +58,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
             u.usuarioId as usuarioId,
             p.profesionalId as profesionalId,
             u.email as email,
+            u.estado as estado,
             r.descripcion as rol
         from Usuario u
         join u.profesional p
@@ -72,4 +74,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Modifying
     @Query(value = "update Usuario u set u.origenPermitido = :origenPermitido, u.estadoOrigen = :estado where u.usuarioId = :usuarioId")
     void actualizarOrigenPermitido(@Param("usuarioId") Long usuarioId, @Param("origenPermitido") String origenPermitido, @Param("estado") Boolean estado);
+
+    @Query(value = "select count(u) > 0 from Usuario u where u.email = :email")
+    boolean existeUsuarioByEmail(@Param("email") String email);
 }

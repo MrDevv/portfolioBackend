@@ -3,22 +3,30 @@ package com.mrdevv.portfolioBackend.services.impl;
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioAuthPrincipalProjection;
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
+import com.mrdevv.portfolioBackend.dto.request.RegisterDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateOrigenPermitidoDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
+import com.mrdevv.portfolioBackend.exceptions.ObjectReplicatedException;
+import com.mrdevv.portfolioBackend.mappers.ProfesionalMapper;
 import com.mrdevv.portfolioBackend.mappers.UsuarioMapper;
+import com.mrdevv.portfolioBackend.models.Profesional;
 import com.mrdevv.portfolioBackend.models.Rol;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.repositories.UsuarioRepository;
+import com.mrdevv.portfolioBackend.services.IProfesionalService;
+import com.mrdevv.portfolioBackend.services.IRolService;
 import com.mrdevv.portfolioBackend.services.IUsuarioService;
 import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
+import com.mrdevv.portfolioBackend.utils.constants.Roles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +40,9 @@ import java.util.UUID;
 public class UsuarioServiceImpl implements IUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-    private final RolServiceImpl rolService;
+    private final IRolService rolService;
+    private final IProfesionalService profesionalService;
+    private final PasswordEncoder PasswordEncoder;
 
     @Transactional(readOnly = true)
     @Override
@@ -76,6 +86,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
                 usuarioProjectionDTO.getEmail(),
                 null,
                 null,
+                usuarioProjectionDTO.getEstado(),
                 List.of(authority)
         );
     }
@@ -149,6 +160,30 @@ public class UsuarioServiceImpl implements IUsuarioService {
                     ErrorMessage.NOT_FOUND_USUARIO_BACKEND.getMessage(usuarioId));
         }
         usuarioRepository.actualizarOrigenPermitido(usuarioId, origenPermitido.origenPermitido(), origenPermitido.estado());
+    }
+
+    @Transactional
+    @Override
+    public Usuario createUsuario(RegisterDTO registerDTO) {
+        this.existeUsuarioPorEmail(registerDTO.email());
+        Rol rol = rolService.findRolByDescripcion(Roles.USUARIO);
+
+        Profesional profesional = profesionalService.crearProfesional(ProfesionalMapper.toProfesionalEntity(registerDTO));
+        Usuario usuario = UsuarioMapper.toUsuarioEntity(registerDTO, profesional, rol);
+        usuario.setPassword(PasswordEncoder.encode(registerDTO.password()));
+        System.out.println(usuario);
+        return usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    @Override
+    public void existeUsuarioPorEmail(String email) {
+        if (usuarioRepository.existeUsuarioByEmail(email)) {
+            throw new ObjectReplicatedException(
+                    ErrorMessage.REPLICATED_USUARIO_BACKEND.getMessage(email),
+                    ErrorMessage.REPLICATED_USUARIO_FRONT.getMessage(email)
+            );
+        }
     }
 
 

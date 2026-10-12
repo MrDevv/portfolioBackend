@@ -6,5 +6,5 @@ public interface UsuarioProjectionDTO {
     String getEmail();
     String getPuesto();
     String getRol();
-    Boolean getEstado();
+    String getEstado();
 }

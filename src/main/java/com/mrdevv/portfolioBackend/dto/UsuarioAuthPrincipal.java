@@ -10,6 +10,7 @@ public record UsuarioAuthPrincipal(
         String email,
         String origenPermitido,
         Boolean estadoOrigen,
+        String estado,
         Collection<? extends GrantedAuthority> authorities
 ) {
 }

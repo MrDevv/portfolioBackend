@@ -1,10 +1,12 @@
 package com.mrdevv.portfolioBackend.services;
 
+import com.mrdevv.portfolioBackend.dto.request.RegisterDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateOrigenPermitidoDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
 import com.mrdevv.portfolioBackend.models.Usuario;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,4 +24,8 @@ public interface IUsuarioService {
     void revocarApiKey();
 
     void actualizarOrigenPermitidoAutenticado(UpdateOrigenPermitidoDTO origenPermitido);
+
+    Usuario createUsuario(RegisterDTO registerDTO);
+
+    void existeUsuarioPorEmail(String email);
 }

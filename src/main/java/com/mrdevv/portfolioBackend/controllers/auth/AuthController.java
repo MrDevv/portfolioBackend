@@ -1,10 +1,12 @@
 package com.mrdevv.portfolioBackend.controllers.auth;
 
 import com.mrdevv.portfolioBackend.dto.request.AuthDTO;
+import com.mrdevv.portfolioBackend.dto.request.RegisterDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.impl.AuthServiceImpl;
 import com.mrdevv.portfolioBackend.utils.constants.TipoResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,12 @@ public class AuthController {
     public ResponseEntity login(@RequestBody AuthDTO authDTO){
         ResponseUsuarioLoginDTO usuario = authService.login(authDTO);
         return ResponseHandler.ok(TipoResponse.GET, "se autenticó el usuario correctamente", usuario);
+    }
+
+    @PostMapping("register")
+    public ResponseEntity register(@Valid @RequestBody RegisterDTO registerDTO){
+        authService.register(registerDTO);
+        return ResponseHandler.ok(TipoResponse.CREATE, "se registró el usuario correctamente", null);
     }
 
     @GetMapping("validate-token")

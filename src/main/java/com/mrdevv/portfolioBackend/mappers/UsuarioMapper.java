@@ -1,8 +1,11 @@
 package com.mrdevv.portfolioBackend.mappers;
 
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
+import com.mrdevv.portfolioBackend.dto.request.RegisterDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
+import com.mrdevv.portfolioBackend.models.Profesional;
+import com.mrdevv.portfolioBackend.models.Rol;
 import com.mrdevv.portfolioBackend.models.Usuario;
 
 import java.util.List;
@@ -13,14 +16,13 @@ public class UsuarioMapper {
     public static List<ResponseUsuarioDTO> toResonseUsuarioDTOList(List<UsuarioProjectionDTO> usuarios){
         List<ResponseUsuarioDTO> usuarioDTOS = usuarios.stream()
                 .map(usuario -> {
-                    String estado = usuario.getEstado() ? "activo" : "inactivo";
                     return new ResponseUsuarioDTO(
                             usuario.getEmail(),
                             usuario.getNombres(),
                             usuario.getApellidos(),
                             usuario.getPuesto(),
                             usuario.getRol(),
-                            estado);
+                            usuario.getEstado());
         }).collect(Collectors.toList());
         return usuarioDTOS;
     }
@@ -34,12 +36,21 @@ public class UsuarioMapper {
                 usuario.getProfesional().getPuesto(),
                 usuario.getProfesional().getLogoUrl(),
                 RolMapper.toResponseRolDTO(usuario.getRol()),
-                usuario.getEstado() ? "activo" : "inactivo",
+                usuario.getEstado(),
                 jwt,
                 usuario.getApiKey(),
                 usuario.getOrigenPermitido(),
                 usuario.getEstadoOrigen() ? "activo" : "inactivo"
         );
+    }
+
+    public static Usuario toUsuarioEntity(RegisterDTO registerDTO, Profesional profesional, Rol rol){
+        return Usuario.builder()
+                .email(registerDTO.email())
+                .password(registerDTO.password())
+                .profesional(profesional)
+                .rol(rol)
+                .build();
     }
 
 }

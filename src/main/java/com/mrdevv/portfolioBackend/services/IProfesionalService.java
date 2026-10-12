@@ -13,4 +13,5 @@ public interface IProfesionalService {
 
     Profesional obtenerProfesionalPorId(Long profesionalId);
 
+    Profesional crearProfesional(Profesional profesionalEntity);
 }

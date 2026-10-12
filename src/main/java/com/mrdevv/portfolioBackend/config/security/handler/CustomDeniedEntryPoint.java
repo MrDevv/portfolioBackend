@@ -22,19 +22,36 @@ public class CustomDeniedEntryPoint implements AccessDeniedHandler {
         ZoneId zoneId = ZoneId.of("America/Lima");
         LocalDateTime localDateTime = LocalDateTime.now(zoneId);
         int httpStatus = HttpStatus.FORBIDDEN.value();
+        String messageBack = "El acceso al recurso solicitado no está permitido.";
+        String messageFront = "No tiene los permisos suficientes para realizar esa operación.";
+
+        System.out.println(accessDeniedException.getMessage());
+
+        String error = (String) request.getAttribute("auth_error");
+
+        if (error != null){
+            if (error.equalsIgnoreCase("EMAIL_NOT_VERIFIED")){
+                messageBack = "El email del usuario no ha sido verificado.";
+                messageFront = "El email del usuario no ha sido verificado, por favor verifique su email para poder iniciar sesión.";
+            }else if (error.equalsIgnoreCase("ACCOUNT_INACTIVE")){
+                messageBack = "La cuenta del usuario está inactiva.";
+                messageFront = "La cuenta del usuario está inactiva, por favor contacte al soporte para más información.";
+            }
+        }
 
         ResponseError responseError = new ResponseError(
                 "Failed",
                 httpStatus,
                 request.getRequestURL().toString(),
                 request.getMethod(),
-                "No tiene los permisos suficientes para realizar esa operación.",
-                "El acceso al recurso solicitado no está permitido.",
+                messageFront,
+                messageBack,
                 localDateTime,
                 null
         );
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
         response.setStatus(httpStatus);
 
         ObjectMapper objectMapper = new ObjectMapper();
