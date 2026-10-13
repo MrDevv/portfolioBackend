@@ -33,7 +33,11 @@ public enum ErrorMessage {
     REPLICATED_USUARIO_BACKEND("El OBJECT 'USUARIO' con EMAIL '%s' ya se encuentra registrado en la base de datos."),
     REPLICATED_USUARIO_FRONT("El usuario con EMAIL '%s' ya se encuentra registrado en la base de datos."),
     BAD_CREDENTIALS_LOGIN_FRONT("Usuario o contraseña incorrectos, revise sus datos"),
-    BAD_CREDENTIALS_LOGIN_BACKEND("Credenciales incorrectas");
+    BAD_CREDENTIALS_LOGIN_BACKEND("Credenciales incorrectas"),
+    NOT_FOUND_TOKEN_USUARIO_FRONT("El token no existe"),
+    NOT_FOUND_TOKEN_USUARIO_BACKEND("No se encontró el OBJECT 'TOKENUSUARIO' en la base de datos."),
+    EXPIRED_TOKEN_USUARIO_FRONT("El enlace ha expirado y su cuenta ha sido eliminada, por favor regístrese nuevamente dentro de 24 horas"),
+    EXPIRED_TOKEN_USUARIO_BACKEND("El OBJECT 'TOKENUSUARIO' ha expirado");
 
 
     private String message;

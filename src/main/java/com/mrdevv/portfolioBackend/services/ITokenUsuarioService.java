@@ -8,4 +8,5 @@ public interface ITokenUsuarioService {
 
     void registrarTokenUsuario(String token, Usuario usuario, String tipoToken,  LocalDateTime fechaExpiracion);
 
+    void confirmarTokenUsuario(String token);
 }

@@ -33,11 +33,11 @@ public class Usuario implements UserDetails {
     @Column(name = "estado", insertable = false)
     String estado;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profesional_id")
     Profesional profesional;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rol_id")
     Rol rol;
 

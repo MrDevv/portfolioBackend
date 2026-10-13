@@ -45,6 +45,7 @@ public class GlobalExceptionHandler {
         NoResourceFoundException.class,
         MethodArgumentNotValidException.class,
         MethodArgumentTypeMismatchException.class,
+        ExpiredTokenUsuario.class,
         PasswordNotMatchException.class,
     })
     public ResponseEntity<Object> handlerAllException(Exception exception, HttpServletRequest request, HttpServletResponse response){
@@ -194,6 +195,19 @@ public class GlobalExceptionHandler {
                     request.getMethod(),
                     passwordNotMatchException.getMessageFront(),
                     passwordNotMatchException.getMessageBack(),
+                    localDateTime,
+                    null
+            );
+            return ResponseEntity.status(code).body(responseError);
+        } else if (exception instanceof ExpiredTokenUsuario expiredTokenUsuario) {
+            Integer code = HttpStatus.BAD_REQUEST.value();
+            ResponseError responseError = new ResponseError(
+                    "Failed",
+                    code,
+                    request.getRequestURL().toString(),
+                    request.getMethod(),
+                    expiredTokenUsuario.getMessageFront(),
+                    expiredTokenUsuario.getMessageBack(),
                     localDateTime,
                     null
             );

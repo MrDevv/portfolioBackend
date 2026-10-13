@@ -1,6 +1,7 @@
 package com.mrdevv.portfolioBackend.controllers.auth;
 
 import com.mrdevv.portfolioBackend.dto.request.AuthDTO;
+import com.mrdevv.portfolioBackend.dto.request.ConfirmAccountDTO;
 import com.mrdevv.portfolioBackend.dto.request.RegisterDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
@@ -28,6 +29,12 @@ public class AuthController {
     public ResponseEntity register(@Valid @RequestBody RegisterDTO registerDTO){
         authService.register(registerDTO);
         return ResponseHandler.ok(TipoResponse.CREATE, "se registró el usuario correctamente", null);
+    }
+
+    @PatchMapping("confirmar-cuenta")
+    public ResponseEntity confirmarCuenta(@RequestBody ConfirmAccountDTO confirmAccountDTO){
+        authService.confirmarCuenta(confirmAccountDTO.token());
+        return ResponseHandler.ok(TipoResponse.PATCH, "se confirmó la cuenta correctamente", null);
     }
 
     @GetMapping("validate-token")

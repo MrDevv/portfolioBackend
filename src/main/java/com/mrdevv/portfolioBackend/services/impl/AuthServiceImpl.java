@@ -81,6 +81,12 @@ public class AuthServiceImpl implements IAuthService {
         mailService.enviarCorreoConfirmacionCuenta(token, registerDTO.email());
     }
 
+    @Transactional
+    @Override
+    public void confirmarCuenta(String token) {
+        tokenUsuarioService.confirmarTokenUsuario(token);
+    }
+
     private boolean isPasswordConfirmed(String password, String confirmarPassword){
         return password.equals(confirmarPassword);
     }

@@ -77,4 +77,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query(value = "select count(u) > 0 from Usuario u where u.email = :email")
     boolean existeUsuarioByEmail(@Param("email") String email);
+
+    @Modifying
+    @Query(value = "update Usuario u set u.estado = 'activo' where u.usuarioId = :usuarioId")
+    void activarCuentaUsuario(@Param("usuarioId") Long usuarioId);
 }

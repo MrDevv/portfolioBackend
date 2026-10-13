@@ -28,4 +28,8 @@ public interface IUsuarioService {
     Usuario createUsuario(RegisterDTO registerDTO);
 
     void existeUsuarioPorEmail(String email);
+
+    void activarCuentaUsuario(Long usuarioId);
+
+    void eliminarUsuario(Usuario usuario);
 }

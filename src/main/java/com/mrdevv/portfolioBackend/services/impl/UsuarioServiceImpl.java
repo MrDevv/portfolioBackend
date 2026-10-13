@@ -156,8 +156,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
         Long usuarioId = ((UsuarioAuthPrincipal) authentication.getPrincipal()).usuarioId();
         if (!usuarioRepository.existsById(usuarioId)){
             throw new ObjectNotFoundException(
-                    ErrorMessage.NOT_FOUND_USUARIO_FRONT.getMessage(usuarioId),
-                    ErrorMessage.NOT_FOUND_USUARIO_BACKEND.getMessage(usuarioId));
+                    ErrorMessage.NOT_FOUND_USUARIO_BACKEND.getMessage(usuarioId),
+                    ErrorMessage.NOT_FOUND_USUARIO_FRONT.getMessage(usuarioId));
+
         }
         usuarioRepository.actualizarOrigenPermitido(usuarioId, origenPermitido.origenPermitido(), origenPermitido.estado());
     }
@@ -184,6 +185,18 @@ public class UsuarioServiceImpl implements IUsuarioService {
                     ErrorMessage.REPLICATED_USUARIO_FRONT.getMessage(email)
             );
         }
+    }
+
+    @Transactional
+    @Override
+    public void activarCuentaUsuario(Long usuarioId) {
+        usuarioRepository.activarCuentaUsuario(usuarioId);
+    }
+
+    @Transactional
+    @Override
+    public void eliminarUsuario(Usuario usuario) {
+        usuarioRepository.delete(usuario);
     }
 
 
