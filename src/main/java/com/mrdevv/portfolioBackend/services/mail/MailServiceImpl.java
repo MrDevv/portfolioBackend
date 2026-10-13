@@ -34,7 +34,7 @@ public class MailServiceImpl implements  IMailService {
     @Override
     public void enviarCorreoConfirmacionCuenta(String token, String destinatario) {
         ClassPathResource plantilla = new ClassPathResource("templates/confirmar-cuenta.html");
-        String enlaceConfirmacion= ULRFRONT + "/auth/confirmar-cuenta?token=" + token;
+        String enlaceConfirmacion= ULRFRONT + "/auth/confirm-email/" + token;
         String year = new Date().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate().getYear() + "";
 
         try (var input = plantilla.getInputStream()) {

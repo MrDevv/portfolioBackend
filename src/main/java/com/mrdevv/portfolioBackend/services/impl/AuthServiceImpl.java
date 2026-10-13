@@ -83,7 +83,7 @@ public class AuthServiceImpl implements IAuthService {
 
     @Transactional
     @Override
-    public void confirmarCuenta(String token) {
+    public void activarCuenta(String token) {
         tokenUsuarioService.confirmarTokenUsuario(token);
     }
 

@@ -15,5 +15,5 @@ public interface IAuthService {
 
     void register(RegisterDTO registerDTO);
 
-    void confirmarCuenta(String token);
+    void activarCuenta(String token);
 }

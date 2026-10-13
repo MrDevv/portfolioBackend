@@ -31,10 +31,10 @@ public class AuthController {
         return ResponseHandler.ok(TipoResponse.CREATE, "se registró el usuario correctamente", null);
     }
 
-    @PatchMapping("confirmar-cuenta")
-    public ResponseEntity confirmarCuenta(@RequestBody ConfirmAccountDTO confirmAccountDTO){
-        authService.confirmarCuenta(confirmAccountDTO.token());
-        return ResponseHandler.ok(TipoResponse.PATCH, "se confirmó la cuenta correctamente", null);
+    @PatchMapping("activar-cuenta")
+    public ResponseEntity activarCuenta(@RequestBody ConfirmAccountDTO confirmAccountDTO){
+        authService.activarCuenta(confirmAccountDTO.token());
+        return ResponseHandler.ok(TipoResponse.PATCH, "se activó la cuenta correctamente", null);
     }
 
     @GetMapping("validate-token")
