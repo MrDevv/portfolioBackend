@@ -4,13 +4,12 @@ import com.mrdevv.portfolioBackend.dto.projection.UsuarioAuthPrincipalProjection
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
 import com.mrdevv.portfolioBackend.models.Rol;
 import com.mrdevv.portfolioBackend.models.Usuario;
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import jakarta.persistence.LockModeType;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,4 +80,45 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Modifying
     @Query(value = "update Usuario u set u.estado = 'activo' where u.usuarioId = :usuarioId")
     void activarCuentaUsuario(@Param("usuarioId") Long usuarioId);
+
+//    querys para tareas programadas
+    @Query(value = """
+            SELECT u.usuarioId
+            FROM Usuario u
+            WHERE u.estado = 'pendiente'
+              AND EXISTS (
+                  SELECT t
+                  FROM TokenUsuario t
+                  WHERE t.usuario = u
+                    AND t.tipoToken = 'CONFIRMAR_CUENTA'
+                    AND t.fechaExpiracion <= :ahora
+              )
+            ORDER BY u.usuarioId
+            """)
+    List<Long> obtenerIdsPendientesConTokenVencido(@Param("ahora") LocalDateTime ahora);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query(value = """
+        SELECT u
+        FROM Usuario u
+        WHERE u.usuarioId = :usuarioId
+          AND u.estado = 'pendiente'
+          AND EXISTS (
+              SELECT t
+              FROM TokenUsuario t
+              WHERE t.usuario = u
+                AND t.tipoToken = 'CONFIRMAR_CUENTA'
+                AND t.fechaExpiracion <= :ahora
+          )
+        """)
+    Optional<Usuario> obtenerPendienteVencidoConBloqueo(@Param("usuarioId") Long usuarioId, @Param("ahora") LocalDateTime ahora);
+
+    // Para coordinar la confirmación con la limpieza.
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
+        SELECT u
+        FROM Usuario u
+        WHERE u.usuarioId = :usuarioId
+        """)
+    Optional<Usuario> buscarPorIdConBloqueo(@Param("usuarioId") Long usuarioId);
 }
