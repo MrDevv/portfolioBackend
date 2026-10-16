@@ -4,6 +4,9 @@ Backend de **DevVault**, una plataforma headless que permite a profesionales ges
 
 Centraliza perfiles profesionales, experiencias, proyectos y tecnologías, separando la administración del contenido de su presentación.
 
+## Arquitectura tecnológica
+![Arquitectura tecnológica de DevVault](docs/images/arquitectura-tech.png)
+
 ## Modelo relacional
 
 ![Modelo relacional de DevVault](docs/images/MR.webp)
