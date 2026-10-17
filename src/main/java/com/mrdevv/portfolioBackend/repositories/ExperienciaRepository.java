@@ -53,4 +53,7 @@ public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> 
 
     @Query(value = "select e from Experiencia e join e.profesional p where e.experienciaUUID = :experiencia_uuid and p.profesionalId = :profesional_id")
     Optional<Experiencia> obtenerExperienciaPorUUIDyProfesionalId(@Param("profesional_id") Long profesionalId, @Param("experiencia_uuid") String experienciaUUID);
+
+    @Query(value = "select count(e) from Experiencia e join e.profesional p join p.usuario u join u.rol r where r.descripcion = 'user'")
+    Long obtenerTotalExperiencias();
 }
