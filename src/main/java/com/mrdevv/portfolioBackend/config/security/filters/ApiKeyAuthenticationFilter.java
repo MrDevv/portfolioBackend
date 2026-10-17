@@ -76,9 +76,11 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
         String origenPeticion = request.getHeader("Origin");
         String origenPermitido = usuario.get().origenPermitido();
 
-        if (!origenPermitido.equals(origenPeticion) && usuario.get().estadoOrigen()) {
-            deniedEntryPoint.handle(request, response, new AccessDeniedException("Origen no permitido"));
-            return;
+        if (origenPermitido != null) {
+            if (!origenPermitido.equals(origenPeticion) && usuario.get().estadoOrigen()) {
+                deniedEntryPoint.handle(request, response, new AccessDeniedException("Origen no permitido"));
+                return;
+            }
         }
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
