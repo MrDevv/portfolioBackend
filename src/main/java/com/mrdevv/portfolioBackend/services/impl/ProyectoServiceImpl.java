@@ -124,6 +124,12 @@ public class ProyectoServiceImpl implements IProyectoService {
         proyectoRepository.delete(proyecto);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Long obtenerTotalProyectos() {
+        return proyectoRepository.obtenerTotalProyectos();
+    }
+
     //    Valida que no exista un proyecto con el mismo título en la misma experiencia
     private void validarProyectoDuplicadoEnExperiencia(String titulo, String experienciaUUID) {
         boolean existeProyecto = proyectoRepository.existeProyectoEnExperiencia(titulo, experienciaUUID);

@@ -2,6 +2,7 @@ package com.mrdevv.portfolioBackend.repositories;
 
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioAuthPrincipalProjection;
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
+import com.mrdevv.portfolioBackend.dto.projection.UsuarioResumenProjection;
 import com.mrdevv.portfolioBackend.models.Rol;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import jakarta.persistence.LockModeType;
@@ -121,4 +122,16 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
         WHERE u.usuarioId = :usuarioId
         """)
     Optional<Usuario> buscarPorIdConBloqueo(@Param("usuarioId") Long usuarioId);
+
+
+    @Query(value = """
+        SELECT 
+            COUNT(u) as totalUsuarios,
+            COALESCE(SUM(CASE WHEN u.estado = 'activo' THEN 1 ELSE 0 END), 0) AS totalActivos,
+            COALESCE(SUM(CASE WHEN u.estado = 'pendiente' THEN 1 ELSE 0 END), 0) AS totalPendientes,
+            COALESCE(SUM(CASE WHEN u.estado = 'inactivo' THEN 1 ELSE 0 END), 0) AS totalInactivos
+        FROM Usuario u join u.rol r 
+        WHERE r.descripcion = 'user'
+    """)
+    UsuarioResumenProjection obtenerResumen();
 }

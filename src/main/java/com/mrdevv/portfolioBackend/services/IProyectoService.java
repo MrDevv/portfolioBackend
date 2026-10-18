@@ -23,4 +23,7 @@ public interface IProyectoService {
     ResponseProyectoDTO obtenerProyectoPorUUID(String proyectoUUID);
 
     void eliminarProyecto(String proyectoUUID);
+
+    Long obtenerTotalProyectos();
+
 }

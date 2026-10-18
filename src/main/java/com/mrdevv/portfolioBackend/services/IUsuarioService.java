@@ -3,6 +3,7 @@ package com.mrdevv.portfolioBackend.services;
 import com.mrdevv.portfolioBackend.dto.request.RegisterDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateOrigenPermitidoDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
+import com.mrdevv.portfolioBackend.dto.response.ResponseDashboardUsuarios;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
 import com.mrdevv.portfolioBackend.models.Usuario;
@@ -32,4 +33,6 @@ public interface IUsuarioService {
     void activarCuentaUsuario(Long usuarioId);
 
     void eliminarUsuario(Usuario usuario);
+
+    ResponseDashboardUsuarios obtenerResumenUsuarios();
 }

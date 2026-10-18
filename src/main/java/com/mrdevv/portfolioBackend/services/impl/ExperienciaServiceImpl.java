@@ -122,6 +122,12 @@ public class ExperienciaServiceImpl implements IExperienciaService {
         return ExperienciaMapper.toResponseExperienciaSimpleDTOList(experiencias);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Long obtenerTotalExperiencias() {
+        return experienciaRepository.obtenerTotalExperiencias();
+    }
+
 
     void validarExperienciaNoRegistradaPorProfesional(Long usuarioId, String experienciaTitulo){
         if (experienciaRepository.existeExperienciaEnProfesional(usuarioId, experienciaTitulo)){

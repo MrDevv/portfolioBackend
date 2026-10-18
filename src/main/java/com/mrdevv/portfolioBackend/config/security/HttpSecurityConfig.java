@@ -62,7 +62,8 @@ public class HttpSecurityConfig {
                     requests.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
                     requests.requestMatchers(HttpMethod.POST, "/auth/register").permitAll();
                     requests.requestMatchers(HttpMethod.PATCH, "/auth/activar-cuenta").permitAll();
-                    requests.requestMatchers(HttpMethod.GET, "/admin/usuarios").hasAnyRole("admin");
+                    requests.requestMatchers("/admin/usuarios", "/admin/usuarios/**").hasRole("admin");
+                    requests.requestMatchers(HttpMethod.GET, "/admin/dashboard").hasRole("admin");
 
                     requests.anyRequest().authenticated();
                 })

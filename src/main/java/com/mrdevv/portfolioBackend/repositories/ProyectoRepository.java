@@ -41,4 +41,7 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
 
     @Query(value = "select p from Proyecto p join p.experiencia e where p.proyectoUUID = :proyecto_uuid and e.profesional.profesionalId = :profesional_id")
     Optional<Proyecto> obtenerProyectoPorUUIDyProfesionalId(@Param(value = "proyecto_uuid") String proyectoUUID, @Param(value = "profesional_id") Long profesionalId);
+
+    @Query(value = "select count(p) from Proyecto p join p.experiencia e join e.profesional pr join pr.usuario u join u.rol r where r.descripcion = 'user'")
+    Long obtenerTotalProyectos();
 }

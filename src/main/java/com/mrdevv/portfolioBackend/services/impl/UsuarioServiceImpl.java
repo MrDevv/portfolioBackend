@@ -3,9 +3,11 @@ package com.mrdevv.portfolioBackend.services.impl;
 import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioAuthPrincipalProjection;
 import com.mrdevv.portfolioBackend.dto.projection.UsuarioProjectionDTO;
+import com.mrdevv.portfolioBackend.dto.projection.UsuarioResumenProjection;
 import com.mrdevv.portfolioBackend.dto.request.RegisterDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateOrigenPermitidoDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseApiKeyUsuario;
+import com.mrdevv.portfolioBackend.dto.response.ResponseDashboardUsuarios;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioDTO;
 import com.mrdevv.portfolioBackend.dto.request.UpdateRolUsuarioDTO;
 import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
@@ -197,6 +199,18 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public void eliminarUsuario(Usuario usuario) {
         usuarioRepository.delete(usuario);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ResponseDashboardUsuarios obtenerResumenUsuarios() {
+        UsuarioResumenProjection resumen = usuarioRepository.obtenerResumen();
+        return new ResponseDashboardUsuarios(
+                resumen.getTotalUsuarios(),
+                resumen.getTotalActivos(),
+                resumen.getTotalPendientes(),
+                resumen.getTotalInactivos()
+        );
     }
 
 

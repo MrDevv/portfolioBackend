@@ -28,4 +28,6 @@ public interface IExperienciaService {
     ResponseExperienciaConProyectosDTO obtenerExperienciaConProyectosProfesionalAutenticado(String experienciaUUID);
 
     List<ResponseExperienciaSimpleDTO> obtenerExperienciasSimpleProfesionalAutenticado();
+
+    Long obtenerTotalExperiencias();
 }
