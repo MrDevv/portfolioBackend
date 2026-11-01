@@ -16,4 +16,8 @@ public interface IAuthService {
     void register(RegisterDTO registerDTO);
 
     void activarCuenta(String token);
+
+    void recuperarPassword(String email);
+
+    void resetPassword(String token, String password);
 }

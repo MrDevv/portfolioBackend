@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
+
 public interface TokenUsuarioRepository extends JpaRepository<TokenUsuario, String> {
 
     @Query(value = "SELECT t FROM TokenUsuario t join t.usuario u WHERE t.token = :token AND t.tipoToken = :tipoToken")
@@ -15,4 +17,7 @@ public interface TokenUsuarioRepository extends JpaRepository<TokenUsuario, Stri
     @Query("DELETE FROM TokenUsuario t WHERE t.usuario.usuarioId = :usuarioId")
     int eliminarPorUsuario(@Param("usuarioId") Long usuarioId);
 
+    @Modifying
+    @Query("DELETE FROM TokenUsuario t WHERE t.fechaExpiracion <= :ahora AND t.tipoToken = 'RECUPERAR_PASSWORD'")
+    void eliminarTokensPasswordVencidos(@Param("ahora") LocalDateTime ahora);
 }
