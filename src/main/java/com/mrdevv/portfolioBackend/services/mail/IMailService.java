@@ -4,4 +4,5 @@ public interface IMailService {
 
     void enviarCorreoConfirmacionCuenta(String token, String destinatario);
 
+    void enviarCorreoRecuperarPassword(String token, String destinatario);
 }

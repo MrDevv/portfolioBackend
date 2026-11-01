@@ -1,8 +1,6 @@
 package com.mrdevv.portfolioBackend.controllers.auth;
 
-import com.mrdevv.portfolioBackend.dto.request.AuthDTO;
-import com.mrdevv.portfolioBackend.dto.request.ConfirmAccountDTO;
-import com.mrdevv.portfolioBackend.dto.request.RegisterDTO;
+import com.mrdevv.portfolioBackend.dto.request.*;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
 import com.mrdevv.portfolioBackend.handler.ResponseHandler;
 import com.mrdevv.portfolioBackend.services.impl.AuthServiceImpl;
@@ -41,6 +39,18 @@ public class AuthController {
     public ResponseEntity validateToken(){
         ResponseUsuarioLoginDTO usuarioLoginDTO = authService.validateToken();
         return ResponseHandler.ok(TipoResponse.GET, "datos del usuario autenticado", usuarioLoginDTO);
+    }
+
+    @PostMapping("recuperar-password")
+    public ResponseEntity recuperarPassword(@RequestBody RecoverPasswordDTO recoverPasswordDTO){
+        authService.recuperarPassword(recoverPasswordDTO.email());
+        return ResponseHandler.ok(TipoResponse.GET, "se envió el correo para recuperar la contraseña", null);
+    }
+
+    @PatchMapping("reset-password")
+    public ResponseEntity resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO){
+        authService.resetPassword(resetPasswordDTO.token(), resetPasswordDTO.password());
+        return ResponseHandler.ok(TipoResponse.PATCH, "se restableció la contraseña correctamente", null);
     }
 
 }

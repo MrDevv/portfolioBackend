@@ -7,4 +7,6 @@ public interface ILimpiezaCuentaService {
     List<Long> obtenerCandidatos(LocalDateTime ahora);
 
     boolean eliminarCuenta(Long usuarioId, LocalDateTime ahora);
+
+    void eliminarTokenPasswordVencidos(LocalDateTime ahora);
 }

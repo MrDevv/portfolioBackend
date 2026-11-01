@@ -10,6 +10,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.HtmlUtils;
 
 import java.io.IOException;
@@ -68,6 +69,45 @@ public class MailServiceImpl implements  IMailService {
             );
         }
 
+    }
+
+    @Transactional
+    @Override
+    public void enviarCorreoRecuperarPassword(String token, String destinatario) {
+        ClassPathResource plantilla = new ClassPathResource("templates/recuperar-contrasena.html");
+        String enlaceRecuperacion = ULRFRONT + "/auth/reset-password/" + token;
+        String year = new Date().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate().getYear() + "";
+
+        try (var input = plantilla.getInputStream()) {
+            String html = new String(
+                    input.readAllBytes(),
+                    StandardCharsets.UTF_8
+            );
+
+            html = html.replace(
+                    "{{enlaceRecuperacion}}",
+                    HtmlUtils.htmlEscape(enlaceRecuperacion)
+            );
+            html = html.replace(
+                    "{{LOGO_URL}}",
+                    HtmlUtils.htmlEscape(URLLOGO)
+            );
+            html = html.replace(
+                    "{{YEAR}}",
+                    HtmlUtils.htmlEscape(year)
+            );
+
+            enviarCorreo(
+                    destinatario,
+                    "Restablece tu contraseña — DevVault",
+                    html
+            );
+        } catch (IOException exception) {
+            throw new MailPreparationException(
+                    "No se pudo leer la plantilla de recuperación de contraseña.",
+                    exception
+            );
+        }
     }
 
     private void enviarCorreo(String destinatario, String asunto, String html) {

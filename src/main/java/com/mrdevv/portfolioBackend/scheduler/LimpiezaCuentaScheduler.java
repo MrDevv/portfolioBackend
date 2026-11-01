@@ -60,4 +60,15 @@ public class LimpiezaCuentaScheduler {
         log.info("Limpieza completada. Eliminados: {}. Omitidos: {}. Fallidos: {}", eliminados, omitidos, fallidos);
     }
 
+    @Scheduled(cron = "0 0 3 * * *", zone = "America/Lima")
+    public void limpiarTokensVencidosPasswordPendientes() {
+        LocalDateTime ahora = LocalDateTime.now(ZONA);
+        try {
+            limpiezaCuentaService.eliminarTokenPasswordVencidos(ahora);
+        } catch (Exception exception) {
+            log.error("No se pudo eliminar los tokens vencidos de recuperación de contraseñas" , exception);
+        }
+
+    }
+
 }
