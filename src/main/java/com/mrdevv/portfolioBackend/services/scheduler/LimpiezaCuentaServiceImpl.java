@@ -49,4 +49,10 @@ public class LimpiezaCuentaServiceImpl implements ILimpiezaCuentaService{
 
         return true;
     }
+
+    @Transactional
+    @Override
+    public void eliminarTokenPasswordVencidos(LocalDateTime ahora) {
+        tokenUsuarioRepository.eliminarTokensPasswordVencidos(ahora);
+    }
 }

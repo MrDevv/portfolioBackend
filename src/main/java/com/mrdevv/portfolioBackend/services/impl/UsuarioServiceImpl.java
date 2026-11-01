@@ -213,5 +213,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
         );
     }
 
+    @Transactional
+    @Override
+    public void updatePassword(Long usuarioId, String password) {
+        String encodedPassword = PasswordEncoder.encode(password);
+        usuarioRepository.updatePassword(usuarioId, encodedPassword);
+    }
 
 }

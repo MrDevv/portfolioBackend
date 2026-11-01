@@ -1,16 +1,20 @@
 package com.mrdevv.portfolioBackend.services.impl;
 
+import com.mrdevv.portfolioBackend.dto.UsuarioAuthPrincipal;
 import com.mrdevv.portfolioBackend.dto.request.AuthDTO;
 import com.mrdevv.portfolioBackend.dto.request.RegisterDTO;
 import com.mrdevv.portfolioBackend.dto.response.ResponseUsuarioLoginDTO;
 import com.mrdevv.portfolioBackend.exceptions.AccountNotEnabledException;
+import com.mrdevv.portfolioBackend.exceptions.ObjectNotFoundException;
 import com.mrdevv.portfolioBackend.exceptions.PasswordNotMatchException;
 import com.mrdevv.portfolioBackend.mappers.UsuarioMapper;
+import com.mrdevv.portfolioBackend.models.TokenUsuario;
 import com.mrdevv.portfolioBackend.models.Usuario;
 import com.mrdevv.portfolioBackend.services.IAuthService;
 import com.mrdevv.portfolioBackend.services.ITokenUsuarioService;
 import com.mrdevv.portfolioBackend.services.auth.JwtService;
 import com.mrdevv.portfolioBackend.services.mail.IMailService;
+import com.mrdevv.portfolioBackend.utils.constants.ErrorMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -85,6 +89,23 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     public void activarCuenta(String token) {
         tokenUsuarioService.confirmarTokenUsuario(token);
+    }
+
+    @Transactional
+    @Override
+    public void recuperarPassword(String email) {
+        Usuario usuario = usuarioService.findByEmail(email);
+        String token = this.generarToken();
+        tokenUsuarioService.registrarTokenUsuario(token, usuario, "RECUPERAR_PASSWORD", LocalDateTime.now().plusHours(24));
+        mailService.enviarCorreoRecuperarPassword(token, email);
+    }
+
+    @Transactional
+    @Override
+    public void resetPassword(String token, String password) {
+        TokenUsuario tokenUsuario = tokenUsuarioService.validarTokenUsuario(token, "RECUPERAR_PASSWORD");
+        usuarioService.updatePassword(tokenUsuario.getUsuario().getUsuarioId(), password);
+        tokenUsuarioService.eliminarTokenUsuario(tokenUsuario);
     }
 
     private boolean isPasswordConfirmed(String password, String confirmarPassword){

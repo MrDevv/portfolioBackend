@@ -55,4 +55,33 @@ public class TokenUsuarioServiceImpl implements ITokenUsuarioService {
         usuarioService.activarCuentaUsuario(usuario.getUsuarioId());
         tokenUsuarioRepository.delete(tokenUsuario);
     }
+
+    @Transactional
+    @Override
+    public TokenUsuario validarTokenUsuario(String token, String tipoToken) {
+        TokenUsuario tokenUsuario = tokenUsuarioRepository.obtenerTokenUsuario(token, tipoToken);
+        if (tokenUsuario == null) {
+            throw new ObjectNotFoundException(
+                    ErrorMessage.NOT_FOUND_TOKEN_USUARIO_FRONT.getMessage(),
+                    ErrorMessage.NOT_FOUND_TOKEN_USUARIO_BACKEND.getMessage()
+            );
+        }
+
+        if (tokenUsuario.getFechaExpiracion().isBefore(LocalDateTime.now())) {
+            throw new ExpiredTokenUsuario(
+                    ErrorMessage.EXPIRED_TOKEN_USUARIO_BACKEND.getMessage(),
+                    ErrorMessage.EXPIRED_TOKEN_USUARIO_FRONT.getMessage()
+            );
+        }
+
+        return tokenUsuario;
+    }
+
+    @Transactional
+    @Override
+    public void eliminarTokenUsuario(TokenUsuario tokenUsuario) {
+        tokenUsuarioRepository.delete(tokenUsuario);
+    }
+
+
 }

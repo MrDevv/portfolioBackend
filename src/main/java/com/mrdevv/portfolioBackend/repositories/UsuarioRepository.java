@@ -134,4 +134,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
         WHERE r.descripcion = 'user'
     """)
     UsuarioResumenProjection obtenerResumen();
+
+    @Modifying
+    @Query("update Usuario u set u.password = :encodedPassword where u.usuarioId = :usuarioId")
+    void updatePassword(@Param("usuarioId") Long usuarioId, @Param("encodedPassword") String encodedPassword);
 }

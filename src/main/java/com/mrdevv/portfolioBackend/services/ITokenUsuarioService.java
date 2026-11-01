@@ -1,5 +1,6 @@
 package com.mrdevv.portfolioBackend.services;
 
+import com.mrdevv.portfolioBackend.models.TokenUsuario;
 import com.mrdevv.portfolioBackend.models.Usuario;
 
 import java.time.LocalDateTime;
@@ -9,4 +10,8 @@ public interface ITokenUsuarioService {
     void registrarTokenUsuario(String token, Usuario usuario, String tipoToken,  LocalDateTime fechaExpiracion);
 
     void confirmarTokenUsuario(String token);
+
+    TokenUsuario validarTokenUsuario(String token, String tipoToken);
+
+    void eliminarTokenUsuario(TokenUsuario tokenUsuario);
 }

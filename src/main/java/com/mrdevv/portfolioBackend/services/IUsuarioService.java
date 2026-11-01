@@ -35,4 +35,6 @@ public interface IUsuarioService {
     void eliminarUsuario(Usuario usuario);
 
     ResponseDashboardUsuarios obtenerResumenUsuarios();
+
+    void updatePassword(Long usuarioId, String password);
 }
