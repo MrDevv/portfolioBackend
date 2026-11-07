@@ -7,6 +7,8 @@ import com.mrdevv.portfolioBackend.config.security.handler.CustomDeniedEntryPoin
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -32,6 +34,8 @@ public class HttpSecurityConfig {
 
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomDeniedEntryPoint customDeniedEntryPoint;
+
+    private final Environment environment;
 
     @Bean
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
@@ -64,6 +68,13 @@ public class HttpSecurityConfig {
                     requests.requestMatchers(HttpMethod.PATCH, "/auth/activar-cuenta").permitAll();
                     requests.requestMatchers(HttpMethod.POST, "/auth/recuperar-password").permitAll();
                     requests.requestMatchers(HttpMethod.PATCH, "/auth/reset-password").permitAll();
+                    if (environment.acceptsProfiles(Profiles.of("dev"))) {
+                        requests.requestMatchers(
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html").permitAll();
+                    }
                     requests.requestMatchers("/admin/usuarios", "/admin/usuarios/**").hasRole("admin");
                     requests.requestMatchers(HttpMethod.GET, "/admin/dashboard").hasRole("admin");
 
