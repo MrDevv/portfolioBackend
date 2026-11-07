@@ -17,6 +17,7 @@ Centraliza perfiles profesionales, experiencias, proyectos y tecnologías, separ
 - Activación de cuenta por correo electrónico.
 - Restricción de acceso según el estado de la cuenta.
 - Gestión de información profesional, experiencias, proyectos y tecnologías.
+- Documentación interactiva de la API con Swagger UI (OpenAPI 3).
 - Consulta de información del portafolio mediante API Key.
 - Generación de API Key.
 - Configuración del origen permitido para las consultas.
@@ -32,6 +33,7 @@ Centraliza perfiles profesionales, experiencias, proyectos y tecnologías, separ
 | Spring Data JPA / Hibernate | Persistencia |
 | PostgreSQL | Base de datos |
 | JWT | Autenticación mediante tokens |
+| springdoc-openapi | Documentación OpenAPI y Swagger UI |
 | Spring Mail | Envío de correos transaccionales |
 | Docker y Docker Compose | Contenedores y despliegue |
 | GitHub Container Registry | Distribución de imágenes |
@@ -65,7 +67,7 @@ Los recursos se organizan mediante los siguientes prefijos:
 | `/auth` | Registro, autenticación y operaciones relacionadas con la cuenta |
 | `/me` | Gestión de recursos del usuario autenticado |
 | `/dev` | Consulta de información del profesional mediante API Key |
-| `/admin` | Prefijo destinado a operaciones administrativas, cuya ampliación está planificada para próximas versiones |
+| `/admin` | Operaciones administrativas: gestión de usuarios (listar y cambiar rol), dashboard y consulta de catálogos (tecnologías, tipos de proyecto y etiquetas). Usuarios y dashboard requieren el rol `admin` |
 
 ### JWT
 
@@ -86,6 +88,33 @@ Authorization: Bearer <API_KEY>
 Consulta los ejemplos de consumo en la [guía de integración](https://devvaultmrdevv.netlify.app/guide).
 
 Una API Key incluida en un frontend público puede ser inspeccionada por sus visitantes y no debe otorgar permisos administrativos.
+
+## Documentación de la API (Swagger)
+
+La API documenta todos sus endpoints con OpenAPI 3 y expone una interfaz interactiva con Swagger UI. Con el contexto base `/api/v1`, los recursos disponibles son:
+
+| Recurso | Ruta |
+|---|---|
+| Swagger UI | `/api/v1/swagger-ui.html` |
+| Especificación OpenAPI (JSON) | `/api/v1/v3/api-docs` |
+| Especificación OpenAPI (YAML) | `/api/v1/v3/api-docs.yaml` |
+
+Por seguridad, estas rutas solo son accesibles con el perfil de Spring `dev`. El perfil por defecto es `prod`, en el cual la documentación no se expone. Para activarla, define la variable de entorno:
+
+```dotenv
+SPRING_PROFILES_ACTIVE=dev
+```
+
+### Autenticación desde Swagger UI
+
+Usa el botón **Authorize** para registrar las credenciales. Hay dos esquemas:
+
+| Esquema | Se utiliza en | Valor |
+|---|---|---|
+| `bearerAuth` | `/me` y `/admin` | Token JWT obtenido en `POST /auth/login` |
+| `apiKeyAuth` | `/dev` | API Key generada en `POST /me/api-key` |
+
+Los endpoints públicos de `/auth` (registro, login, activación de cuenta y recuperación de contraseña) no requieren credenciales.
 
 
 ## Estados de cuenta
@@ -135,6 +164,7 @@ Estos scripts corresponden a la preparación inicial. Revisa su contenido antes 
 | `EMAIL_PASSWORD` | Credencial SMTP |
 | `FRONTEND_URL` | URL del frontend usada para generar enlaces |
 | `LOGO_URL` | URL pública del logo utilizado en los correos |
+| `SPRING_PROFILES_ACTIVE` | Opcional. Usa `dev` para habilitar Swagger UI. Por defecto es `prod` |
 
 Ejemplo:
 
@@ -169,7 +199,7 @@ http://localhost:8082/api/v1
 ### Requisitos
 
 - Docker y Docker Compose.
-- Acceso a la imagen `ghcr.io/mrdevv/api_devvault:1.0.0`.
+- Acceso a la imagen `ghcr.io/mrdevv/api_devvault:1.2.0`.
 - Credenciales SMTP válidas.
 
 ### Variables de entorno
@@ -205,6 +235,8 @@ LOGO_URL=https://tu-dominio.com/logo.png
 ```
 
 Docker Compose lee `.env` para sustituir las variables referenciadas en su archivo de configuración. 
+
+Para habilitar Swagger UI en un entorno local, agrega `SPRING_PROFILES_ACTIVE: dev` en la sección `environment` del servicio `devvault` del archivo `docker-compose.yml`. No lo actives en producción.
 
 ### Puertos y conexión
 
@@ -273,7 +305,7 @@ http://localhost:8082/api/v1
 El servicio del backend utiliza la imagen publicada en GHCR:
 
 ```text
-ghcr.io/mrdevv/api_devvault:1.0.0
+ghcr.io/mrdevv/api_devvault:1.2.0
 ```
 
 Cuando Docker Compose utiliza `image:` sin una configuración de construcción, los cambios locales del código no se incorporan automáticamente al contenedor. Para ejecutarlos, debes construir una nueva imagen y configurar el servicio para utilizarla.
@@ -282,10 +314,10 @@ Cuando Docker Compose utiliza `image:` sin una configuración de construcción, 
 
 El proyecto utiliza etiquetas de Git para identificar sus versiones.
 
-| Referencia | Versión inicial |
+| Referencia | Versión actual |
 |---|---|
-| Tag Git | `v1.0.0` |
-| Imagen Docker | `ghcr.io/mrdevv/api_devvault:1.0.0` |
+| Tag Git | `v1.2.0` |
+| Imagen Docker | `ghcr.io/mrdevv/api_devvault:1.2.0` |
 
 Las notas de cada lanzamiento se publican en **GitHub Releases**.
 
