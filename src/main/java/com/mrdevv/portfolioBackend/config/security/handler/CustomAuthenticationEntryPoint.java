@@ -28,50 +28,52 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
         String error = (String) request.getAttribute("auth_error");
 
-        if (error.equals("JWT_MISSING")){
-            responseError = new ResponseError(
-                    "Failed",
-                    httpStatus,
-                    request.getRequestURL().toString(),
-                    request.getMethod(),
-                    "No está logeado o su sesión no es válida, por favor inicie sesión.",
-                    "No se encontró un token de autenticación o este a expirado.",
-                    localDateTime,
-                    null
-            );
-        }else if(error.equals("JWT_INVALID")){
-            responseError = new ResponseError(
-                    "Failed",
-                    httpStatus,
-                    request.getRequestURL().toString(),
-                    request.getMethod(),
-                    "El token proporcionado no es válido.",
-                    "El JWT proporcionado en los HEADERS de la REQUEST no es válido.",
-                    localDateTime,
-                    null
-            );
-        } else if(error.equals("API_KEY_MISSING")){
-            responseError = new ResponseError(
-                    "Failed",
-                    httpStatus,
-                    request.getRequestURL().toString(),
-                    request.getMethod(),
-                    "No se proporcionó la API KEY.",
-                    "No se encontró la API KEY en los HEADERS de la REQUEST.",
-                    localDateTime,
-                    null
-            );
-        }else if(error.equals("API_KEY_INVALID")){
-            responseError = new ResponseError(
-                    "Failed",
-                    httpStatus,
-                    request.getRequestURL().toString(),
-                    request.getMethod(),
-                    "La API KEY proporcionada no es válida.",
-                    "La API KEY proporcionada en los HEADERS de la REQUEST no existe.",
-                    localDateTime,
-                    null
-            );
+        if (error != null){
+            if (error.equals("JWT_MISSING")){
+                responseError = new ResponseError(
+                        "Failed",
+                        httpStatus,
+                        request.getRequestURL().toString(),
+                        request.getMethod(),
+                        "No está logeado o su sesión no es válida, por favor inicie sesión.",
+                        "No se encontró un token de autenticación o este a expirado.",
+                        localDateTime,
+                        null
+                );
+            }else if(error.equals("JWT_INVALID")){
+                responseError = new ResponseError(
+                        "Failed",
+                        httpStatus,
+                        request.getRequestURL().toString(),
+                        request.getMethod(),
+                        "El token proporcionado no es válido.",
+                        "El JWT proporcionado en los HEADERS de la REQUEST no es válido.",
+                        localDateTime,
+                        null
+                );
+            } else if(error.equals("API_KEY_MISSING")){
+                responseError = new ResponseError(
+                        "Failed",
+                        httpStatus,
+                        request.getRequestURL().toString(),
+                        request.getMethod(),
+                        "No se proporcionó la API KEY.",
+                        "No se encontró la API KEY en los HEADERS de la REQUEST.",
+                        localDateTime,
+                        null
+                );
+            }else if(error.equals("API_KEY_INVALID")){
+                responseError = new ResponseError(
+                        "Failed",
+                        httpStatus,
+                        request.getRequestURL().toString(),
+                        request.getMethod(),
+                        "La API KEY proporcionada no es válida.",
+                        "La API KEY proporcionada en los HEADERS de la REQUEST no existe.",
+                        localDateTime,
+                        null
+                );
+            }
         }
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
